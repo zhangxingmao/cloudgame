@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudGame - Play Om Nom Run Online | Free Browser Games</title>
+    <meta name="description" content="Play Om Nom Run online for free at CloudGame.info. Join Om Nom on an exciting running adventure with challenging obstacles and sweet treats to collect!">
+    <link rel="canonical" href="https://cloudgame.info/games/om-nom-run">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        
+        .game-title {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(90deg, #4ade80 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link:hover {
+            background: linear-gradient(90deg, #4ade80 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .game-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+            backdrop-filter: blur(4px);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-play {
+            background: linear-gradient(90deg, #4ade80 0%, #3b82f6 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-play:hover {
+            background: linear-gradient(90deg, #3b82f6 0%, #4ade80 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .game-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4ade80;
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="px-4 py-3 md:px-8 lg:px-16">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="https://cloudgame.info" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+                </svg>
+                <span class="ml-2 text-xl font-bold game-title">CloudGame</span>
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="nav-link text-gray-300 hover:text-white font-medium">Home</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white font-medium">Games</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white font-medium">Categories</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white font-medium">About</a>
+            </div>
+            <button class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 md:px-8 lg:px-16">
+        <!-- Game Title and Description -->
+        <section class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 game-title">Om Nom Run</h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">Join the adorable green monster Om Nom in this exciting endless runner where you'll dodge obstacles and collect sweet treats!</p>
+        </section>
+
+        <!-- Game Container -->
+        <section class="mb-12">
+            <div class="game-container w-full h-[500px] md:h-[600px] mx-auto max-w-5xl bg-gray-900">
+                <iframe src="https://play.famobi.com/om-nom-run/A1000-10A" frameborder="0" class="w-full h-full" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- Game Information -->
+        <section class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="game-card p-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-400">Game Description</h2>
+                <p class="mb-4">Om Nom Run is an exciting endless runner game featuring the lovable green monster from the Cut the Rope series. Guide Om Nom through a colorful world filled with obstacles and challenges while collecting candies and power-ups along the way.</p>
+                <p>With simple controls but challenging gameplay, Om Nom Run offers hours of entertainment for players of all ages. The further you run, the more difficult the obstacles become - how far can you go?</p>
+            </div>
+            <div class="game-card p-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-400">How to Play</h2>
+                <ul class="space-y-2">
+                    <li><span class="text-green-400">•</span> Use the arrow keys or swipe to move Om Nom left and right</li>
+                    <li><span class="text-green-400">•</span> Jump over obstacles by pressing the up arrow or swiping up</li>
+                    <li><span class="text-green-400">•</span> Slide under barriers by pressing the down arrow or swiping down</li>
+                    <li><span class="text-green-400">•</span> Collect candies to increase your score</li>
+                    <li><span class="text-green-400">•</span> Grab power-ups for special abilities</li>
+                    <li><span class="text-green-400">•</span> Try to beat your high score with each run!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Additional Information -->
+        <section class="mb-12">
+            <div class="game-card p-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-400">About Om Nom Run</h2>
+                <p class="mb-4">Om Nom Run is developed by ZeptoLab, the creators of the popular Cut the Rope series. Featuring the same charming character and colorful graphics that fans love, this endless runner brings a new dimension to the Om Nom adventure.</p>
+                <p class="mb-4">The game features smooth animations, responsive controls, and an increasing difficulty curve that keeps players coming back for more. Whether you're a longtime fan of Om Nom or new to the character, this addictive runner game offers fun gameplay that's easy to learn but challenging to master.</p>
+                <p>Play Om Nom Run in your browser for free, no downloads required. Perfect for quick gaming sessions or longer play when you want to beat your high score!</p>
+            </div>
+        </section>
+
+        <!-- Similar Games -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 text-center game-title">You Might Also Like</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="game-card overflow-hidden">
+                    <div class="h-40 bg-gray-800 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Cut the Rope</h3>
+                        <p class="text-gray-400 mb-4">Feed candy to Om Nom in this physics-based puzzle game.</p>
+                        <button class="btn-play w-full py-2 rounded-lg font-bold text-white">Play Now</button>
+                    </div>
+                </div>
+                <div class="game-card overflow-hidden">
+                    <div class="h-40 bg-gray-800 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Temple Run</h3>
+                        <p class="text-gray-400 mb-4">Run, jump and slide your way through ancient temples.</p>
+                        <button class="btn-play w-full py-2 rounded-lg font-bold text-white">Play Now</button>
+                    </div>
+                </div>
+                <div class="game-card overflow-hidden">
+                    <div class="h-40 bg-gray-800 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Subway Surfers</h3>
+                        <p class="text-gray-400 mb-4">Dash through the subway avoiding trains and obstacles.</p>
+                        <button class="btn-play w-full py-2 rounded-lg font-bold text-white">Play Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 bg-gray-900 py-8">
+        <div class="container mx-auto px-4 md:px-8 lg:px-16">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="https://cloudgame.info" class="flex items-center justify-center md:justify-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+                        </svg>
+                        <span class="ml-2 text-xl font-bold game-title">CloudGame</span>
+                    </a>
+                    <p class="text-gray-400 mt-2 text-center md:text-left">Play free online games in your browser</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.032 10.032 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63a9.936 9.936 0 002.46-2.548l-.047-.02z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.891 18.886c-.356.071-.712.12-1.072.167-1.157.154-2.32.227-3.487.227-1.866 0-3.734-.218-5.555-.676 1.028.101 2.059.156 3.092.156 2.755 0 5.515-.342 8.204-1.016-1.02 1.606-4.362 2.005-6.548.973.783-.18 1.661-.392 2.567-.64 2.466-.676 4.936-1.647 7.146-2.867.126.372.24.747.341 1.126-1.562.915-3.223 1.697-4.955 2.334-.5.186-1.006.356-1.51.51-.42.13-.834.245-1.258.346-.38.09-.766.177-1.153.25-.067.01-.134.024-.201.04zm-9.546-7.92c.557 0 1.088.104 1.587.294.493.18.927.46 1.294.833.42.43.8.933.86 1.777.03.42.054.83.072 1.247.022.527.037 1.055.037 1.583v.42a.707.707 0 0 1-.202.504.699.699 0 0 1-.504.203h-5.488a.704.704 0 0 1-.706-.707v-.42c0-.527.015-1.056.037-1.582.018-.418.042-.829.072-1.248.06-.844.44-1.347.86-1.777.367-.371.8-.652 1.294-.833.498-.19 1.03-.294 1.586-.294zm0 1.414c-.356 0-.687.074-.994.185-.302.11-.56.271-.78.496-.28.288-.44.648-.479 1.092-.029.392-.051.773-.067 1.154-.016.436-.026.87-.026 1.307v.12h4.693v-.12c0-.436-.011-.87-.026-1.307-.016-.38-.038-.762-.067-1.154-.04-.444-.198-.804-.479-1.092a1.919 1.919 0 0 0-.78-.496 2.512 2.512 0 0 0-.995-.185zm7.446-4.5c1.249 0 2.268 1.02 2.268 2.268s-1.02 2.268-2.268 2.268-2.269-1.02-2.269-2.268 1.02-2.268 2.269-2.268zm0 .993c-.703 0-1.275.572-1.275 1.275s.572 1.275 1.275 1.275 1.275-.572 1.275-1.275-.572-1.275-1.275-1.275z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-500">&copy; 2025 CloudGame.info. All rights reserved.</p>
+                <div class="flex justify-center mt-4 space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-gray-400">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simple Analytics for SEO -->
+    <script>
+        // Record page view
+        window.addEventListener('load', function() {
+            console.log('Page loaded: Om Nom Run - CloudGame');
+            
+            // Track game interactions
+            const gameFrame = document.querySelector('iframe');
+            if (gameFrame) {
+                gameFrame.addEventListener('load', function() {
+                    console.log('Game loaded successfully');
+                });
+            }
+            
+            // Track recommended game clicks
+            const playButtons = document.querySelectorAll('.btn-play');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const gameName = this.closest('.game-card').querySelector('h3').textContent;
+                    console.log('Game selected: ' + gameName);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+</html>
