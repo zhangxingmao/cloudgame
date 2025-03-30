@@ -15,14 +15,15 @@
                     colors: {
                         primary: '#007AFF', // Apple Blue
                         secondary: '#5AC8FA', // Apple Light Blue
-                        dark: '#1D1D1F', // Apple Dark
-                        light: '#F5F5F7', // Apple Light Gray
+                        dark: '#000000', // Pure Black
+                        darker: '#1A1A1A', // Slightly lighter black
+                        light: '#FFFFFF', // Pure White
                         accent: '#FF2D55', // Apple Pink/Red
-                        anime: '#AF52DE', // Apple Purple
-                        action: '#34C759', // Apple Green
-                        puzzle: '#FF9500', // Apple Orange
-                        sports: '#30B0C7', // Apple Teal
-                        shooter: '#FF3B30' // Apple Red
+                        anime: '#BF5AF2', // Brighter Purple for dark mode
+                        action: '#32D74B', // Brighter Green for dark mode
+                        puzzle: '#FF9F0A', // Brighter Orange for dark mode
+                        sports: '#64D2FF', // Brighter Teal for dark mode
+                        shooter: '#FF453A' // Brighter Red for dark mode
                     },
                     fontFamily: {
                         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
@@ -41,25 +42,30 @@
         .smooth-transition {
             transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
+
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+        }
     </style>
 </head>
-<body class="bg-light font-sans text-dark">
+<body class="bg-dark font-sans text-light">
     <!-- Header -->
-    <header class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+    <header class="fixed w-full bg-darker/90 backdrop-blur-md border-b border-white/10 z-50">
         <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
             
             <!-- Primary Navigation -->
             <div class="hidden md:flex space-x-8">
-                <a href="#features" class="text-dark/80 hover:text-primary transition-colors duration-300">Features</a>
-                <a href="#how-it-works" class="text-dark/80 hover:text-primary transition-colors duration-300">How It Works</a>
-                <a href="#faq" class="text-dark/80 hover:text-primary transition-colors duration-300">FAQ</a>
+                <a href="#features" class="text-light/80 hover:text-primary transition-colors duration-300">Features</a>
+                <a href="#how-it-works" class="text-light/80 hover:text-primary transition-colors duration-300">How It Works</a>
+                <a href="#faq" class="text-light/80 hover:text-primary transition-colors duration-300">FAQ</a>
             </div>
             
             <button class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium">Play Now</button>
             
             <!-- Mobile menu button -->
-            <button class="md:hidden text-dark">
+            <button class="md:hidden text-light">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -67,27 +73,62 @@
         </nav>
         
         <!-- Game Categories Navigation -->
-        <div class="bg-light/70 backdrop-blur-md py-2 border-y border-gray-200">
+        <div class="bg-darker/70 backdrop-blur-md py-4 border-y border-white/10">
             <div class="container mx-auto px-6">
-                <div class="flex items-center justify-between overflow-x-auto whitespace-nowrap py-1">
-                    <a href="/games/action.html" class="text-action hover:text-action/90 font-medium px-3 py-1 rounded-full hover:bg-action/10 transition-colors duration-300">Action</a>
-                    <a href="/games/shooter.html" class="text-shooter hover:text-shooter/90 font-medium px-3 py-1 rounded-full hover:bg-shooter/10 transition-colors duration-300">Shooter</a>
-                    <a href="/games/puzzle.html" class="text-puzzle hover:text-puzzle/90 font-medium px-3 py-1 rounded-full hover:bg-puzzle/10 transition-colors duration-300">Puzzle</a>
-                    <a href="/games/sports.html" class="text-sports hover:text-sports/90 font-medium px-3 py-1 rounded-full hover:bg-sports/10 transition-colors duration-300">Sports</a>
-                    <a href="/games/anime.html" class="text-anime hover:text-anime/90 font-medium px-3 py-1 rounded-full hover:bg-anime/10 transition-colors duration-300">Anime</a>
-                    <a href="/games/new.html" class="text-primary font-medium px-3 py-1 rounded-full hover:bg-primary/10 transition-colors duration-300">New Games</a>
-                    <a href="/games/popular.html" class="text-dark/80 font-medium px-3 py-1 rounded-full hover:bg-dark/10 transition-colors duration-300">Popular</a>
+                <div class="flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4">
+                    <a href="/games/action.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-action/10 rounded-lg border border-action/20 hover:bg-action/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-action/0 via-action/10 to-action/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-action font-bold tracking-wide uppercase text-sm">Action</span>
+                        </div>
+                    </a>
+                    <a href="/games/shooter.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-shooter/10 rounded-lg border border-shooter/20 hover:bg-shooter/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-shooter/0 via-shooter/10 to-shooter/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-shooter font-bold tracking-wide uppercase text-sm">Shooter</span>
+                        </div>
+                    </a>
+                    <a href="/games/puzzle.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-puzzle/10 rounded-lg border border-puzzle/20 hover:bg-puzzle/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-puzzle/0 via-puzzle/10 to-puzzle/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-puzzle font-bold tracking-wide uppercase text-sm">Puzzle</span>
+                        </div>
+                    </a>
+                    <a href="/games/sports.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-sports/10 rounded-lg border border-sports/20 hover:bg-sports/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-sports/0 via-sports/10 to-sports/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-sports font-bold tracking-wide uppercase text-sm">Sports</span>
+                        </div>
+                    </a>
+                    <a href="/games/anime.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-anime/10 rounded-lg border border-anime/20 hover:bg-anime/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-anime/0 via-anime/10 to-anime/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-anime font-bold tracking-wide uppercase text-sm">Anime</span>
+                        </div>
+                    </a>
+                    <a href="/games/new.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-primary/10 rounded-lg border border-primary/20 hover:bg-primary/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-primary font-bold tracking-wide uppercase text-sm">New Games</span>
+                        </div>
+                    </a>
+                    <a href="/games/popular.html" class="game-category-link group">
+                        <div class="relative px-5 py-2 bg-accent/10 rounded-lg border border-accent/20 hover:bg-accent/20 transition-all duration-300 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                            <span class="relative text-accent font-bold tracking-wide uppercase text-sm">Popular</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="pt-36 pb-24 bg-gradient-to-b from-white to-light">
+    <section class="pt-36 pb-24 bg-gradient-to-b from-darker to-dark">
         <div class="container mx-auto px-6">
             <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-6xl font-bold text-dark mb-8 leading-tight tracking-tight">Experience Next-Gen Gaming in Your Browser</h1>
-                <p class="text-xl text-dark/70 mb-10 max-w-3xl mx-auto">Jump into immersive gaming experiences instantly — no downloads, no waiting. Just pure gaming excitement at your fingertips.</p>
+                <h1 class="text-5xl md:text-6xl font-bold text-light mb-8 leading-tight tracking-tight">Experience Next-Gen Gaming in Your Browser</h1>
+                <p class="text-xl text-light/70 mb-10 max-w-3xl mx-auto">Jump into immersive gaming experiences instantly — no downloads, no waiting. Just pure gaming excitement at your fingertips.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <button class="bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors duration-300 text-lg font-medium shadow-lg shadow-primary/20">Start Playing</button>
                     <button class="bg-white text-primary border border-primary/20 px-8 py-3 rounded-full hover:bg-primary/5 transition-colors duration-300 text-lg font-medium shadow-sm">Learn More</button>
@@ -96,54 +137,31 @@
         </div>
     </section>
 
-    <!-- Game Section -->
-    <section class="py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold text-dark mb-4">Featured Game</h2>
-                    <p class="text-dark/70 max-w-3xl mx-auto">Experience our flagship game that pushes the boundaries of browser-based gaming</p>
-                </div>
-                <div class="rounded-2xl overflow-hidden shadow-2xl">
-                    <iframe src="https://html-classic.itch.zone/html/13211766/index.html" 
-                            class="w-full aspect-video border-0"
-                            allow="fullscreen; autoplay; gamepad"
-                            title="CloudGame Featured Game">
-                    </iframe>
-                </div>
-                <div class="mt-8 bg-light p-8 rounded-2xl">
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Game Details</h3>
-                    <p class="text-dark/70 leading-relaxed">An immersive browser-based gaming experience that showcases the power of cloud gaming. Enjoy smooth gameplay, stunning graphics, and responsive controls — all without any downloads.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- All Games Showcase -->
-    <section class="py-24 bg-light">
+    <section class="py-24 bg-darker">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">Explore All Games</h2>
-                <p class="text-dark/70 max-w-3xl mx-auto">Browse our complete collection of games across all categories</p>
+                <h2 class="text-3xl font-bold text-light mb-4">Explore All Games</h2>
+                <p class="text-light/70 max-w-3xl mx-auto">Browse our complete collection of games across all categories</p>
             </div>
 
             <!-- Category Tabs -->
             <div class="flex justify-center mb-12 overflow-x-auto whitespace-nowrap pb-4">
-                <button class="text-primary font-medium px-6 py-2.5 rounded-full bg-primary/10 hover:bg-primary/15 transition-colors duration-300 mx-1 border border-primary/20 category-btn active" data-category="all">All Games</button>
-                <button class="text-action font-medium px-6 py-2.5 rounded-full hover:bg-action/10 transition-colors duration-300 mx-1 category-btn" data-category="action">Action</button>
-                <button class="text-shooter font-medium px-6 py-2.5 rounded-full hover:bg-shooter/10 transition-colors duration-300 mx-1 category-btn" data-category="shooter">Shooter</button>
-                <button class="text-puzzle font-medium px-6 py-2.5 rounded-full hover:bg-puzzle/10 transition-colors duration-300 mx-1 category-btn" data-category="puzzle">Puzzle</button>
-                <button class="text-sports font-medium px-6 py-2.5 rounded-full hover:bg-sports/10 transition-colors duration-300 mx-1 category-btn" data-category="sports">Sports</button>
-                <button class="text-anime font-medium px-6 py-2.5 rounded-full hover:bg-anime/10 transition-colors duration-300 mx-1 category-btn" data-category="anime">Anime</button>
+                <button class="text-primary font-medium px-6 py-2.5 rounded-full bg-primary/20 hover:bg-primary/30 transition-colors duration-300 mx-1 border border-primary/30 category-btn active" data-category="all">All Games</button>
+                <button class="text-action font-medium px-6 py-2.5 rounded-full hover:bg-action/20 transition-colors duration-300 mx-1 category-btn" data-category="action">Action</button>
+                <button class="text-shooter font-medium px-6 py-2.5 rounded-full hover:bg-shooter/20 transition-colors duration-300 mx-1 category-btn" data-category="shooter">Shooter</button>
+                <button class="text-puzzle font-medium px-6 py-2.5 rounded-full hover:bg-puzzle/20 transition-colors duration-300 mx-1 category-btn" data-category="puzzle">Puzzle</button>
+                <button class="text-sports font-medium px-6 py-2.5 rounded-full hover:bg-sports/20 transition-colors duration-300 mx-1 category-btn" data-category="sports">Sports</button>
+                <button class="text-anime font-medium px-6 py-2.5 rounded-full hover:bg-anime/20 transition-colors duration-300 mx-1 category-btn" data-category="anime">Anime</button>
             </div>
 
             <!-- Games Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Game 1: Original Featured -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="anime">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="anime">
                     <div class="aspect-video bg-gray-100 overflow-hidden relative group">
                         <img src="https://via.placeholder.com/640x360?text=Anime+Adventure" alt="Anime Adventure" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-6">
                                 <span class="bg-anime/80 text-white text-xs px-2.5 py-1 rounded-full">Anime</span>
                                 <h3 class="text-white font-bold mt-2">Anime Adventure</h3>
@@ -151,17 +169,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">Anime Adventure</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">Embark on an epic journey through colorful anime-inspired worlds in this action-packed adventure.</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">Anime Adventure</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Embark on an epic journey through colorful anime-inspired worlds in this action-packed adventure.</p>
                         <a href="/games/anime.html" class="inline-block bg-anime text-white px-5 py-2 rounded-full hover:bg-anime/90 transition-colors duration-300 text-sm font-medium">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Game 2: Bubble Tower 3D -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="puzzle">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="puzzle">
                     <div class="aspect-video bg-gray-100 overflow-hidden relative group">
                         <img src="https://via.placeholder.com/640x360?text=Bubble+Tower+3D" alt="Bubble Tower 3D" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-6">
                                 <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
                                 <h3 class="text-white font-bold mt-2">Bubble Tower 3D</h3>
@@ -169,17 +187,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">Bubble Tower 3D</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">Match and pop colorful bubbles in this addictive 3D puzzle game with challenging levels.</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">Bubble Tower 3D</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Match and pop colorful bubbles in this addictive 3D puzzle game with challenging levels.</p>
                         <a href="/games/puzzle.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Game 3: Cannon Balls 3D -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="shooter">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="shooter">
                     <div class="aspect-video bg-gray-100 overflow-hidden relative group">
                         <img src="https://via.placeholder.com/640x360?text=Cannon+Balls+3D" alt="Cannon Balls 3D" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-6">
                                 <span class="bg-shooter/80 text-white text-xs px-2.5 py-1 rounded-full">Shooter</span>
                                 <h3 class="text-white font-bold mt-2">Cannon Balls 3D</h3>
@@ -187,17 +205,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">Cannon Balls 3D</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">Take control of a powerful cannon and blast your way through challenging levels in this shooter game.</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">Cannon Balls 3D</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Take control of a powerful cannon and blast your way through challenging levels in this shooter game.</p>
                         <a href="/games/shooter.html" class="inline-block bg-shooter text-white px-5 py-2 rounded-full hover:bg-shooter/90 transition-colors duration-300 text-sm font-medium">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Game 4: Space Racer -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="action">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
                     <div class="aspect-video bg-gray-100 overflow-hidden relative group">
                         <img src="https://via.placeholder.com/640x360?text=Space+Racer" alt="Space Racer" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-6">
                                 <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
                                 <h3 class="text-white font-bold mt-2">Space Racer</h3>
@@ -205,17 +223,17 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">Space Racer</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">Navigate through space at high speeds, dodging obstacles and collecting power-ups in this fast-paced action game.</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">Space Racer</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Navigate through space at high speeds, dodging obstacles and collecting power-ups in this fast-paced action game.</p>
                         <a href="/games/action.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Game 5: Sports Champions -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="sports">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="sports">
                     <div class="aspect-video bg-gray-100 overflow-hidden relative group">
                         <img src="https://via.placeholder.com/640x360?text=Sports+Champions" alt="Sports Champions" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-6">
                                 <span class="bg-sports/80 text-white text-xs px-2.5 py-1 rounded-full">Sports</span>
                                 <h3 class="text-white font-bold mt-2">Sports Champions</h3>
@@ -223,20 +241,20 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">Sports Champions</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">Compete in multiple sports events and become the ultimate sports champion in this competitive game.</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">Sports Champions</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Compete in multiple sports events and become the ultimate sports champion in this competitive game.</p>
                         <a href="/games/sports.html" class="inline-block bg-sports text-white px-5 py-2 rounded-full hover:bg-sports/90 transition-colors duration-300 text-sm font-medium">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Game 6: Coming Soon -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 game-card" data-category="new">
+                <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="new">
                     <div class="aspect-video bg-gradient-to-r from-primary/20 to-secondary/20 overflow-hidden relative group flex items-center justify-center">
                         <span class="text-xl font-bold text-primary">Coming Soon</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-2 text-dark">New Release</h3>
-                        <p class="text-dark/70 mb-4 line-clamp-2">We're constantly adding new games to our collection. Check back soon for our latest releases!</p>
+                        <h3 class="text-lg font-semibold mb-2 text-light">New Release</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">We're constantly adding new games to our collection. Check back soon for our latest releases!</p>
                         <a href="/games/new.html" class="inline-block bg-white border border-primary/30 text-primary px-5 py-2 rounded-full hover:bg-primary/5 transition-colors duration-300 text-sm font-medium">View New Games</a>
                     </div>
                 </div>
@@ -250,142 +268,142 @@
     </section>
 
     <!-- Features -->
-    <section id="features" class="py-24 bg-light">
+    <section id="features" class="py-24 bg-dark">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">Why Choose CloudGame</h2>
-                <p class="text-dark/70 max-w-3xl mx-auto">Cloud gaming reimagined with the features you'll love</p>
+                <h2 class="text-3xl font-bold text-light mb-4">Why Choose CloudGame</h2>
+                <p class="text-light/70 max-w-3xl mx-auto">Cloud gaming reimagined with the features you'll love</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
                     <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Instant Play</h3>
-                    <p class="text-dark/70 leading-relaxed">No downloads or installations required. Start playing your favorite games instantly in your browser.</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Instant Play</h3>
+                    <p class="text-light/70 leading-relaxed">No downloads or installations required. Start playing your favorite games instantly in your browser.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
                     <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Secure Gaming</h3>
-                    <p class="text-dark/70 leading-relaxed">Advanced encryption and security measures to keep your gaming experience safe and private.</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Secure Gaming</h3>
+                    <p class="text-light/70 leading-relaxed">Advanced encryption and security measures to keep your gaming experience safe and private.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
                     <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                         <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Cross-Platform</h3>
-                    <p class="text-dark/70 leading-relaxed">Play on any device with a modern web browser. Your progress syncs automatically.</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Cross-Platform</h3>
+                    <p class="text-light/70 leading-relaxed">Play on any device with a modern web browser. Your progress syncs automatically.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section id="how-it-works" class="py-24 bg-white">
+    <section id="how-it-works" class="py-24 bg-darker">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">How CloudGame Works</h2>
-                <p class="text-dark/70 max-w-3xl mx-auto">Getting started is simple and seamless</p>
+                <h2 class="text-3xl font-bold text-light mb-4">How CloudGame Works</h2>
+                <p class="text-light/70 max-w-3xl mx-auto">Getting started is simple and seamless</p>
             </div>
             <div class="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-2xl font-bold text-primary">1</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Visit Website</h3>
-                    <p class="text-dark/70 leading-relaxed">Open CloudGame in your favorite browser</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Visit Website</h3>
+                    <p class="text-light/70 leading-relaxed">Open CloudGame in your favorite browser</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-2xl font-bold text-primary">2</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Choose Game</h3>
-                    <p class="text-dark/70 leading-relaxed">Select from our curated collection of games</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Choose Game</h3>
+                    <p class="text-light/70 leading-relaxed">Select from our curated collection of games</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-2xl font-bold text-primary">3</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Start Playing</h3>
-                    <p class="text-dark/70 leading-relaxed">Click play and enjoy instant gaming</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Start Playing</h3>
+                    <p class="text-light/70 leading-relaxed">Click play and enjoy instant gaming</p>
                 </div>
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-2xl font-bold text-primary">4</span>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Save Progress</h3>
-                    <p class="text-dark/70 leading-relaxed">Your progress saves automatically</p>
+                    <h3 class="text-xl font-semibold mb-3 text-light">Save Progress</h3>
+                    <p class="text-light/70 leading-relaxed">Your progress saves automatically</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-24 bg-light">
+    <section id="faq" class="py-24 bg-dark">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-dark mb-4">Frequently Asked Questions</h2>
-                <p class="text-dark/70 max-w-3xl mx-auto">Everything you need to know about CloudGame</p>
+                <h2 class="text-3xl font-bold text-light mb-4">Frequently Asked Questions</h2>
+                <p class="text-light/70 max-w-3xl mx-auto">Everything you need to know about CloudGame</p>
             </div>
             <div class="max-w-3xl mx-auto space-y-6">
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-xl font-semibold mb-3 text-dark">What are the system requirements?</h3>
-                    <p class="text-dark/70 leading-relaxed">You only need a modern web browser and a stable internet connection. We recommend at least 10 Mbps for the best experience.</p>
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-3 text-light">What are the system requirements?</h3>
+                    <p class="text-light/70 leading-relaxed">You only need a modern web browser and a stable internet connection. We recommend at least 10 Mbps for the best experience.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-xl font-semibold mb-3 text-dark">Can I play offline?</h3>
-                    <p class="text-dark/70 leading-relaxed">CloudGame requires an internet connection as all games are streamed directly to your browser.</p>
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-3 text-light">Can I play offline?</h3>
+                    <p class="text-light/70 leading-relaxed">CloudGame requires an internet connection as all games are streamed directly to your browser.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-xl font-semibold mb-3 text-dark">How do I save my progress?</h3>
-                    <p class="text-dark/70 leading-relaxed">Your progress is automatically saved to your account. Simply log in on any device to continue where you left off.</p>
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-3 text-light">How do I save my progress?</h3>
+                    <p class="text-light/70 leading-relaxed">Your progress is automatically saved to your account. Simply log in on any device to continue where you left off.</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-xl font-semibold mb-3 text-dark">What payment methods do you accept?</h3>
-                    <p class="text-dark/70 leading-relaxed">We accept all major credit cards, PayPal, and various local payment methods depending on your region.</p>
+                <div class="bg-darker p-8 rounded-2xl shadow-lg shadow-black/50 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-3 text-light">What payment methods do you accept?</h3>
+                    <p class="text-light/70 leading-relaxed">We accept all major credit cards, PayPal, and various local payment methods depending on your region.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-16">
+    <footer class="bg-darker text-light py-16 border-t border-white/10">
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-10 mb-10">
                 <div>
                     <h3 class="text-xl font-bold mb-6">CloudGame</h3>
-                    <p class="text-white/70 leading-relaxed">Experience the future of gaming directly in your browser.</p>
+                    <p class="text-light/70 leading-relaxed">Experience the future of gaming directly in your browser.</p>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-6">Quick Links</h4>
                     <ul class="space-y-3">
-                        <li><a href="#features" class="text-white/70 hover:text-white transition-colors duration-300">Features</a></li>
-                        <li><a href="#how-it-works" class="text-white/70 hover:text-white transition-colors duration-300">How It Works</a></li>
-                        <li><a href="#faq" class="text-white/70 hover:text-white transition-colors duration-300">FAQ</a></li>
+                        <li><a href="#features" class="text-light/70 hover:text-light transition-colors duration-300">Features</a></li>
+                        <li><a href="#how-it-works" class="text-light/70 hover:text-light transition-colors duration-300">How It Works</a></li>
+                        <li><a href="#faq" class="text-light/70 hover:text-light transition-colors duration-300">FAQ</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-6">Legal</h4>
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-white/70 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
-                        <li><a href="#" class="text-white/70 hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                        <li><a href="#" class="text-light/70 hover:text-light transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-light/70 hover:text-light transition-colors duration-300">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-6">Contact</h4>
-                    <p class="text-white/70">Email: <a href="mailto:yanzhang582@gmail.com" class="hover:text-white transition-colors duration-300">yanzhang582@gmail.com</a></p>
+                    <p class="text-light/70">Email: <a href="mailto:yanzhang582@gmail.com" class="hover:text-light transition-colors duration-300">yanzhang582@gmail.com</a></p>
                 </div>
             </div>
             <div class="border-t border-white/10 pt-8">
-                <p class="text-center text-white/70">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
+                <p class="text-center text-light/70">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
             </div>
         </div>
     </footer>
