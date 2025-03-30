@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Games - CloudGame</title>
+    <meta name="description" content="Discover anime-themed games at CloudGame. Immerse yourself in vibrant Japanese-inspired worlds with stunning visuals and engaging gameplay.">
+    <link rel="canonical" href="https://cloudgame.info/games/anime.html" />
+    <meta name="author" content="yanzhang582">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',
+                        secondary: '#4F46E5',
+                        dark: '#1F2937',
+                        anime: '#EC4899',
+                        action: '#10B981',
+                        puzzle: '#F59E0B',
+                        sports: '#3B82F6',
+                        shooter: '#EF4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
+            
+            <!-- Primary Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="/#features" class="text-gray-600 hover:text-primary">Features</a>
+                <a href="/#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
+                <a href="/#faq" class="text-gray-600 hover:text-primary">FAQ</a>
+            </div>
+            
+            <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+        
+        <!-- Game Categories Navigation -->
+        <div class="bg-dark/5 py-2">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between overflow-x-auto whitespace-nowrap py-1">
+                    <a href="/games/action.html" class="text-action hover:text-action font-medium px-3 py-1 rounded-lg hover:bg-action/10 transition">Action</a>
+                    <a href="/games/shooter.html" class="text-shooter hover:text-shooter font-medium px-3 py-1 rounded-lg hover:bg-shooter/10 transition">Shooter</a>
+                    <a href="/games/puzzle.html" class="text-puzzle hover:text-puzzle font-medium px-3 py-1 rounded-lg hover:bg-puzzle/10 transition">Puzzle</a>
+                    <a href="/games/sports.html" class="text-sports hover:text-sports font-medium px-3 py-1 rounded-lg hover:bg-sports/10 transition">Sports</a>
+                    <a href="/games/anime.html" class="text-anime font-medium px-3 py-1 rounded-lg bg-anime/10 transition">Anime</a>
+                    <a href="/games/new.html" class="text-primary font-medium px-3 py-1 rounded-lg hover:bg-primary/10 transition">New Games</a>
+                    <a href="/games/popular.html" class="text-gray-700 font-medium px-3 py-1 rounded-lg hover:bg-gray-700/10 transition">Popular</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Header with Anime Style -->
+    <section class="pt-32 pb-12 bg-gradient-to-r from-anime/20 to-indigo-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-anime mb-4">Anime Games</h1>
+                <p class="text-xl text-gray-700 mb-8">Immerse yourself in vibrant anime-inspired worlds with stunning visuals and engaging storylines</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Game -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4">Featured Game</h2>
+                <div class="aspect-video rounded-xl overflow-hidden shadow-xl">
+                    <iframe src="https://html-classic.itch.zone/html/13211766/index.html" 
+                            class="w-full h-full border-0"
+                            allow="fullscreen; autoplay; gamepad"
+                            title="Featured Anime Game">
+                    </iframe>
+                </div>
+                <div class="mt-8 bg-anime/5 p-6 rounded-lg border border-anime/20">
+                    <h3 class="text-xl font-semibold mb-2 text-anime">Anime Adventure</h3>
+                    <p class="text-gray-600">Embark on an epic journey through colorful anime-inspired worlds. Battle mysterious enemies, make allies, and uncover the secrets of this magical realm in this action-packed adventure game.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Anime Games -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">More Anime Games</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-anime/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <img src="https://via.placeholder.com/640x360?text=Anime+RPG" alt="Anime RPG" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-anime">Anime RPG</h3>
+                        <p class="text-gray-600 mb-4">Customize your character and explore a vast anime-inspired world filled with quests, allies, and enemies.</p>
+                        <a href="#" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
+                    </div>
+                </div>
+                
+                <!-- Game 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-anime/10">
+                    <div class="aspect-video bg-gradient-to-r from-anime/30 to-indigo-100 overflow-hidden flex items-center justify-center">
+                        <span class="text-xl font-bold text-white bg-anime/80 px-4 py-2 rounded-lg">Coming Soon</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-anime">Magic Academy</h3>
+                        <p class="text-gray-600 mb-4">Attend a prestigious academy for magic users, learn spells, make friends, and compete in magical tournaments.</p>
+                        <span class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Coming Soon</span>
+                    </div>
+                </div>
+                
+                <!-- Game 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-anime/10">
+                    <div class="aspect-video bg-gradient-to-r from-anime/30 to-indigo-100 overflow-hidden flex items-center justify-center">
+                        <span class="text-xl font-bold text-white bg-anime/80 px-4 py-2 rounded-lg">Coming Soon</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-anime">Battle Arena</h3>
+                        <p class="text-gray-600 mb-4">Choose your anime-inspired fighter and battle against opponents in this action-packed fighting game.</p>
+                        <span class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anime Theme Section -->
+    <section class="py-16 bg-gradient-to-r from-anime/5 to-indigo-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8 text-anime">Anime-Inspired Gaming</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-sm">
+                <p class="text-gray-600 mb-4">Our anime game collection brings the distinct visual style and storytelling of Japanese animation to your gaming experience. Featuring vibrant colors, unique character designs, and engaging narratives, these games transport you to worlds inspired by popular anime aesthetics.</p>
+                <p class="text-gray-600">Whether you're a long-time anime fan or new to the genre, our curated selection offers something for everyone - from action-packed adventures to strategic role-playing games, all with that distinctive anime flair.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">CloudGame</h3>
+                    <p class="text-gray-400">Experience the future of gaming directly in your browser.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Game Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/games/action.html" class="text-gray-400 hover:text-white">Action Games</a></li>
+                        <li><a href="/games/shooter.html" class="text-gray-400 hover:text-white">Shooter Games</a></li>
+                        <li><a href="/games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
+                        <li><a href="/games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
+                        <li><a href="/games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400">Email: yanzhang582@gmail.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-center text-gray-400">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
