@@ -52,75 +52,27 @@
 <body class="bg-dark font-sans text-light">
     <!-- Header -->
     <header class="fixed w-full bg-darker/90 backdrop-blur-md border-b border-white/10 z-50">
-        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
             
             <!-- Primary Navigation -->
             <div class="hidden md:flex space-x-8">
-                <a href="#features" class="text-light/80 hover:text-primary transition-colors duration-300">Features</a>
-                <a href="#how-it-works" class="text-light/80 hover:text-primary transition-colors duration-300">How It Works</a>
-                <a href="#faq" class="text-light/80 hover:text-primary transition-colors duration-300">FAQ</a>
+                <a href="/#features" class="text-gray-600 hover:text-primary">Features</a>
+                <a href="/#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
+                <a href="/#faq" class="text-gray-600 hover:text-primary">FAQ</a>
+                <a href="/games/new.html" class="text-gray-600 hover:text-primary">New Games</a>
+                <a href="/games/popular.html" class="text-gray-600 hover:text-primary">Popular</a>
             </div>
             
-            <button class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium">Play Now</button>
+            <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
             
             <!-- Mobile menu button -->
-            <button class="md:hidden text-light">
+            <button class="md:hidden text-gray-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
         </nav>
-        
-        <!-- Game Categories Navigation -->
-        <div class="bg-darker/70 backdrop-blur-md py-4 border-y border-white/10">
-            <div class="container mx-auto px-6">
-                <div class="flex items-center justify-between overflow-x-auto whitespace-nowrap gap-4">
-                    <a href="/games/action.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-action/10 rounded-lg border border-action/20 hover:bg-action/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-action/0 via-action/10 to-action/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-action font-bold tracking-wide uppercase text-sm">Action</span>
-                        </div>
-                    </a>
-                    <a href="/games/shooter.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-shooter/10 rounded-lg border border-shooter/20 hover:bg-shooter/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-shooter/0 via-shooter/10 to-shooter/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-shooter font-bold tracking-wide uppercase text-sm">Shooter</span>
-                        </div>
-                    </a>
-                    <a href="/games/puzzle.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-puzzle/10 rounded-lg border border-puzzle/20 hover:bg-puzzle/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-puzzle/0 via-puzzle/10 to-puzzle/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-puzzle font-bold tracking-wide uppercase text-sm">Puzzle</span>
-                        </div>
-                    </a>
-                    <a href="/games/sports.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-sports/10 rounded-lg border border-sports/20 hover:bg-sports/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-sports/0 via-sports/10 to-sports/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-sports font-bold tracking-wide uppercase text-sm">Sports</span>
-                        </div>
-                    </a>
-                    <a href="/games/anime.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-anime/10 rounded-lg border border-anime/20 hover:bg-anime/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-anime/0 via-anime/10 to-anime/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-anime font-bold tracking-wide uppercase text-sm">Anime</span>
-                        </div>
-                    </a>
-                    <a href="/games/new.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-primary/10 rounded-lg border border-primary/20 hover:bg-primary/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-primary font-bold tracking-wide uppercase text-sm">New Games</span>
-                        </div>
-                    </a>
-                    <a href="/games/popular.html" class="game-category-link group">
-                        <div class="relative px-5 py-2 bg-accent/10 rounded-lg border border-accent/20 hover:bg-accent/20 transition-all duration-300 overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                            <span class="relative text-accent font-bold tracking-wide uppercase text-sm">Popular</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
     </header>
 
     <!-- Hero Section -->
