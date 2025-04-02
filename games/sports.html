@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Games - CloudGame</title>
+    <meta name="description" content="Experience thrilling sports games at CloudGame. From football to table tennis, enjoy competitive sports action in your browser.">
+    <link rel="canonical" href="https://cloudgame.info/games/sports.html" />
+    <meta name="author" content="yanzhang582">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',
+                        secondary: '#4F46E5',
+                        dark: '#1F2937',
+                        anime: '#EC4899',
+                        action: '#10B981',
+                        puzzle: '#F59E0B',
+                        sports: '#3B82F6',
+                        shooter: '#EF4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
+            
+            <!-- Primary Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="/#features" class="text-gray-600 hover:text-primary">Features</a>
+                <a href="/#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
+                <a href="/#faq" class="text-gray-600 hover:text-primary">FAQ</a>
+                <a href="/games/new.html" class="text-gray-600 hover:text-primary">New Games</a>
+                <a href="/games/popular.html" class="text-gray-600 hover:text-primary">Popular</a>
+            </div>
+            
+            <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Category Header -->
+    <section class="pt-32 pb-12 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-sports mb-4">Sports Games</h1>
+                <p class="text-xl text-gray-600 mb-8">Experience the thrill of competitive sports right in your browser</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Game -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4">Featured Game</h2>
+                <div class="aspect-video rounded-xl overflow-hidden shadow-xl">
+                    <iframe src="https://play.famobi.com/3d-free-kick" 
+                            class="w-full h-full border-0"
+                            allow="fullscreen; autoplay; gamepad"
+                            title="3D Free Kick">
+                    </iframe>
+                </div>
+                <div class="mt-8 bg-sports/5 p-6 rounded-lg border border-sports/20">
+                    <h3 class="text-xl font-semibold mb-2 text-sports">3D Free Kick</h3>
+                    <p class="text-gray-600">Experience the excitement of taking crucial free kicks in this realistic 3D football game. Master the perfect curve, power, and accuracy to score spectacular goals against increasingly challenging goalkeepers and defensive walls.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Sports Games -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">More Sports Games</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 8-ball Billiards Classic -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-sports/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/8-ball-billiards-classic" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="8-ball Billiards Classic">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-sports">8-ball Billiards Classic</h3>
+                        <p class="text-gray-600 mb-4">Challenge yourself in this realistic pool game with precise physics and smooth controls. Play against AI or challenge your friends in local multiplayer mode.</p>
+                        <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                    </div>
+                </div>
+
+                <!-- Archery World Tour -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-sports/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/archery-world-tour" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Archery World Tour">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-sports">Archery World Tour</h3>
+                        <p class="text-gray-600 mb-4">Travel the world and test your archery skills in various challenging environments. Account for wind, distance, and obstacles to hit your targets perfectly.</p>
+                        <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                    </div>
+                </div>
+
+                <!-- Table Tennis World Tour -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-sports/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/table-tennis-world-tour" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Table Tennis World Tour">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-sports">Table Tennis World Tour</h3>
+                        <p class="text-gray-600 mb-4">Experience fast-paced table tennis action with realistic physics and responsive controls. Compete in tournaments and improve your skills.</p>
+                        <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                    </div>
+                </div>
+
+                <!-- Moto X3M Pool Party -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-sports/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/moto-x3m-pool-party" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Moto X3M Pool Party">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-sports">Moto X3M Pool Party</h3>
+                        <p class="text-gray-600 mb-4">Race through challenging water-themed tracks performing stunts and tricks. Master the physics-based gameplay to achieve the best times.</p>
+                        <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">CloudGame</h3>
+                    <p class="text-gray-400">Experience the future of gaming directly in your browser.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Game Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/games/action.html" class="text-gray-400 hover:text-white">Action Games</a></li>
+                        <li><a href="/games/shooter.html" class="text-gray-400 hover:text-white">Shooter Games</a></li>
+                        <li><a href="/games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
+                        <li><a href="/games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
+                        <li><a href="/games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <p class="text-gray-400">Email: yanzhang582@gmail.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-center text-gray-400">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
