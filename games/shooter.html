@@ -26,6 +26,46 @@
             }
         }
     </script>
+    <script>
+        function playGame(gameUrl) {
+            // 创建一个新的全屏iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // 添加关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // 点击关闭按钮时移除iframe和按钮
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // 将iframe和关闭按钮添加到页面
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -69,7 +109,7 @@
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-center mb-4">Featured Game</h2>
                 <div class="aspect-video rounded-xl overflow-hidden shadow-xl">
-                    <iframe src="https://play.famobi.com/cannon-balls-3d/A1000-10A" 
+                    <iframe src="https://play.famobi.com/cannon-balls-3d" 
                             class="w-full h-full border-0"
                             allow="fullscreen; autoplay; gamepad"
                             title="Cannon Balls 3D">
@@ -77,7 +117,8 @@
                 </div>
                 <div class="mt-8 bg-gray-50 p-6 rounded-lg">
                     <h3 class="text-xl font-semibold mb-2">Cannon Balls 3D</h3>
-                    <p class="text-gray-600">Take control of a powerful cannon and blast your way through challenging levels in this exciting 3D shooter game. Aim carefully, adjust your power, and destroy targets with precision to earn high scores and unlock new levels.</p>
+                    <p class="text-gray-600">Take control of powerful cannons and blast your way through challenging levels in this exciting 3D shooter game!</p>
+                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/cannon-balls-3d')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition mt-4">Play Now</a>
                 </div>
             </div>
         </div>
@@ -120,6 +161,54 @@
                         <h3 class="text-xl font-semibold mb-2">Sniper Elite</h3>
                         <p class="text-gray-600 mb-4">Take on the role of an elite sniper in this precision-based shooting game. Complete missions with stealth and accuracy.</p>
                         <span class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Tank Battle War -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/tank-battle-war" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Tank Battle War">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Tank Battle War</h3>
+                        <p class="text-gray-600 mb-4">Command your tank through intense battles. Upgrade your weapons and defeat enemy forces!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/tank-battle-war')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
+                    </div>
+                </div>
+
+                <!-- Pixel Gun Apocalypse -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/pixel-gun-apocalypse" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Pixel Gun Apocalypse">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Pixel Gun Apocalypse</h3>
+                        <p class="text-gray-600 mb-4">Survive in a pixelated world filled with zombies. Collect weapons and fight for survival!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/pixel-gun-apocalypse')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
+                    </div>
+                </div>
+
+                <!-- Space Shooter -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/space-shooter" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Space Shooter">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Space Shooter</h3>
+                        <p class="text-gray-600 mb-4">Pilot your spaceship through waves of alien enemies. Upgrade your weapons and save the galaxy!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/space-shooter')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
                     </div>
                 </div>
             </div>

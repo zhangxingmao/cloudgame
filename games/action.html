@@ -26,6 +26,46 @@
             }
         }
     </script>
+    <script>
+        function playGame(gameUrl) {
+            // 创建一个新的全屏iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // 添加关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // 点击关闭按钮时移除iframe和按钮
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // 将iframe和关闭按钮添加到页面
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -75,9 +115,10 @@
                             title="Giant Rush">
                     </iframe>
                 </div>
-                <div class="mt-8 bg-action/5 p-6 rounded-lg border border-action/20">
-                    <h3 class="text-xl font-semibold mb-2 text-action">Giant Rush</h3>
-                    <p class="text-gray-600">Run, jump, and grow in this exciting endless runner game. Collect power-ups, avoid obstacles, and become the biggest giant in this thrilling action adventure.</p>
+                <div class="mt-8 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">Giant Rush</h3>
+                    <p class="text-gray-600">Run, jump, and grow in this exciting endless runner game. Collect power-ups and become the biggest giant!</p>
+                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/giant-rush')" class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition mt-4">Play Now</a>
                 </div>
             </div>
         </div>
@@ -89,7 +130,7 @@
             <h2 class="text-3xl font-bold text-center mb-12">More Action Games</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Om Nom Run -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-action/10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
                         <iframe src="https://play.famobi.com/om-nom-run" 
                                 class="w-full h-full border-0"
@@ -98,14 +139,14 @@
                         </iframe>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 text-action">Om Nom Run</h3>
+                        <h3 class="text-xl font-semibold mb-2">Om Nom Run</h3>
                         <p class="text-gray-600 mb-4">Help Om Nom run, jump and slide through colorful levels while collecting candies and avoiding obstacles.</p>
-                        <span class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</span>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/om-nom-run')" class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Rise Up -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-action/10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
                         <iframe src="https://play.famobi.com/rise-up" 
                                 class="w-full h-full border-0"
@@ -114,14 +155,14 @@
                         </iframe>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 text-action">Rise Up</h3>
-                        <p class="text-gray-600 mb-4">Guide your balloon to the top while protecting it from dangerous obstacles. Test your reflexes in this challenging action game.</p>
-                        <span class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</span>
+                        <h3 class="text-xl font-semibold mb-2">Rise Up</h3>
+                        <p class="text-gray-600 mb-4">Protect your balloon as it rises through challenging obstacles. Use your shield wisely to reach new heights!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/rise-up')" class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Train Miner -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-action/10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
                         <iframe src="https://play.famobi.com/train-miner" 
                                 class="w-full h-full border-0"
@@ -130,14 +171,14 @@
                         </iframe>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 text-action">Train Miner</h3>
-                        <p class="text-gray-600 mb-4">Mine resources and upgrade your train while exploring mysterious caves. Combine action and strategy in this unique adventure.</p>
-                        <span class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</span>
+                        <h3 class="text-xl font-semibold mb-2">Train Miner</h3>
+                        <p class="text-gray-600 mb-4">Manage your train and collect resources while exploring underground mines. Upgrade your train and discover new areas!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/train-miner')" class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</a>
                     </div>
                 </div>
 
                 <!-- Go Escape -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-action/10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
                         <iframe src="https://play.famobi.com/go-escape" 
                                 class="w-full h-full border-0"
@@ -146,9 +187,9 @@
                         </iframe>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 text-action">Go Escape</h3>
-                        <p class="text-gray-600 mb-4">Navigate through challenging mazes and escape various obstacles. Quick thinking and fast reflexes are key to success.</p>
-                        <span class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</span>
+                        <h3 class="text-xl font-semibold mb-2">Go Escape</h3>
+                        <p class="text-gray-600 mb-4">Navigate through challenging mazes and find your way to freedom. Use your skills to solve puzzles and escape!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/go-escape')" class="inline-block bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition">Play Now</a>
                     </div>
                 </div>
             </div>

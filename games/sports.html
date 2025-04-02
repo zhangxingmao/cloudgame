@@ -26,6 +26,46 @@
             }
         }
     </script>
+    <script>
+        function playGame(gameUrl) {
+            // 创建一个新的全屏iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // 添加关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // 点击关闭按钮时移除iframe和按钮
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // 将iframe和关闭按钮添加到页面
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -75,9 +115,10 @@
                             title="3D Free Kick">
                     </iframe>
                 </div>
-                <div class="mt-8 bg-sports/5 p-6 rounded-lg border border-sports/20">
-                    <h3 class="text-xl font-semibold mb-2 text-sports">3D Free Kick</h3>
-                    <p class="text-gray-600">Experience the excitement of taking crucial free kicks in this realistic 3D football game. Master the perfect curve, power, and accuracy to score spectacular goals against increasingly challenging goalkeepers and defensive walls.</p>
+                <div class="mt-8 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2">3D Free Kick</h3>
+                    <p class="text-gray-600">Take amazing free kicks and score spectacular goals in this realistic 3D soccer game!</p>
+                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/3d-free-kick')" class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition mt-4">Play Now</a>
                 </div>
             </div>
         </div>
@@ -121,7 +162,7 @@
                 </div>
 
                 <!-- Table Tennis World Tour -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border border-sports/10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
                         <iframe src="https://play.famobi.com/table-tennis-world-tour" 
                                 class="w-full h-full border-0"
@@ -130,9 +171,9 @@
                         </iframe>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2 text-sports">Table Tennis World Tour</h3>
-                        <p class="text-gray-600 mb-4">Experience fast-paced table tennis action with realistic physics and responsive controls. Compete in tournaments and improve your skills.</p>
-                        <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                        <h3 class="text-xl font-semibold mb-2">Table Tennis World Tour</h3>
+                        <p class="text-gray-600 mb-4">Compete in intense table tennis matches against players from around the world!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/table-tennis-world-tour')" class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</a>
                     </div>
                 </div>
 
@@ -149,6 +190,38 @@
                         <h3 class="text-xl font-semibold mb-2 text-sports">Moto X3M Pool Party</h3>
                         <p class="text-gray-600 mb-4">Race through challenging water-themed tracks performing stunts and tricks. Master the physics-based gameplay to achieve the best times.</p>
                         <span class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</span>
+                    </div>
+                </div>
+
+                <!-- Penalty Shooters -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/penalty-shooters" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Penalty Shooters">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Penalty Shooters</h3>
+                        <p class="text-gray-600 mb-4">Test your penalty shooting and goalkeeping skills in this exciting soccer game!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/penalty-shooters')" class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</a>
+                    </div>
+                </div>
+
+                <!-- Basketball Stars -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/basketball-stars" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Basketball Stars">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Basketball Stars</h3>
+                        <p class="text-gray-600 mb-4">Become a basketball legend in this fast-paced multiplayer basketball game!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/basketball-stars')" class="inline-block bg-sports text-white px-4 py-2 rounded-lg hover:bg-sports/90 transition">Play Now</a>
                     </div>
                 </div>
             </div>
