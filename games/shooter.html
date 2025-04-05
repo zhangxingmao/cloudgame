@@ -74,6 +74,125 @@
             document.body.appendChild(gameFrame);
             document.body.appendChild(closeButton);
         }
+        
+        function showExternalGameInfo(gameName, imageUrl, gameUrl, description) {
+            // 创建外部游戏信息弹窗
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+            overlay.style.zIndex = '9999';
+            overlay.style.display = 'flex';
+            overlay.style.alignItems = 'center';
+            overlay.style.justifyContent = 'center';
+            
+            // 创建内容容器
+            const container = document.createElement('div');
+            container.style.maxWidth = '800px';
+            container.style.width = '90%';
+            container.style.backgroundColor = 'white';
+            container.style.borderRadius = '12px';
+            container.style.padding = '30px';
+            container.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+            container.style.position = 'relative';
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.style.alignItems = 'center';
+            container.style.textAlign = 'center';
+            
+            // 关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '15px';
+            closeButton.style.right = '15px';
+            closeButton.style.background = '#f1f1f1';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '30px';
+            closeButton.style.height = '30px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.display = 'flex';
+            closeButton.style.alignItems = 'center';
+            closeButton.style.justifyContent = 'center';
+            closeButton.style.fontSize = '16px';
+            
+            // 游戏标题
+            const title = document.createElement('h2');
+            title.textContent = gameName;
+            title.style.fontSize = '26px';
+            title.style.fontWeight = 'bold';
+            title.style.marginBottom = '15px';
+            title.style.color = '#EF4444';
+            
+            // 游戏图片
+            const image = document.createElement('img');
+            image.src = imageUrl;
+            image.alt = gameName;
+            image.style.width = '100%';
+            image.style.maxHeight = '350px';
+            image.style.objectFit = 'contain';
+            image.style.marginBottom = '20px';
+            image.style.borderRadius = '8px';
+            
+            // 游戏描述
+            const desc = document.createElement('p');
+            desc.textContent = description;
+            desc.style.fontSize = '16px';
+            desc.style.lineHeight = '1.6';
+            desc.style.color = '#4B5563';
+            desc.style.marginBottom = '25px';
+            
+            // 消息提示
+            const message = document.createElement('p');
+            message.innerHTML = '此游戏需要在原始网站上玩。<br>点击下方按钮前往游戏页面';
+            message.style.fontSize = '14px';
+            message.style.color = '#6B7280';
+            message.style.marginBottom = '20px';
+            
+            // 前往游戏按钮
+            const playButton = document.createElement('a');
+            playButton.href = gameUrl;
+            playButton.target = '_blank';
+            playButton.textContent = '前往游戏页面';
+            playButton.style.display = 'inline-block';
+            playButton.style.backgroundColor = '#EF4444';
+            playButton.style.color = 'white';
+            playButton.style.padding = '12px 25px';
+            playButton.style.borderRadius = '8px';
+            playButton.style.textDecoration = 'none';
+            playButton.style.fontWeight = 'bold';
+            playButton.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+            
+            // 添加元素到容器
+            container.appendChild(closeButton);
+            container.appendChild(title);
+            container.appendChild(image);
+            container.appendChild(desc);
+            container.appendChild(message);
+            container.appendChild(playButton);
+            
+            // 添加容器到覆盖层
+            overlay.appendChild(container);
+            
+            // 关闭事件
+            closeButton.onclick = function() {
+                document.body.removeChild(overlay);
+            };
+            
+            // 点击覆盖层外部也关闭
+            overlay.onclick = function(e) {
+                if (e.target === overlay) {
+                    document.body.removeChild(overlay);
+                }
+            };
+            
+            // 添加到页面
+            document.body.appendChild(overlay);
+        }
     </script>
 </head>
 <body class="bg-gray-50">
@@ -138,98 +257,35 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-12">More Shooter Games</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Original Game -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <img src="https://via.placeholder.com/640x360?text=CloudGame" alt="Space Shooter" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Space Shooter</h3>
-                        <p class="text-gray-600 mb-4">Navigate through space and eliminate enemy ships in this classic arcade-style shooter.</p>
-                        <a href="/" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                    </div>
-                </div>
-                
-                <!-- Coming Soon Games -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <img src="https://via.placeholder.com/640x360?text=Coming+Soon" alt="Zombie Survival" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Zombie Survival</h3>
-                        <p class="text-gray-600 mb-4">Survive waves of zombies in this intense first-person shooter experience. Test your survival skills!</p>
-                        <span class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Coming Soon</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <img src="https://via.placeholder.com/640x360?text=Coming+Soon" alt="Sniper Elite" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Sniper Elite</h3>
-                        <p class="text-gray-600 mb-4">Take on the role of an elite sniper in this precision-based shooting game. Complete missions with stealth and accuracy.</p>
-                        <span class="inline-block bg-gray-200 text-gray-700 px-4 py-2 rounded-lg">Coming Soon</span>
-                    </div>
-                </div>
-
-                <!-- Tank Battle War -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/tank-battle-war" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Tank Battle War">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Tank Battle War</h3>
-                        <p class="text-gray-600 mb-4">Command your tank through intense battles. Upgrade your weapons and defeat enemy forces!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/tank-battle-war')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- Pixel Gun Apocalypse -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/pixel-gun-apocalypse" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Pixel Gun Apocalypse">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Pixel Gun Apocalypse</h3>
-                        <p class="text-gray-600 mb-4">Survive in a pixelated world filled with zombies. Collect weapons and fight for survival!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/pixel-gun-apocalypse')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- Space Shooter -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/space-shooter" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Space Shooter">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Space Shooter</h3>
-                        <p class="text-gray-600 mb-4">Pilot your spaceship through waves of alien enemies. Upgrade your weapons and save the galaxy!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/space-shooter')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                    </div>
-                </div>
-
                 <!-- Battle Royale Survival -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <img src="https://imgs.crazygames.com/battle-royale-survival.png?metadata=none&quality=85&width=273&fit=crop" alt="Battle Royale Survival" class="w-full h-full object-cover">
+                        <iframe src="https://www.crazygames.com/embed/tenkyu-ball" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Battle Royale Survival">
+                        </iframe>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Battle Royale Survival</h3>
                         <p class="text-gray-600 mb-4">Compete to be the last one standing in this intense battle royale shooter game.</p>
                         <a href="javascript:void(0)" onclick="playGame('https://www.crazygames.com/game/battle-royale-survival')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
+                    </div>
+                </div>
+                
+                <!-- Western Sniper -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://html5gameshq.com/iframed/western-sniper" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Western Sniper">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Western Sniper</h3>
+                        <p class="text-gray-600 mb-4">Test your marksmanship skills in this classic western-themed sniper game. Take aim and become the sharpest shooter in the Wild West!</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://html5gameshq.com/iframed/western-sniper')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
                     </div>
                 </div>
             </div>
