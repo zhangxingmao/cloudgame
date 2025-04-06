@@ -33,12 +33,6 @@ https://cloudgame.info/games/popular.html /games/popular.html 200!
 /games/new/ /games/new.html 200!
 /games/popular/ /games/popular.html 200!
 
-# Game detail pages with clean URLs
-/games/detail/giant-rush /games/detail/giant-rush.html 200!
-/games/detail/om-nom-run /games/detail/om-nom-run.html 200!
-/games/detail/bubble-tower-3d /games/detail/bubble-tower-3d.html 200!
-/games/detail/cannon-balls-3d /games/detail/cannon-balls-3d.html 200!
-
 # Special handling for direct access to URLs with www
 https://www.cloudgame.info/games/action.html https://cloudgame.info/games/action.html 301!
 https://www.cloudgame.info/games/sports.html https://cloudgame.info/games/sports.html 301!
