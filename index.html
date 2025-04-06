@@ -12,6 +12,12 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="images/game-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.svg" type="image/svg+xml">
     <title>CloudGame - Play Free Online Games Instantly in Your Browser | No Downloads</title>
     <meta name="description" content="CloudGame offers free online games you can play instantly in your browser. No downloads required. Play action, puzzle, sports, shooter, and anime games with cloud gaming technology. Start playing now!">
     <meta name="keywords" content="cloudgame, cloud gaming, online games, browser games, free games, instant play games, no download games">
@@ -664,8 +670,13 @@
                         this.classList.add(`bg-${currentCategory}/20`, 'border', `border-${currentCategory}/30`);
                     }
                     
+                    // Reset original game elements display property
+                    gameCards.forEach(card => {
+                        card.style.display = 'none';
+                    });
+                    
                     // Display initial set of games
-                    displayGamesByCategory(currentCategory, currentPage);
+                    displayGames(currentCategory, currentPage);
                     
                     // Show or hide the view more button
                     updateViewMoreButtonVisibility();
@@ -675,7 +686,7 @@
             // Add click event to view more button
             viewMoreButton.addEventListener('click', function() {
                 currentPage++;
-                displayMoreGames(currentCategory, currentPage);
+                displayGames(currentCategory, currentPage, true);
                 updateViewMoreButtonVisibility();
             });
             
@@ -696,6 +707,13 @@
             function initializeGames() {
                 // Clear the allGames array to avoid duplicates if function is called multiple times
                 allGames = [];
+                
+                // First hide all game cards
+                gameCards.forEach(card => {
+                    card.style.display = 'none';
+                    // Store original parent to restore if needed
+                    card.dataset.originalParent = card.parentNode ? 'true' : 'false';
+                });
                 
                 // Get initial games from the document
                 gameCards.forEach(card => {
@@ -719,94 +737,80 @@
                 });
                 
                 // After initializing all games, display initial set
-                displayGamesByCategory('all', currentPage);
+                displayGames('all', currentPage);
                 updateViewMoreButtonVisibility();
             }
             
-            // Display games by category and page
-            function displayGamesByCategory(category, page) {
-                // Clear current games
-                gamesContainer.innerHTML = '';
+            // Unified function to display games by category and page
+            function displayGames(category, page, isAppending = false) {
+                // Clear current games if not appending
+                if (!isAppending) {
+                    gamesContainer.innerHTML = '';
+                }
                 
                 // Filter games by category
                 const filteredGames = category === 'all' 
                     ? allGames 
                     : allGames.filter(game => game.category === category);
                 
-                // Display games for current page
-                const startIndex = 0;
+                // Get already displayed games
+                const displayedGames = Array.from(gamesContainer.children);
+                const displayedGameTitles = displayedGames.map(game => {
+                    const title = game.querySelector('h3')?.textContent || '';
+                    return title.trim();
+                });
+                
+                // Calculate start and end indices
+                const startIndex = isAppending ? (page - 1) * gamesPerPage : 0;
                 const endIndex = page * gamesPerPage;
                 
+                // Display games for current page
                 for (let i = startIndex; i < Math.min(endIndex, filteredGames.length); i++) {
                     const game = filteredGames[i];
                     
+                    // Get the title for comparison
+                    const gameTitle = game.element.querySelector('h3')?.textContent || '';
+                    
+                    // Only add the game if it's not already displayed
+                    if (isAppending && displayedGameTitles.includes(gameTitle.trim())) {
+                        continue;
+                    }
+                    
                     if (game.isAdditional) {
-                        // Clone the element to avoid issues with reusing
-                        const clone = game.element.cloneNode(true);
-                        gamesContainer.appendChild(clone);
+                        // Create a fresh clone to avoid any issues with reused elements
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = additionalGames.find(ag => 
+                            ag.category === game.category && 
+                            ag.html.includes(gameTitle)
+                        ).html.trim();
+                        const freshClone = tempDiv.firstChild;
+                        
+                        gamesContainer.appendChild(freshClone);
                         
                         // Add animation
                         setTimeout(() => {
-                            clone.classList.add('animate-fade-in');
+                            freshClone.classList.add('animate-fade-in');
                             setTimeout(() => {
-                                clone.classList.remove('animate-fade-in');
+                                freshClone.classList.remove('animate-fade-in');
                             }, 500);
                         }, 10);
                     } else {
-                        // Original element from the page
-                        gamesContainer.appendChild(game.element);
+                        // For original elements from the page
+                        const originalElement = game.element;
                         
-                        // Make it visible and add animation
-                        game.element.style.display = 'block';
-                        setTimeout(() => {
-                            game.element.classList.add('animate-fade-in');
+                        // Check if this element is already in the DOM
+                        if (!document.body.contains(originalElement)) {
+                            gamesContainer.appendChild(originalElement);
+                            
+                            // Make it visible with animation
+                            originalElement.style.display = 'block';
                             setTimeout(() => {
-                                game.element.classList.remove('animate-fade-in');
-                            }, 500);
-                        }, 10);
-                    }
-                }
-            }
-            
-            // Display more games
-            function displayMoreGames(category, page) {
-                // Filter games by category
-                const filteredGames = category === 'all' 
-                    ? allGames 
-                    : allGames.filter(game => game.category === category);
-                
-                // Calculate indices for pagination
-                const startIndex = (page - 1) * gamesPerPage;
-                const endIndex = page * gamesPerPage;
-                
-                // Display additional games
-                for (let i = startIndex; i < Math.min(endIndex, filteredGames.length); i++) {
-                    const game = filteredGames[i];
-                    
-                    if (game.isAdditional) {
-                        // Clone the element to avoid issues with reusing
-                        const clone = game.element.cloneNode(true);
-                        gamesContainer.appendChild(clone);
-                        
-                        // Add animation
-                        setTimeout(() => {
-                            clone.classList.add('animate-fade-in');
-                            setTimeout(() => {
-                                clone.classList.remove('animate-fade-in');
-                            }, 500);
-                        }, 10);
-                    } else if (!document.contains(game.element)) {
-                        // If original element is not in the document
-                        gamesContainer.appendChild(game.element);
-                        
-                        // Make it visible and add animation
-                        game.element.style.display = 'block';
-                        setTimeout(() => {
-                            game.element.classList.add('animate-fade-in');
-                            setTimeout(() => {
-                                game.element.classList.remove('animate-fade-in');
-                            }, 500);
-                        }, 10);
+                                originalElement.classList.add('animate-fade-in');
+                                setTimeout(() => {
+                                    originalElement.classList.remove('animate-fade-in');
+                                }, 500);
+                            }, 10);
+                        }
                     }
                 }
             }
@@ -817,7 +821,9 @@
                     ? allGames 
                     : allGames.filter(game => game.category === currentCategory);
                 
-                if (currentPage * gamesPerPage >= filteredGames.length) {
+                const displayedGames = gamesContainer.children.length;
+                
+                if (displayedGames >= filteredGames.length) {
                     viewMoreButton.style.display = 'none';
                 } else {
                     viewMoreButton.style.display = 'inline-block';
@@ -838,7 +844,7 @@
             document.head.appendChild(style);
             
             // Initialize with "all" category
-            displayGamesByCategory('all', currentPage);
+            displayGames('all', currentPage);
             updateViewMoreButtonVisibility();
         });
     </script>

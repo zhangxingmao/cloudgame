@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- 背景 -->
+  <rect width="180" height="180" rx="30" fill="#007AFF"/>
+  
+  <!-- 游戏相关的装饰背景元素 -->
+  <circle cx="45" cy="45" r="15" fill="#0052A2" opacity="0.7"/>
+  <circle cx="145" cy="40" r="20" fill="#0052A2" opacity="0.7"/>
+  <circle cx="35" cy="130" r="18" fill="#0052A2" opacity="0.7"/>
+  <circle cx="155" cy="140" r="25" fill="#0052A2" opacity="0.7"/>
+  
+  <!-- 游戏手柄形状 -->
+  <path d="M40,70 C40,50 60,50 70,50 L110,50 C120,50 140,50 140,70 L140,110 C140,130 120,130 110,130 L70,130 C60,130 40,130 40,110 Z" fill="#005BB5"/>
+  
+  <!-- 左侧方向键 -->
+  <rect x="55" y="80" width="10" height="20" rx="2" fill="#FFFFFF"/>
+  <rect x="45" y="90" width="20" height="10" rx="2" fill="#FFFFFF"/>
+  
+  <!-- 右侧按钮 -->
+  <circle cx="120" cy="80" r="8" fill="#FFFFFF"/>
+  <circle cx="120" cy="105" r="8" fill="#FFFFFF"/>
+  
+  <!-- 中央"C"字母 -->
+  <text x="90" y="105" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="white">C</text>
+  
+  <!-- 装饰元素：游戏像素风格小元素 -->
+  <rect x="20" y="20" width="7" height="7" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="153" y="27" width="7" height="7" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="30" y="153" width="7" height="7" fill="#FFFFFF" opacity="0.5"/>
+  <rect x="150" y="150" width="7" height="7" fill="#FFFFFF" opacity="0.5"/>
+</svg> 
