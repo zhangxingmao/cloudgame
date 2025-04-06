@@ -288,12 +288,44 @@
                         <a href="javascript:void(0)" onclick="playGame('https://html5gameshq.com/iframed/western-sniper')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
                     </div>
                 </div>
-            </div>
             
+            <!-- Aliens Attack -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <div class="aspect-video bg-gray-100 overflow-hidden">
+                    <iframe src="https://play.famobi.com/aliens-attack" 
+                            class="w-full h-full border-0"
+                            allow="fullscreen; autoplay; gamepad"
+                            title="Aliens Attack">
+                    </iframe>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Aliens Attack</h3>
+                    <p class="text-gray-600 mb-4">Aliens are invading the earth! Protect the planet, shoot as many intergalactic enemies as possible and beware of the mighty bosses. Can you unlock all heroes and save the world?</p>
+                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/aliens-attack')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Cannons and Soldiers -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <div class="aspect-video bg-gray-100 overflow-hidden">
+                    <iframe src="https://play.famobi.com/cannons-and-soldiers" 
+                            class="w-full h-full border-0"
+                            allow="fullscreen; autoplay; gamepad"
+                            title="Cannons and Soldiers">
+                    </iframe>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2">Cannons and Soldiers</h3>
+                    <p class="text-gray-600 mb-4">Shoot your enemies by determining the strength and angle of your cannon. The less shots you need, the better.</p>
+                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/cannons-and-soldiers')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
+                </div>
+            </div>
+        </div>
             <!-- View More Games Button -->
             <div class="text-center mt-12">
                 <button id="view-more-games-btn" class="inline-block bg-shooter text-white px-8 py-3 rounded-lg hover:bg-shooter/90 transition-colors duration-300 font-medium shadow-lg">View More Games</button>
             </div>
+
         </div>
     </section>
 
@@ -375,76 +407,16 @@
             // Additional shooter games
             const additionalGames = [
                 {
-                    html: `
-                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                            <div class="aspect-video bg-gray-100 overflow-hidden">
-                                <iframe src="https://play.famobi.com/shootem.io" 
-                                    class="w-full h-full border-0"
-                                    allow="fullscreen; autoplay; gamepad"
-                                    title="Shootem.io">
-                                </iframe>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2">Shootem.io</h3>
-                                <p class="text-gray-600 mb-4">Join this multiplayer shooter arena and compete against players worldwide in fast-paced battles.</p>
-                                <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/shootem.io')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                            </div>
-                        </div>
-                    `
+                    
                 },
                 {
-                    html: `
-                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                            <div class="aspect-video bg-gray-100 overflow-hidden">
-                                <iframe src="https://play.famobi.com/tank-wars" 
-                                    class="w-full h-full border-0"
-                                    allow="fullscreen; autoplay; gamepad"
-                                    title="Tank Wars">
-                                </iframe>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2">Tank Wars</h3>
-                                <p class="text-gray-600 mb-4">Command your tank through battlefields and destroy enemy forces in this action-packed strategy shooter.</p>
-                                <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/tank-wars')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                            </div>
-                        </div>
-                    `
+                    
                 },
                 {
-                    html: `
-                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                            <div class="aspect-video bg-gray-100 overflow-hidden">
-                                <iframe src="https://play.famobi.com/stickman-archer" 
-                                    class="w-full h-full border-0"
-                                    allow="fullscreen; autoplay; gamepad"
-                                    title="Stickman Archer">
-                                </iframe>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2">Stickman Archer</h3>
-                                <p class="text-gray-600 mb-4">Test your archery skills in this precise shooting game featuring stickman characters and challenging levels.</p>
-                                <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/stickman-archer')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                            </div>
-                        </div>
-                    `
+                   
                 },
                 {
-                    html: `
-                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                            <div class="aspect-video bg-gray-100 overflow-hidden">
-                                <iframe src="https://play.famobi.com/zombie-shooter" 
-                                    class="w-full h-full border-0"
-                                    allow="fullscreen; autoplay; gamepad"
-                                    title="Zombie Shooter">
-                                </iframe>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2">Zombie Shooter</h3>
-                                <p class="text-gray-600 mb-4">Survive the zombie apocalypse by eliminating hordes of undead in this intense survival shooter game.</p>
-                                <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/zombie-shooter')" class="inline-block bg-shooter text-white px-4 py-2 rounded-lg hover:bg-shooter/90 transition">Play Now</a>
-                            </div>
-                        </div>
-                    `
+                   
                 }
             ];
             

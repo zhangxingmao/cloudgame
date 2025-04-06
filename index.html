@@ -371,6 +371,16 @@
                     <h4 class="font-semibold mb-6">Contact</h4>
                     <p class="text-light/70">Email: <a href="mailto:yanzhang582@gmail.com" class="hover:text-light transition-colors duration-300">yanzhang582@gmail.com</a></p>
                 </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Game Categories</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/games/action.html" class="text-gray-400 hover:text-white">Action Games</a></li>
+                        <li><a href="/games/shooter.html" class="text-gray-400 hover:text-white">Shooter Games</a></li>
+                        <li><a href="/games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
+                        <li><a href="/games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
+                        <li><a href="/games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="border-t border-white/10 pt-8">
                 <p class="text-center text-light/70">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
@@ -397,28 +407,12 @@
                     html: `
                         <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
                             <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://img.gamepix.com/games/go-escape/cover/go-escape.webp" alt="Play Go Escape on CloudGame - Free Online Action Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
-                                        <h3 class="text-white font-bold mt-2">Go Escape - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Go Escape on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Go Escape instantly on CloudGame. Navigate through challenging mazes and find your way to freedom in this free online action game.</p>
-                                <a href="/games/action.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                {
-                    category: 'action',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://img.gamepix.com/games/rise-up/cover/rise-up.webp" alt="Play Rise Up on CloudGame - Free Online Action Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    <rect width="300" height="200" fill="#32D74B" opacity="0.2"/>
+                                    <circle cx="150" cy="80" r="40" fill="#FF5E3A"/>
+                                    <path d="M 110 120 L 140 160 L 160 160 L 190 120" stroke="#333" stroke-width="5" fill="none"/>
+                                    <text x="150" y="180" font-family="Arial" font-size="16" fill="#333" text-anchor="middle">Rise Up</text>
+                                </svg>
                                 <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                                     <div class="p-6">
                                         <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
@@ -440,7 +434,45 @@
                     html: `
                         <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="shooter">
                             <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://html5gameshq.com/wp-content/uploads/2022/02/Western-Sniper-HTML5-Game.jpg" alt="Play Western Sniper on CloudGame - Free Online Shooter Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    <!-- Desert background with sunset -->
+                                    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#FF7F50" />
+                                        <stop offset="100%" stop-color="#FFD700" />
+                                    </linearGradient>
+                                    <rect width="300" height="120" fill="url(#sky)" />
+                                    
+                                    <!-- Desert sand -->
+                                    <rect width="300" height="80" y="120" fill="#D2B48C" />
+                                    
+                                    <!-- Sun -->
+                                    <circle cx="250" cy="40" r="20" fill="#FF4500" />
+                                    
+                                    <!-- Cactus -->
+                                    <rect x="50" y="100" width="10" height="40" fill="#2F4F4F" />
+                                    <rect x="45" y="110" width="20" height="5" fill="#2F4F4F" />
+                                    
+                                    <!-- Mountains -->
+                                    <polygon points="0,120 50,70 100,120" fill="#8B4513" />
+                                    <polygon points="90,120 150,60 210,120" fill="#A0522D" />
+                                    
+                                    <!-- Sniper silhouette -->
+                                    <path d="M 130 140 C 135 130 145 130 150 140 L 150 170 L 130 170 Z" fill="#000" />
+                                    
+                                    <!-- Cowboy hat -->
+                                    <path d="M 125 140 L 155 140 L 162 135 L 118 135 Z" fill="#8B4513" />
+                                    <path d="M 130 135 L 150 135 L 145 125 L 135 125 Z" fill="#8B4513" />
+                                    
+                                    <!-- Rifle -->
+                                    <rect x="150" y="150" width="70" height="5" fill="#000" />
+                                    <rect x="155" y="155" width="10" height="10" fill="#8B4513" />
+                                    
+                                    <!-- Tumbleweeds -->
+                                    <circle cx="230" cy="170" r="10" fill="#CD853F" opacity="0.7" />
+                                    
+                                    <!-- Game title -->
+                                    <text x="150" y="190" font-family="Arial" font-size="16" font-weight="bold" fill="#000" text-anchor="middle">Western Sniper</text>
+                                </svg>
                                 <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                                     <div class="p-6">
                                         <span class="bg-shooter/80 text-white text-xs px-2.5 py-1 rounded-full">Shooter</span>
@@ -478,6 +510,28 @@
                         </div>
                     `
                 },
+                // Gold Rush puzzle game
+                {
+                    category: 'puzzle',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="puzzle">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://html5gameshq.com/data/html5-games-index-1/gold-rush/gold-rush.jpg" alt="Play Gold Rush on CloudGame - Free Online Puzzle Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
+                                        <h3 class="text-white font-bold mt-2">Gold Rush - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Gold Rush on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Gold Rush instantly on CloudGame. Tap on groups of 3 or more blocks of the same color to remove them and advance by clearing gold nuggets in this addictive Match3 puzzle game.</p>
+                                <a href="/games/puzzle.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
                 // Additional sports games
                 {
                     category: 'sports',
@@ -506,7 +560,56 @@
                     html: `
                         <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="anime">
                             <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://img.gamepix.com/games/kawaii-dressup/cover/kawaii-dressup.webp" alt="Play Kawaii Dressup on CloudGame - Free Online Anime Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    <!-- Pastel background -->
+                                    <linearGradient id="kawaii-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFD6E0" />
+                                        <stop offset="100%" stop-color="#FFEFEF" />
+                                    </linearGradient>
+                                    <rect width="300" height="200" fill="url(#kawaii-bg)" />
+                                    
+                                    <!-- Decorative elements -->
+                                    <circle cx="30" cy="30" r="15" fill="#FFC0CB" opacity="0.7" />
+                                    <circle cx="270" cy="40" r="20" fill="#FFB6C1" opacity="0.7" />
+                                    <circle cx="50" cy="170" r="18" fill="#FFC0CB" opacity="0.7" />
+                                    <circle cx="250" cy="160" r="15" fill="#FFB6C1" opacity="0.7" />
+                                    
+                                    <!-- Cute stars -->
+                                    <path d="M120,20 L123,29 L132,29 L125,35 L128,44 L120,38 L112,44 L115,35 L108,29 L117,29 Z" fill="#FFD700" />
+                                    <path d="M220,30 L222,36 L228,36 L223,40 L225,46 L220,42 L215,46 L217,40 L212,36 L218,36 Z" fill="#FFD700" />
+                                    <path d="M80,160 L82,166 L88,166 L83,170 L85,176 L80,172 L75,176 L77,170 L72,166 L78,166 Z" fill="#FFD700" />
+                                    
+                                    <!-- Anime character outline -->
+                                    <!-- Head -->
+                                    <circle cx="150" cy="75" r="35" fill="#FFF" stroke="#FF69B4" stroke-width="2" />
+                                    
+                                    <!-- Hair -->
+                                    <path d="M115,75 Q130,40 150,45 Q170,40 185,75 L185,90 Q168,100 150,95 Q132,100 115,90 Z" fill="#FF69B4" />
+                                    
+                                    <!-- Eyes -->
+                                    <ellipse cx="135" cy="75" rx="6" ry="9" fill="#FFF" />
+                                    <ellipse cx="165" cy="75" rx="6" ry="9" fill="#FFF" />
+                                    <circle cx="135" cy="75" r="3" fill="#000" />
+                                    <circle cx="165" cy="75" r="3" fill="#000" />
+                                    
+                                    <!-- Blush -->
+                                    <circle cx="125" cy="85" r="7" fill="#FFB6C1" opacity="0.7" />
+                                    <circle cx="175" cy="85" r="7" fill="#FFB6C1" opacity="0.7" />
+                                    
+                                    <!-- Smile -->
+                                    <path d="M140,90 Q150,100 160,90" fill="none" stroke="#000" stroke-width="2" />
+                                    
+                                    <!-- Dress outline -->
+                                    <path d="M130,110 L170,110 Q180,140 150,150 Q120,140 130,110" fill="#FFF" stroke="#FF69B4" stroke-width="2" />
+                                    
+                                    <!-- Clothing items -->
+                                    <rect x="190" y="115" width="20" height="30" rx="2" fill="#87CEFA" stroke="#1E90FF" />
+                                    <rect x="220" y="115" width="20" height="30" rx="2" fill="#FF69B4" stroke="#FF1493" />
+                                    <rect x="250" y="115" width="20" height="30" rx="2" fill="#98FB98" stroke="#3CB371" />
+                                    
+                                    <!-- Game title -->
+                                    <text x="150" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="#FF69B4" text-anchor="middle">Kawaii Dressup</text>
+                                </svg>
                                 <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                                     <div class="p-6">
                                         <span class="bg-anime/80 text-white text-xs px-2.5 py-1 rounded-full">Anime</span>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C49NH6D1H6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-C49NH6D1H6');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fighting Games - CloudGame</title>
+    <meta name="description" content="Explore our collection of fighting games at CloudGame. Test your skills with our action-packed browser-based fighting games.">
+    <link rel="canonical" href="https://cloudgame.info/games/fighting.html" />
+    <meta name="author" content="yanzhang582">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        secondary: '#5AC8FA',
+                        dark: '#000000',
+                        darker: '#1A1A1A',
+                        light: '#FFFFFF',
+                        accent: '#FF2D55',
+                        anime: '#BF5AF2',
+                        action: '#32D74B',
+                        puzzle: '#FF9F0A',
+                        sports: '#64D2FF',
+                        shooter: '#FF453A',
+                        racing: '#FF9500',
+                        fighting: '#FF2D55'
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        function playGame(gameUrl) {
+            // 创建一个新的全屏iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // 添加关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // 点击关闭按钮时移除iframe和按钮
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // 将iframe和关闭按钮添加到页面
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
+</head>
+<body class="bg-dark text-light">
+    <!-- Header -->
+    <header class="fixed w-full bg-darker/90 backdrop-blur-md border-b border-white/10 z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
+            
+            <!-- Primary Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="/#features" class="text-gray-400 hover:text-primary">Features</a>
+                <a href="/#how-it-works" class="text-gray-400 hover:text-primary">How It Works</a>
+                <a href="/#faq" class="text-gray-400 hover:text-primary">FAQ</a>
+                <a href="/games/new.html" class="text-gray-400 hover:text-primary">New Games</a>
+                <a href="/games/popular.html" class="text-gray-400 hover:text-primary">Popular</a>
+            </div>
+            
+            <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Category Header -->
+    <section class="pt-32 pb-12 bg-gradient-to-b from-darker to-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-fighting mb-4">Fighting Games</h1>
+                <p class="text-xl text-light/70 mb-8">Test your combat skills with our collection of action-packed fighting games</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Game -->
+    <section class="py-10 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4 text-light">Featured Game</h2>
+                <div class="aspect-video rounded-xl overflow-hidden shadow-xl">
+                    <iframe src="https://play.famobi.com/kumba-karate" 
+                            class="w-full h-full border-0"
+                            allow="fullscreen; autoplay; gamepad"
+                            title="Kumba Karate">
+                    </iframe>
+                </div>
+                <div class="mt-8 bg-darker p-6 rounded-lg border border-white/10">
+                    <h3 class="text-xl font-semibold mb-2 text-light">Kumba Karate</h3>
+                    <p class="text-light/70">Be a karate master with cute monkey Kumba, use all the right kicks, punches and moves to throw your opponent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Fighting Games -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-light">More Fighting Games</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- HTML5 Fighting Games -->
+            <div id="html5-fighting-games" class="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Kumba Karate -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/kumba-karate" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Kumba Karate">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-light">Kumba Karate</h3>
+                        <p class="text-light/70 mb-4">Be a karate master with cute monkey Kumba, use all the right kicks, punches and moves to throw your opponent.</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/kumba-karate')" class="inline-block bg-fighting text-white px-4 py-2 rounded-lg hover:bg-fighting/90 transition">Play Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker text-light py-16 border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-10 mb-10">
+                <div>
+                    <h3 class="text-xl font-bold mb-6">CloudGame - Free Online Games</h3>
+                    <p class="text-light/70 leading-relaxed">Experience the future of cloud gaming directly in your browser. Play instantly with CloudGame.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/#features" class="text-light/70 hover:text-light transition-colors duration-300">Features</a></li>
+                        <li><a href="/#how-it-works" class="text-light/70 hover:text-light transition-colors duration-300">How It Works</a></li>
+                        <li><a href="/#faq" class="text-light/70 hover:text-light transition-colors duration-300">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6">Game Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/games/action.html" class="text-light/70 hover:text-light transition-colors duration-300">Action Games</a></li>
+                        <li><a href="/games/shooter.html" class="text-light/70 hover:text-light transition-colors duration-300">Shooter Games</a></li>
+                        <li><a href="/games/puzzle.html" class="text-light/70 hover:text-light transition-colors duration-300">Puzzle Games</a></li>
+                        <li><a href="/games/sports.html" class="text-light/70 hover:text-light transition-colors duration-300">Sports Games</a></li>
+                        <li><a href="/games/racing.html" class="text-light/70 hover:text-light transition-colors duration-300">Racing Games</a></li>
+                        <li><a href="/games/fighting.html" class="text-light/70 hover:text-light transition-colors duration-300">Fighting Games</a></li>
+                        <li><a href="/games/anime.html" class="text-light/70 hover:text-light transition-colors duration-300">Anime Games</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-6">Contact</h4>
+                    <p class="text-light/70">Email: <a href="mailto:yanzhang582@gmail.com" class="hover:text-light transition-colors duration-300">yanzhang582@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8">
+                <p class="text-center text-light/70">&copy; 2024 CloudGame. All rights reserved. Created by yanzhang582</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Script to prevent auto-redirects -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear all existing timeouts
+            const highestTimeoutId = setTimeout(";");
+            for (let i = 0; i < highestTimeoutId; i++) {
+                clearTimeout(i);
+            }
+            
+            // Clear all existing intervals
+            const highestIntervalId = setInterval(";");
+            for (let i = 0; i < highestIntervalId; i++) {
+                clearInterval(i);
+            }
+            
+            // Override setTimeout and setInterval to prevent future redirects
+            const originalSetTimeout = window.setTimeout;
+            window.setTimeout = function(callback, timeout) {
+                // Only allow timeouts for animation or UI-related functions
+                if (timeout < 5000) {  // Allow short timeouts (less than 5 seconds)
+                    return originalSetTimeout(callback, timeout);
+                }
+                console.log('Blocked a long timeout that might cause redirect');
+                return 0;
+            };
+            
+            // Log to console
+            console.log('Auto-redirect prevention active');
+        });
+    </script>
+</body>
+</html> 
