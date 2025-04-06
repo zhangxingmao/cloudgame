@@ -281,6 +281,46 @@
             transform: translateY(-2px);
         }
     </style>
+    <script>
+        function playGame(gameUrl) {
+            // 创建一个新的全屏iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // 添加关闭按钮
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // 点击关闭按钮时移除iframe和按钮
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // 将iframe和关闭按钮添加到页面
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
 </head>
 <body class="bg-dark font-sans text-light">
     <!-- Header -->
@@ -780,10 +820,10 @@
                 viewMoreButton.style.display = 'inline-block';
                 
                 if (currentCategory !== 'all') {
-                    // 为特定分类，显示"View All [Category] Games"
-                    viewMoreButton.textContent = `View All ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Games`;
-                    // 设置data-url属性以便跳转
-                    viewMoreButton.setAttribute('data-url', gamePageUrls[currentCategory] || '#');
+                    // 为特定分类，显示"View More [Category] Games"
+                    viewMoreButton.textContent = `View More ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Games (${displayedCount}/${totalGames})`;
+                    // 不设置data-url属性，这样点击会加载更多而不是跳转
+                    viewMoreButton.removeAttribute('data-url');
                     // 添加特定分类的类
                     viewMoreButton.className = `inline-block bg-${currentCategory} text-white px-8 py-3 rounded-full hover:bg-${currentCategory}/90 transition-colors duration-300 font-medium shadow-lg shadow-${currentCategory}/20`;
                 } else {
@@ -812,7 +852,15 @@
             // 否则，执行默认的"加载更多"行为
             // 禁用按钮，显示加载状态
             this.disabled = true;
-            this.textContent = 'Loading...';
+            
+            const totalGames = currentCategory === 'all' 
+                ? allGames.length
+                : allGames.filter(game => game.category === currentCategory).length;
+            
+            const displayedGames = document.querySelectorAll('.game-card').length;
+            const remainingGames = totalGames - displayedGames;
+            
+            this.textContent = `Loading... (${remainingGames} remaining)`;
             this.classList.add('loading');
             
             // 短暂延迟以显示加载状态
@@ -856,24 +904,9 @@
             // 设置当前分类
             setActiveCategory('all');
             
-            // 立即加载静态游戏数据而不是等待
-            const shouldLoadImmediately = window.location.hostname === 'cloudgame.info' || 
-                !window.location.hostname.includes('localhost');
-                
-            if (shouldLoadImmediately) {
-                // 在生产环境中直接加载静态数据
-                loadStaticGameData();
-            } else {
-                // 在本地环境中尝试从页面中获取游戏
-                // 如果没有足够的游戏，也会加载静态数据
-                if (existingGameCards.length < 6) {
-                    loadStaticGameData();
-                } else {
-                    // 仅在没有足够游戏时获取分类页面中的游戏
-                    console.log('Enough games already on page, will fetch category games in background');
-                    setTimeout(() => fetchGamesFromPages(), 100);
-                }
-            }
+            // 立即开始获取所有分类页面的游戏
+            console.log('Starting to fetch games from all category pages');
+            fetchGamesFromPages();
             
             // Optimize category button clicks to prevent redundant operations
             categoryButtons.forEach(btn => {
@@ -894,14 +927,6 @@
                     // Display the games with minimal delay
                     requestAnimationFrame(() => {
                         displayGames(category, 1);
-                        
-                        // Update the View More button immediately
-                        if (category !== 'all' && gamePageUrls[category]) {
-                            viewMoreButton.textContent = `View All ${category.charAt(0).toUpperCase() + category.slice(1)} Games`;
-                            viewMoreButton.setAttribute('data-url', gamePageUrls[category]);
-                            viewMoreButton.className = `inline-block bg-${category} text-white px-8 py-3 rounded-full hover:bg-${category}/90 transition-colors duration-300 font-medium shadow-lg shadow-${category}/20`;
-                            viewMoreButton.style.display = 'inline-block';
-                        }
                     });
                 });
             });
@@ -1253,7 +1278,7 @@
 
             // Show loading state while ensuring users can still interact
             viewMoreButton.textContent = 'Loading games...';
-            viewMoreButton.disabled = false; // Changed from true to false to allow user interaction
+            viewMoreButton.disabled = false;
 
             try {
                 // Check if gamePageUrls is defined
@@ -1265,11 +1290,10 @@
                 
                 console.log('Game page URLs:', gamePageUrls);
                 
-                // Always load static game data first (immediately) to prevent long loading times
-                // This change ensures users always see content right away
+                // Load static game data first as placeholders until real data is fetched
                 loadStaticGameData();
                 
-                // Detect environment - modified to be more reliable
+                // Detect environment
                 const hostName = window.location.hostname;
                 const isProduction = hostName === 'cloudgame.info' || 
                                      hostName === 'www.cloudgame.info' ||
@@ -1277,25 +1301,15 @@
                 
                 console.log(`Environment detected: ${isProduction ? 'Production' : 'Local'}`);
                 
-                // Skip real data fetching in production to prevent CORS issues
-                // This addresses problems with cross-origin requests
-                if (isProduction) {
-                    console.log('Production environment detected. Using only static game data to avoid CORS issues.');
-                    // We've already loaded static data above, so just return
-                    return;
-                }
-                
-                // Below code only runs in local development environment
                 // Prepare all category page URLs with corrected paths
                 const urls = Object.entries(gamePageUrls).map(([category, url]) => {
                     // Fix URL format to prevent issues
-                    // URLs need the .html extension
                     let fixedUrl = url;
                     if (!url.includes('.html') && !url.endsWith('/')) {
                         fixedUrl = url + '.html';
                     }
                     
-                    // Make URL absolute for local testing
+                    // Make URL absolute for testing
                     let fullUrl = fixedUrl;
                     if (!fixedUrl.startsWith('http')) {
                         const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
@@ -1308,144 +1322,329 @@
                 
                 console.log(`Will fetch games from ${urls.length} category pages in background:`, urls.map(u => u.url));
                 
-                // Fetch real data in background with longer timeout to avoid blocking UI
+                // Prioritize fetching fighting category to address the specific issue mentioned
+                const prioritizedUrls = [...urls];
+                
+                // Move fighting category to the front if it exists
+                const fightingIndex = prioritizedUrls.findIndex(item => item.category === 'fighting');
+                if (fightingIndex !== -1) {
+                    const fightingItem = prioritizedUrls.splice(fightingIndex, 1)[0];
+                    prioritizedUrls.unshift(fightingItem);
+                    console.log("Prioritized fighting category to ensure consistent display");
+                }
+                
+                // Fetch real data
                 setTimeout(() => {
                     console.log("Starting background fetch of real game data...");
-                    fetchRealGameData(urls);
-                }, 500); // Increased timeout to reduce initial load pressure
+                    fetchRealGameData(prioritizedUrls);
+                }, 300);
             } catch (error) {
                 console.error('Error in fetch setup:', error);
-                // Static data is already loaded, so we don't need to do anything more
             } finally {
-                // Always restore button state
                 viewMoreButton.textContent = 'View More Games';
                 viewMoreButton.disabled = false;
             }
         }
-        
-        // Function to fetch real game data in the background after static data is shown
+
+        // Enhanced function to fetch real game data from category pages
         async function fetchRealGameData(urls) {
             try {
-                // Skip URL checks to improve performance - all URL preparation is done in fetchGamesFromPages
-                console.log("Starting real data fetch without redundant URL checks");
+                console.log("Starting real data fetch for all category pages");
 
+                // Clear the new games array at the start
+                let categoryGames = {};
                 let newGames = [];
-                const maxConcurrentRequests = 2; // Limit concurrent requests to avoid overwhelming the browser
-
-                // Process URLs in smaller batches to reduce load
-                for (let i = 0; i < urls.length; i += maxConcurrentRequests) {
-                    const batchUrls = urls.slice(i, i + maxConcurrentRequests);
-                    console.log(`Processing batch ${i/maxConcurrentRequests + 1} of URLs: ${batchUrls.map(u => u.category)}`);
+                
+                // Process each category one at a time to ensure completeness
+                for (const { category, url } of urls) {
+                    console.log(`Fetching games from ${category} category: ${url}`);
                     
-                    // Fetch batch of category pages with timeout to prevent hanging
-                    const batchResults = await Promise.all(batchUrls.map(async ({ category, url }) => {
-                        console.log(`Fetching games from ${category} category: ${url}`);
-                        try {
-                            // Add timeout to prevent long-running requests
-                            const controller = new AbortController();
-                            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-                            
-                            const response = await fetch(url, { 
-                                signal: controller.signal,
-                                // Include credentials for same-origin requests
-                                credentials: 'same-origin',
-                                // Add headers to help with caching
-                                headers: {
-                                    'Cache-Control': 'no-cache',
-                                    'Pragma': 'no-cache'
-                                }
-                            });
-                            
-                            clearTimeout(timeoutId);
-                            
-                            if (!response.ok) {
-                                throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
-                            }
-                            const html = await response.text();
-                            return { category, html, url };
-                        } catch (error) {
-                            console.error(`Error fetching ${category} games from ${url}:`, error);
-                            return { category, html: null, error, url };
-                        }
-                    }));
-
-                    // Process results from batch
-                    for (const result of batchResults) {
-                        const { category, html, error, url } = result;
+                    try {
+                        // Add timeout to prevent long-running requests
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout - increased for reliability
                         
-                        if (error || !html) {
-                            console.error(`Skipping ${category} category due to fetch error`);
+                        const response = await fetch(url, { 
+                            signal: controller.signal,
+                            credentials: 'same-origin',
+                            headers: {
+                                'Cache-Control': 'no-cache',
+                                'Pragma': 'no-cache'
+                            }
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+                        }
+                        
+                        const html = await response.text();
+                        
+                        // Parse HTML
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        // Try different selectors to find game cards in the category pages
+                        const gameCardSelectors = [
+                            '.game-card',
+                            '.bg-white.rounded-xl.overflow-hidden',  // Matches format in action.html
+                            '.bg-white.rounded-xl',
+                            '.bg-darker.rounded-xl',
+                            '.rounded-xl.overflow-hidden',
+                            '.card',
+                            '[class*="game"][class*="card"]'
+                        ];
+                        
+                        let allGameCards = [];
+                        
+                        // Try each selector until we find some game cards
+                        for (const selector of gameCardSelectors) {
+                            const elements = doc.querySelectorAll(selector);
+                            if (elements.length > 0) {
+                                console.log(`Found ${elements.length} game elements with selector "${selector}" in ${category}`);
+                                allGameCards = Array.from(elements);
+                                break;
+                            }
+                        }
+                        
+                        // If no game cards found with standard selectors, try to find Featured Game section
+                        if (allGameCards.length === 0) {
+                            // Check for featured game sections
+                            const featuredGameSection = doc.querySelector('section.py-10.bg-white, section.featured-game, section:has(.aspect-video)');
+                            if (featuredGameSection) {
+                                const featuredGameCard = featuredGameSection.querySelector('.rounded-xl.overflow-hidden, .aspect-video, .game-card');
+                                if (featuredGameCard) {
+                                    console.log(`Found featured game in ${category}`);
+                                    allGameCards.push(featuredGameCard);
+                                }
+                            }
+                        }
+                        
+                        // Skip if no game cards found
+                        if (allGameCards.length === 0) {
+                            console.warn(`No game elements found in ${category} category page.`);
                             continue;
                         }
-
-                        console.log(`Processing games from ${category} category`);
                         
-                        try {
-                            // Parse HTML
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            
-                            // Get all game cards using a simpler, more focused selector strategy
-                            const gameCardSelectors = [
-                                '.game-card',
-                                '.game-item',
-                                '[class*="game"][class*="card"]',
-                                '.card'
-                            ];
-                            
-                            let allGameCards = [];
-                            
-                            // Try each selector until we find some game cards
-                            for (const selector of gameCardSelectors) {
-                                const elements = doc.querySelectorAll(selector);
-                                if (elements.length > 0) {
-                                    console.log(`Found ${elements.length} game elements with selector "${selector}" in ${category}`);
-                                    allGameCards = Array.from(elements);
-                                    break;
+                        // Store all games for this category
+                        categoryGames[category] = [];
+                        
+                        // Add the entire game grid container
+                        console.log(`Processing ${allGameCards.length} games from ${category} category`);
+                        
+                        // Process the found game cards and convert them to the format needed for index.html
+                        for (const gameCard of allGameCards) {
+                            try {
+                                // Extract game details
+                                let gameTitle = '';
+                                let gameDescription = '';
+                                let gameImage = '';
+                                let gameUrl = '';
+                                let gameIframeUrl = '';
+                                let gameHtml = '';
+                                
+                                // Check if this is a complete game card we can preserve as-is
+                                const isFullGameCard = gameCard.classList.contains('bg-white') || 
+                                                      gameCard.classList.contains('bg-darker') ||
+                                                      gameCard.classList.contains('rounded-xl');
+                                
+                                if (isFullGameCard) {
+                                    // Clone the card to preserve its original structure
+                                    const clonedCard = gameCard.cloneNode(true);
+                                    
+                                    // Update styling while keeping the structure
+                                    if (clonedCard.classList.contains('bg-white')) {
+                                        clonedCard.classList.remove('bg-white');
+                                        clonedCard.classList.add('bg-darker');
+                                    }
+                                    
+                                    if (!clonedCard.classList.contains('game-card')) {
+                                        clonedCard.classList.add('game-card');
+                                    }
+                                    
+                                    // Add standardized classes for shadows, borders, etc.
+                                    clonedCard.classList.add('shadow-lg', 'shadow-black/50', 'hover:shadow-xl', 'hover:shadow-black/50', 
+                                                                 'transition-shadow', 'duration-300', 'border', 'border-white/10');
+                                    
+                                    // Add data-category attribute
+                                    clonedCard.setAttribute('data-category', category);
+                                    
+                                    // Get the game title for tracking
+                                    const titleElement = clonedCard.querySelector('h3');
+                                    if (titleElement) {
+                                        gameTitle = titleElement.textContent.trim();
+                                    }
+                                    
+                                    // Fix any buttons/links to use the category color
+                                    const buttons = clonedCard.querySelectorAll('a, button');
+                                    buttons.forEach(button => {
+                                        if (button.classList.contains('bg-action') || 
+                                            button.classList.contains('bg-primary') ||
+                                            button.classList.contains('bg-secondary')) {
+                                            
+                                            // Remove old color classes
+                                            button.classList.remove('bg-action', 'bg-primary', 'bg-secondary');
+                                            button.classList.remove('hover:bg-action/90', 'hover:bg-primary/90', 'hover:bg-secondary/90');
+                                            
+                                            // Add appropriate category color
+                                            button.classList.add(`bg-${category}`);
+                                            button.classList.add(`hover:bg-${category}/90`);
+                                        }
+                                        
+                                        // Update "Play Now" links to include onclick handler for playGame function
+                                        if (button.textContent.trim() === 'Play Now') {
+                                            const iframeElement = clonedCard.querySelector('iframe');
+                                            if (iframeElement && iframeElement.src) {
+                                                gameIframeUrl = iframeElement.src;
+                                                
+                                                // Update the button to use the playGame function
+                                                button.setAttribute('href', 'javascript:void(0)');
+                                                button.setAttribute('onclick', `playGame('${gameIframeUrl}')`);
+                                            }
+                                        }
+                                    });
+                                    
+                                    // Fix text colors for dark background
+                                    const paragraphs = clonedCard.querySelectorAll('p');
+                                    paragraphs.forEach(p => {
+                                        if (p.classList.contains('text-gray-600')) {
+                                            p.classList.remove('text-gray-600');
+                                            p.classList.add('text-light/70');
+                                        }
+                                    });
+                                    
+                                    const h3Elements = clonedCard.querySelectorAll('h3');
+                                    h3Elements.forEach(h3 => {
+                                        if (!h3.classList.contains('text-light')) {
+                                            h3.classList.add('text-light');
+                                        }
+                                    });
+                                    
+                                    // Use the cloned card's HTML as our game card
+                                    gameHtml = clonedCard.outerHTML;
+                                } else {
+                                    // Extract data from individual elements if not a full card
+                                    
+                                    // Try to extract title
+                                    const titleElement = gameCard.querySelector('h3');
+                                    if (titleElement) {
+                                        gameTitle = titleElement.textContent.trim();
+                                    }
+                                    
+                                    // Try to extract description
+                                    const descElement = gameCard.querySelector('p.text-gray-600, p');
+                                    if (descElement) {
+                                        gameDescription = descElement.textContent.trim();
+                                    }
+                                    
+                                    // Try to extract image
+                                    const imgElement = gameCard.querySelector('img');
+                                    if (imgElement && imgElement.src) {
+                                        gameImage = imgElement.src;
+                                    } else {
+                                        // Try to extract from iframe if no image found
+                                        const iframeElement = gameCard.querySelector('iframe');
+                                        if (iframeElement && iframeElement.src) {
+                                            gameIframeUrl = iframeElement.src;
+                                            // Generate a placeholder image if using an iframe
+                                            gameImage = `https://img.gamepix.com/games/${category}-game/cover/${category}-game.webp`;
+                                        }
+                                    }
+                                    
+                                    // Try to extract URL from any link
+                                    if (!gameUrl) {
+                                        const linkElement = gameCard.querySelector('a[href], a[onclick]');
+                                        if (linkElement) {
+                                            if (linkElement.href && !linkElement.href.includes('javascript:void')) {
+                                                gameUrl = linkElement.href;
+                                            } else if (linkElement.getAttribute('onclick')) {
+                                                // Extract URL from onclick handler
+                                                const onclickAttr = linkElement.getAttribute('onclick');
+                                                const urlMatch = onclickAttr.match(/['"]([^'"]*)['"]/);
+                                                if (urlMatch && urlMatch[1]) {
+                                                    gameIframeUrl = urlMatch[1];
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Create game card that mimics the category page style
+                                    // This format is based on the action.html game cards
+                                    gameHtml = `
+                                        <div class="bg-darker rounded-xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="${category}">
+                                            <div class="aspect-video bg-gray-100 overflow-hidden">
+                                                ${gameIframeUrl ? 
+                                                    `<iframe src="${gameIframeUrl}" 
+                                                            class="w-full h-full border-0"
+                                                            allow="fullscreen; autoplay; gamepad"
+                                                            title="${gameTitle || category + ' game'}">
+                                                    </iframe>` : 
+                                                    `<img src="${gameImage || `https://img.gamepix.com/games/${category}-game/cover/${category}-game.webp`}" 
+                                                         alt="Play ${gameTitle || category + ' game'} on CloudGame" 
+                                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">`
+                                                }
+                                            </div>
+                                            <div class="p-6">
+                                                <h3 class="text-xl font-semibold mb-2 text-light">${gameTitle || `${category.charAt(0).toUpperCase() + category.slice(1)} Game`}</h3>
+                                                <p class="text-light/70 mb-4">${gameDescription || `Enjoy this exciting ${category} game on CloudGame.`}</p>
+                                                <a href="javascript:void(0)" onclick="playGame('${gameIframeUrl || `https://play.famobi.com/${category}-game`}')" class="inline-block bg-${category} text-white px-4 py-2 rounded-lg hover:bg-${category}/90 transition">Play Now</a>
+                                            </div>
+                                        </div>
+                                    `;
                                 }
+                                
+                                // Create the game object
+                                const gameObject = {
+                                    category: category,
+                                    title: gameTitle,
+                                    html: gameHtml
+                                };
+                                
+                                // Add to category-specific array
+                                categoryGames[category].push(gameObject);
+                                
+                            } catch (e) {
+                                console.error('Error processing game card:', e);
                             }
-                            
-                            // Skip if no game cards found
-                            if (allGameCards.length === 0) {
-                                console.warn(`No game elements found in ${category} category page.`);
-                                continue;
-                            }
-                            
-                            // Process the found game cards
-                            for (const gameCard of allGameCards) {
-                                // Use a more lightweight approach for creating game objects
-                                try {
-                                    const gameObject = {
-                                        category: category,
-                                        html: gameCard.outerHTML
-                                    };
-                                    newGames.push(gameObject);
-                                } catch (e) {
-                                    console.error('Error processing game card:', e);
-                                }
-                            }
-                        } catch (e) {
-                            console.error(`Error processing HTML for ${category}:`, e);
                         }
+                        
+                        console.log(`Successfully processed ${categoryGames[category].length} games from ${category} category`);
+                        
+                    } catch (error) {
+                        console.error(`Error fetching ${category} category:`, error);
                     }
                     
-                    // Short delay between batches to prevent browser from becoming unresponsive
+                    // Short delay between categories to prevent browser from becoming unresponsive
                     await new Promise(resolve => setTimeout(resolve, 100));
                 }
-
-                console.log(`Fetched ${newGames.length} new games from category pages`);
                 
-                // Merge new games with existing ones and deduplicate
-                if (newGames.length > 0) {
-                    allGames = [...allGames, ...newGames];
-                    console.log(`Total games after merge: ${allGames.length}`);
-                    
-                    // Reinitialize but don't redisplay - this will deduplicate in the background
-                    initializeGames();
+                // After all categories are processed, combine them into the newGames array
+                // This ensures complete categories are added together
+                
+                // First, add all games from each category
+                for (const category in categoryGames) {
+                    if (categoryGames[category] && categoryGames[category].length > 0) {
+                        console.log(`Adding ${categoryGames[category].length} ${category} games to new games array`);
+                        newGames = [...newGames, ...categoryGames[category]];
+                    }
                 }
                 
+                console.log(`Fetched ${newGames.length} total games from all category pages`);
+                
+                // Replace existing games with the new ones from category pages
+                if (newGames.length > 0) {
+                    allGames = [...newGames];
+                    console.log(`Total games after merge: ${allGames.length}`);
+                    
+                    // Reinitialize and refresh the display to show the real games
+                    initializeGames();
+                    
+                    // Update displayed games
+                    displayGames(currentCategory, 1);
+                }
             } catch (error) {
-                console.error('Error fetching game data:', error);
+                console.error('Error fetching real game data:', error);
             }
         }
 
@@ -1458,12 +1657,13 @@
                 finalGamesContainer.innerHTML = '';
             }
             
-            // 根据分类筛选游戏 - 使用更高效的方法
+            // 根据分类筛选游戏
             let filteredGames;
             if (category === 'all') {
+                // For "all" category, include games from all categories
                 filteredGames = allGames;
             } else {
-                // 一次遍历，直接使用数据属性进行过滤
+                // For specific categories, only show games from that category
                 filteredGames = allGames.filter(game => game.category === category);
             }
             
@@ -1492,13 +1692,16 @@
             // 创建一个DocumentFragment以减少DOM操作
             const fragment = document.createDocumentFragment();
             
-            // 计算分页 - 先快速应用分页，然后在处理时再去重
+            // 计算分页 - 初始显示9个游戏，然后每次加载更多时显示6个
+            const gamesPerInitialPage = 9; // Initially show 9 games as specified in requirements
             const totalGames = filteredGames.length;
-            const startIndex = (page - 1) * gamesPerPage;
-            const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
+            const startIndex = (page === 1) ? 0 : (gamesPerInitialPage + (page - 2) * gamesPerPage);
+            const endIndex = (page === 1) 
+                ? Math.min(gamesPerInitialPage, totalGames) 
+                : Math.min(startIndex + gamesPerPage, totalGames);
             const gamesToShow = filteredGames.slice(startIndex, endIndex);
             
-            console.log(`Showing games from index ${startIndex} to ${endIndex}`);
+            console.log(`Showing games from index ${startIndex} to ${endIndex} (${gamesToShow.length} games)`);
             
             if (gamesToShow.length === 0) {
                 if (!isAppending) {
@@ -1592,15 +1795,44 @@
                 ? finalGamesContainer.querySelectorAll('.game-card').length 
                 : uniqueCount;
             
-            // 更新"查看更多"按钮的可见性
+            // 更新"查看更多"按钮的可见性和行为
             updateViewMoreButtonVisibility(filteredGames.length, totalDisplayed);
             
             // 如果当前页小于总页数，确保"查看更多"按钮可见
-            const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
-            if (page < totalPages) {
+            if (totalDisplayed < totalGames) {
                 viewMoreButton.style.display = 'inline-block';
+                
+                // 更新按钮文本和样式
+                if (currentCategory !== 'all' && gamePageUrls[currentCategory]) {
+                    // 特定分类页面按钮
+                    viewMoreButton.textContent = `View More ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Games`;
+                    viewMoreButton.className = `inline-block bg-${currentCategory} text-white px-8 py-3 rounded-full hover:bg-${currentCategory}/90 transition-colors duration-300 font-medium shadow-lg shadow-${currentCategory}/20`;
+                    // 不设置data-url，这样点击后会继续加载更多游戏而不是跳转
+                    viewMoreButton.removeAttribute('data-url');
+                } else {
+                    // 所有游戏按钮
+                    const remainingGames = totalGames - totalDisplayed;
+                    viewMoreButton.textContent = `View More Games (${totalDisplayed}/${totalGames})`;
+                    viewMoreButton.className = 'inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium shadow-lg shadow-primary/20';
+                    viewMoreButton.removeAttribute('data-url');
+                }
             } else {
                 viewMoreButton.style.display = 'none';
+                
+                // 添加"所有游戏已显示"信息
+                const allShownMessage = document.createElement('p');
+                allShownMessage.className = 'text-light/50 text-center mt-4 all-shown-message';
+                allShownMessage.textContent = `All ${totalGames} ${currentCategory === 'all' ? '' : currentCategory} games have been shown`;
+                
+                // 移除之前可能存在的"所有游戏已显示"消息
+                const existingMessages = document.querySelectorAll('.all-shown-message');
+                existingMessages.forEach(msg => msg.remove());
+                
+                // 将消息添加到viewMoreButton的父元素
+                const viewMoreContainer = document.querySelector('.text-center.mt-12');
+                if (viewMoreContainer) {
+                    viewMoreContainer.appendChild(allShownMessage);
+                }
             }
         }
     </script>
