@@ -18,7 +18,6 @@
     <link rel="icon" href="images/game-icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.svg" type="image/svg+xml">
-    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007AFF">
     <title>CloudGame - Play Free Online Games Instantly in Your Browser | No Downloads</title>
     <meta name="description" content="CloudGame offers free online games you can play instantly in your browser. No downloads required. Play action, puzzle, sports, shooter, and anime games with cloud gaming technology. Start playing now!">
@@ -34,22 +33,6 @@
     <meta name="twitter:description" content="Play free online games instantly in your browser with CloudGame. No downloads required.">
     <meta name="robots" content="index, follow">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Service worker registration for PWA functionality
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered with scope:', registration.scope);
-                        // Check for updates
-                        registration.update();
-                    })
-                    .catch(error => {
-                        console.error('Service Worker registration failed:', error);
-                    });
-            });
-        }
-    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -1294,10 +1277,10 @@
                 
                 console.log(`Environment detected: ${isProduction ? 'Production' : 'Local'}`);
                 
-                // Skip real data fetching in production to prevent CORS and redirect issues
-                // This addresses problems caused by .htaccess and _redirects
+                // Skip real data fetching in production to prevent CORS issues
+                // This addresses problems with cross-origin requests
                 if (isProduction) {
-                    console.log('Production environment detected. Using only static game data to avoid redirect and CORS issues.');
+                    console.log('Production environment detected. Using only static game data to avoid CORS issues.');
                     // We've already loaded static data above, so just return
                     return;
                 }
@@ -1305,8 +1288,8 @@
                 // Below code only runs in local development environment
                 // Prepare all category page URLs with corrected paths
                 const urls = Object.entries(gamePageUrls).map(([category, url]) => {
-                    // Fix URL format to prevent redirect issues
-                    // URLs without .html extension will be redirected by .htaccess rules
+                    // Fix URL format to prevent issues
+                    // URLs need the .html extension
                     let fixedUrl = url;
                     if (!url.includes('.html') && !url.endsWith('/')) {
                         fixedUrl = url + '.html';
@@ -1364,9 +1347,9 @@
                             
                             const response = await fetch(url, { 
                                 signal: controller.signal,
-                                // Include credentials to handle cookies that might be needed for redirects
+                                // Include credentials for same-origin requests
                                 credentials: 'same-origin',
-                                // Add headers to help with caching and redirects
+                                // Add headers to help with caching
                                 headers: {
                                     'Cache-Control': 'no-cache',
                                     'Pragma': 'no-cache'
