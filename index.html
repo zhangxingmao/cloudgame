@@ -1268,9 +1268,9 @@
                 return;
             }
 
-            // Show loading state
+            // Show loading state while ensuring users can still interact
             viewMoreButton.textContent = 'Loading games...';
-            viewMoreButton.disabled = true;
+            viewMoreButton.disabled = false; // Changed from true to false to allow user interaction
 
             try {
                 // Check if gamePageUrls is defined
@@ -1282,55 +1282,57 @@
                 
                 console.log('Game page URLs:', gamePageUrls);
                 
-                // Production environment detection
-                const isProduction = window.location.hostname === 'cloudgame.info' || 
-                                    !window.location.hostname.includes('localhost');
+                // Always load static game data first (immediately) to prevent long loading times
+                // This change ensures users always see content right away
+                loadStaticGameData();
+                
+                // Detect environment - modified to be more reliable
+                const hostName = window.location.hostname;
+                const isProduction = hostName === 'cloudgame.info' || 
+                                     hostName === 'www.cloudgame.info' ||
+                                     !hostName.includes('localhost');
                 
                 console.log(`Environment detected: ${isProduction ? 'Production' : 'Local'}`);
                 
+                // Skip real data fetching in production to prevent CORS and redirect issues
+                // This addresses problems caused by .htaccess and _redirects
                 if (isProduction) {
-                    console.log('Production environment detected. Using static game data to avoid CORS issues.');
-                    loadStaticGameData();
+                    console.log('Production environment detected. Using only static game data to avoid redirect and CORS issues.');
+                    // We've already loaded static data above, so just return
                     return;
                 }
                 
-                // In local environment, immediately load static data first to avoid waiting
-                // This gives users something to look at while the real data loads
-                loadStaticGameData();
-                
-                // Prepare all category page URLs
+                // Below code only runs in local development environment
+                // Prepare all category page URLs with corrected paths
                 const urls = Object.entries(gamePageUrls).map(([category, url]) => {
-                    // Make sure URL is absolute, handle relative paths
-                    let fullUrl = url;
-                    if (!url.startsWith('http')) {
-                        // Handle paths starting with /
-                        if (url.startsWith('/')) {
-                            fullUrl = window.location.origin + url;
-                        } else {
-                            // Handle relative paths
-                            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
-                            fullUrl = baseUrl + url;
-                        }
+                    // Fix URL format to prevent redirect issues
+                    // URLs without .html extension will be redirected by .htaccess rules
+                    let fixedUrl = url;
+                    if (!url.includes('.html') && !url.endsWith('/')) {
+                        fixedUrl = url + '.html';
                     }
+                    
+                    // Make URL absolute for local testing
+                    let fullUrl = fixedUrl;
+                    if (!fixedUrl.startsWith('http')) {
+                        const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+                        fullUrl = baseUrl + fixedUrl;
+                    }
+                    
                     console.log(`Mapped ${category} to URL: ${fullUrl}`);
                     return { category, url: fullUrl };
                 });
                 
-                console.log(`Will fetch games from ${urls.length} category pages:`, urls.map(u => u.url));
+                console.log(`Will fetch games from ${urls.length} category pages in background:`, urls.map(u => u.url));
                 
-                // Since we already loaded static data, we can proceed with the real fetch in the background
-                // No need to block the user interface
+                // Fetch real data in background with longer timeout to avoid blocking UI
                 setTimeout(() => {
                     console.log("Starting background fetch of real game data...");
                     fetchRealGameData(urls);
-                }, 100);
-                
+                }, 500); // Increased timeout to reduce initial load pressure
             } catch (error) {
                 console.error('Error in fetch setup:', error);
-                // Ensure static data is loaded even if there's an error
-                if (!gamesInitialized) {
-                    loadStaticGameData();
-                }
+                // Static data is already loaded, so we don't need to do anything more
             } finally {
                 // Always restore button state
                 viewMoreButton.textContent = 'View More Games';
@@ -1341,289 +1343,126 @@
         // Function to fetch real game data in the background after static data is shown
         async function fetchRealGameData(urls) {
             try {
-                // Check if pages can be accessed correctly
-                for (const { category, url } of urls) {
-                    try {
-                        const checkResponse = await fetch(url, { method: 'HEAD' });
-                        console.log(`URL check for ${category}: ${url} - Status: ${checkResponse.status} ${checkResponse.ok ? 'OK' : 'Failed'}`);
-                    } catch (e) {
-                        console.error(`Failed to check URL for ${category}: ${url}`, e);
-                    }
-                }
+                // Skip URL checks to improve performance - all URL preparation is done in fetchGamesFromPages
+                console.log("Starting real data fetch without redundant URL checks");
 
                 let newGames = [];
+                const maxConcurrentRequests = 2; // Limit concurrent requests to avoid overwhelming the browser
 
-                // Fetch all category pages in parallel
-                const results = await Promise.all(urls.map(async ({ category, url }) => {
-                    console.log(`Fetching games from ${category} category: ${url}`);
-                    try {
-                        const response = await fetch(url);
-                        if (!response.ok) {
-                            throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+                // Process URLs in smaller batches to reduce load
+                for (let i = 0; i < urls.length; i += maxConcurrentRequests) {
+                    const batchUrls = urls.slice(i, i + maxConcurrentRequests);
+                    console.log(`Processing batch ${i/maxConcurrentRequests + 1} of URLs: ${batchUrls.map(u => u.category)}`);
+                    
+                    // Fetch batch of category pages with timeout to prevent hanging
+                    const batchResults = await Promise.all(batchUrls.map(async ({ category, url }) => {
+                        console.log(`Fetching games from ${category} category: ${url}`);
+                        try {
+                            // Add timeout to prevent long-running requests
+                            const controller = new AbortController();
+                            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                            
+                            const response = await fetch(url, { 
+                                signal: controller.signal,
+                                // Include credentials to handle cookies that might be needed for redirects
+                                credentials: 'same-origin',
+                                // Add headers to help with caching and redirects
+                                headers: {
+                                    'Cache-Control': 'no-cache',
+                                    'Pragma': 'no-cache'
+                                }
+                            });
+                            
+                            clearTimeout(timeoutId);
+                            
+                            if (!response.ok) {
+                                throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+                            }
+                            const html = await response.text();
+                            return { category, html, url };
+                        } catch (error) {
+                            console.error(`Error fetching ${category} games from ${url}:`, error);
+                            return { category, html: null, error, url };
                         }
-                        const html = await response.text();
-                        return { category, html, url };
-                    } catch (error) {
-                        console.error(`Error fetching ${category} games from ${url}:`, error);
-                        return { category, html: null, error, url };
-                    }
-                }));
+                    }));
 
-                // Process results from each category page
-                results.forEach(({ category, html, error, url }) => {
-                    if (error || !html) {
-                        console.error(`Skipping ${category} category due to fetch error`);
-                        return;
-                    }
+                    // Process results from batch
+                    for (const result of batchResults) {
+                        const { category, html, error, url } = result;
+                        
+                        if (error || !html) {
+                            console.error(`Skipping ${category} category due to fetch error`);
+                            continue;
+                        }
 
-                    console.log(`Processing games from ${category} category`);
-                    
-                    // Parse HTML
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    
-                    // Get all game cards
-                    let allGameCards = Array.from(doc.querySelectorAll('.game-card'));
-                    console.log(`Found ${allGameCards.length} game cards with .game-card class in ${category}`);
-                    
-                    // Initialize category games array
-                    let categoryGames = [];
-                    
-                    // If no .game-card found, try other possible game cards
-                    if (allGameCards.length === 0) {
-                        console.warn(`No .game-card elements found in ${category} category page. Trying alternative selectors...`);
+                        console.log(`Processing games from ${category} category`);
                         
-                        // Try using other selectors to find game elements
-                        const alternativeSelectors = [
-                            '.game-item',
-                            '.game',
-                            '[class*="game-"][class*="card"]',
-                            '[class*="game-"][class*="item"]',
-                            '.card[class*="game"]',
-                            'div[class*="game"]',
-                            // Find elements in containers that might contain game cards
-                            '.featured-games > div',
-                            '.games-grid > div',
-                            '.more-games-section > div', 
-                            '.games-container > div',
-                            '.game-grid > div',
-                            // Look for areas with game-related class names
-                            '.grid div',
-                            // Generic selectors, looking for elements with game features
-                            'div:has(img) > div:has(h3):has(a)'
-                        ];
-                        
-                        for (const selector of alternativeSelectors) {
-                            try {
+                        try {
+                            // Parse HTML
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            // Get all game cards using a simpler, more focused selector strategy
+                            const gameCardSelectors = [
+                                '.game-card',
+                                '.game-item',
+                                '[class*="game"][class*="card"]',
+                                '.card'
+                            ];
+                            
+                            let allGameCards = [];
+                            
+                            // Try each selector until we find some game cards
+                            for (const selector of gameCardSelectors) {
                                 const elements = doc.querySelectorAll(selector);
-                                console.log(`Looking for games with selector "${selector}": found ${elements.length} elements`);
-                                
                                 if (elements.length > 0) {
+                                    console.log(`Found ${elements.length} game elements with selector "${selector}" in ${category}`);
                                     allGameCards = Array.from(elements);
-                                    console.log(`Using ${elements.length} elements found with selector "${selector}"`);
                                     break;
                                 }
-                            } catch (e) {
-                                console.error(`Error using selector "${selector}":`, e);
-                            }
-                        }
-                        
-                        // If still not found, try more generic method
-                        if (allGameCards.length === 0) {
-                            console.warn(`Still no game elements found with alternative selectors. Trying to identify by content...`);
-                            
-                            // Find elements with game features (elements with images, titles and links)
-                            const possibleGameDivs = doc.querySelectorAll('div:has(img), div:has(a.play), div:has([class*="title"]), div:has(h3)');
-                            const potentialGames = Array.from(possibleGameDivs).filter(div => {
-                                // Check if this div looks like a game card
-                                const hasImage = div.querySelector('img') !== null;
-                                const hasTitle = div.querySelector('h3, h4, [class*="title"]') !== null;
-                                const hasLink = div.querySelector('a') !== null;
-                                
-                                return hasImage && (hasTitle || hasLink);
-                            });
-                            
-                            console.log(`Found ${potentialGames.length} potential game elements by content analysis`);
-                            
-                            if (potentialGames.length > 0) {
-                                allGameCards = potentialGames;
-                            }
-                        }
-                    }
-                    
-                    console.log(`Processing ${allGameCards.length} game elements for ${category} category`);
-                    
-                    // Process found game cards
-                    allGameCards.forEach(card => {
-                        try {
-                            // Add or confirm category label for each card
-                            card.setAttribute('data-category', category);
-                            
-                            // Fix links inside card, ensure they're absolute URLs
-                            const links = card.querySelectorAll('a');
-                            links.forEach(link => {
-                                const href = link.getAttribute('href');
-                                if (href && !href.startsWith('http') && !href.startsWith('javascript')) {
-                                    // Convert relative links to absolute links
-                                    const urlObj = new URL(url);
-                                    const baseUrl = urlObj.origin + urlObj.pathname.substring(0, urlObj.pathname.lastIndexOf('/') + 1);
-                                    link.setAttribute('href', new URL(href, baseUrl).href);
-                                }
-                                
-                                // Ensure links have proper styling
-                                if (link.classList.contains('btn') || link.classList.contains('button') || 
-                                    link.textContent.toLowerCase().includes('play') || 
-                                    link.parentElement && link.parentElement.classList.contains('p-6')) {
-                                    link.className = `inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium`;
-                                    link.textContent = link.textContent.includes('Play') ? link.textContent : `Play on CloudGame`;
-                                }
-                            });
-                            
-                            // Fix image URLs
-                            const images = card.querySelectorAll('img');
-                            images.forEach(img => {
-                                const src = img.getAttribute('src');
-                                if (src && !src.startsWith('http')) {
-                                    // Convert relative image links to absolute links
-                                    const urlObj = new URL(url);
-                                    const baseUrl = urlObj.origin + urlObj.pathname.substring(0, urlObj.pathname.lastIndexOf('/') + 1);
-                                    img.setAttribute('src', new URL(src, baseUrl).href);
-                                }
-                                
-                                // Add proper image styling
-                                img.className = "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105";
-                                
-                                // Add alt text if missing
-                                if (!img.hasAttribute('alt') || img.getAttribute('alt').trim() === '') {
-                                    // Extract game title from parent card if possible
-                                    let title = '';
-                                    const h3Elements = card.querySelectorAll('h3');
-                                    if (h3Elements.length > 0) {
-                                        h3Elements.forEach(h3 => {
-                                            if (h3.textContent.length > title.length) {
-                                                title = h3.textContent.trim();
-                                            }
-                                        });
-                                        title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
-                                        img.setAttribute('alt', `Play ${title} on CloudGame - Free Online ${category.charAt(0).toUpperCase() + category.slice(1)} Games`);
-                                    } else {
-                                        img.setAttribute('alt', `Play games on CloudGame - Free Online Gaming`);
-                                    }
-                                }
-                            });
-                            
-                            // Ensure card has proper class structure
-                            if (!card.classList.contains('game-card')) {
-                                card.classList.add('game-card');
                             }
                             
-                            // Add Tailwind classes for consistent styling
-                            card.className = `bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10`;
-                            
-                            // If the card has no proper structure, rebuild it with a consistent format
-                            const hasProperStructure = card.querySelector('.aspect-video') && card.querySelector('.p-6');
-                            if (!hasProperStructure) {
-                                // Get important elements
-                                const img = card.querySelector('img');
-                                let title = '';
-                                const h3 = card.querySelector('h3, h2, .title, [class*="title"]');
-                                if (h3) title = h3.textContent.trim();
-                                let desc = '';
-                                const p = card.querySelector('p, .description, [class*="desc"]');
-                                if (p) desc = p.textContent.trim();
-                                const link = card.querySelector('a[href]');
-                                
-                                // Re-create the card with proper structure
-                                card.innerHTML = `
-                                    <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                        ${img ? img.outerHTML : `<div class="w-full h-full bg-gradient-to-r from-${category} to-${category}/50 flex items-center justify-center">
-                                            <span class="text-xl font-bold text-white">${title || category.charAt(0).toUpperCase() + category.slice(1) + ' Game'}</span>
-                                        </div>`}
-                                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                            <div class="p-6">
-                                                <span class="bg-${category}/80 text-white text-xs px-2.5 py-1 rounded-full">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
-                                                <h3 class="text-white font-bold mt-2">${title || 'Game'} - CloudGame</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-6">
-                                        <h3 class="text-lg font-semibold mb-2 text-light">${title || 'Game'} on CloudGame</h3>
-                                        <p class="text-light/70 mb-4 line-clamp-2">${desc || `Play ${title || 'this game'} instantly on CloudGame. Experience the best online ${category} gaming with no downloads required.`}</p>
-                                        ${link ? link.outerHTML : `<a href="${url}" class="inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium">Play on CloudGame</a>`}
-                                    </div>
-                                `;
+                            // Skip if no game cards found
+                            if (allGameCards.length === 0) {
+                                console.warn(`No game elements found in ${category} category page.`);
+                                continue;
                             }
                             
-                            // Add to category games list
-                            categoryGames.push({
-                                category,
-                                html: card.outerHTML
-                            });
+                            // Process the found game cards
+                            for (const gameCard of allGameCards) {
+                                // Use a more lightweight approach for creating game objects
+                                try {
+                                    const gameObject = {
+                                        category: category,
+                                        html: gameCard.outerHTML
+                                    };
+                                    newGames.push(gameObject);
+                                } catch (e) {
+                                    console.error('Error processing game card:', e);
+                                }
+                            }
                         } catch (e) {
-                            console.error(`Error processing game card in ${category}:`, e);
+                            console.error(`Error processing HTML for ${category}:`, e);
                         }
-                    });
-                    
-                    console.log(`Total ${categoryGames.length} games found in ${category} category`);
-                    newGames = [...newGames, ...categoryGames];
-                });
-                
-                console.log(`Total ${newGames.length} real games fetched from all category pages`);
-                
-                if (newGames.length > 0) {
-                    // Merge new games with static games but avoid duplication
-                    const newUniqueGames = [];
-                    const existingTitles = new Set();
-                    
-                    // Get existing titles to avoid duplicates
-                    allGames.forEach(game => {
-                        try {
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = game.html.trim();
-                            const gameTitle = tempDiv.querySelector('h3')?.textContent.trim();
-                            if (gameTitle) {
-                                existingTitles.add(gameTitle.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, ''));
-                            }
-                        } catch (error) {
-                            console.error('Error extracting game title:', error);
-                        }
-                    });
-                    
-                    // Add only unique games
-                    newGames.forEach(game => {
-                        try {
-                            const tempDiv = document.createElement('div');
-                            tempDiv.innerHTML = game.html.trim();
-                            const gameTitle = tempDiv.querySelector('h3')?.textContent.trim();
-                            const title = gameTitle ? gameTitle.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '') : '';
-                            
-                            if (title && !existingTitles.has(title)) {
-                                existingTitles.add(title);
-                                newUniqueGames.push(game);
-                            }
-                        } catch (error) {
-                            console.error('Error checking for duplicate games:', error);
-                        }
-                    });
-                    
-                    console.log(`Adding ${newUniqueGames.length} unique real games to the existing static games`);
-                    
-                    // Add new unique games to the global arrays
-                    allGames = [...allGames, ...newUniqueGames];
-                    additionalGames = [...additionalGames, ...newUniqueGames];
-                    
-                    // If we're currently showing 'all' games or a specific category that has new games,
-                    // refresh the display to include the new real games
-                    const hasNewGamesInCurrentCategory = newUniqueGames.some(game => 
-                        game.category === currentCategory || currentCategory === 'all');
-                        
-                    if (hasNewGamesInCurrentCategory) {
-                        console.log(`Refreshing display to include new games for ${currentCategory} category`);
-                        displayGames(currentCategory, 1);
                     }
+                    
+                    // Short delay between batches to prevent browser from becoming unresponsive
+                    await new Promise(resolve => setTimeout(resolve, 100));
                 }
+
+                console.log(`Fetched ${newGames.length} new games from category pages`);
+                
+                // Merge new games with existing ones and deduplicate
+                if (newGames.length > 0) {
+                    allGames = [...allGames, ...newGames];
+                    console.log(`Total games after merge: ${allGames.length}`);
+                    
+                    // Reinitialize but don't redisplay - this will deduplicate in the background
+                    initializeGames();
+                }
+                
             } catch (error) {
-                console.error('Error in background fetch:', error);
+                console.error('Error fetching game data:', error);
             }
         }
 

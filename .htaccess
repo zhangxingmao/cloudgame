@@ -1,21 +1,39 @@
 # Enable URL rewriting
 RewriteEngine On
 
+# Set base options to improve performance
+Options -Indexes +FollowSymLinks
+
+# Performance improvement: core rule set
 # If the requested filename is not a directory
 RewriteCond %{REQUEST_FILENAME} !-d
 # If the requested filename is not a file
 RewriteCond %{REQUEST_FILENAME} !-f
 # If the request does not already end with .html
 RewriteCond %{REQUEST_URI} !\.html$
+# Only process if this is potentially a content page
+RewriteCond %{REQUEST_URI} !\.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|json|map)$
 # Then redirect to add .html extension
-RewriteRule ^(.*)$ $1.html [L]
+RewriteRule ^(.*)$ $1.html [L,QSA]
 
 # Set default index file
 DirectoryIndex index.html
 
 # Enable CORS
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
+    # Set CORS headers only for HTML, CSS, JS, JSON resources
+    <FilesMatch "\.(html|css|js|json)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+    
+    # Avoid redirects by checking if the page exists with .html
+    <FilesMatch "^[^.]+$">
+        RewriteCond %{REQUEST_FILENAME}.html -f
+        RewriteRule ^(.*)$ $1.html [L]
+    </FilesMatch>
+    
+    # Prevent unnecessary redirects for index.html
+    RewriteRule ^(.*)/$ $1/index.html [L]
 </IfModule>
 
 # Set character encoding
@@ -23,10 +41,16 @@ AddDefaultCharset UTF-8
 
 # Enable gzip compression
 <IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+    
+    # Remove browser bugs
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 </IfModule>
 
-# Set browser cache time
+# Set browser cache time - shorter times for frequently changing resources
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType image/jpg "access plus 1 year"
@@ -36,6 +60,15 @@ AddDefaultCharset UTF-8
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType application/json "access plus 0 seconds"
-    ExpiresByType text/html "access plus 0 seconds"
+    
+    # Reduced cache times for dynamic content
+    ExpiresByType application/json "access plus 5 minutes"
+    ExpiresByType text/html "access plus 10 minutes"
+</IfModule>
+
+# Set ETags for better caching
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css|xml|gz|html)$">
+        Header append Vary: Accept-Encoding
+    </FilesMatch>
 </IfModule> 

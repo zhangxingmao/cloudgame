@@ -1,13 +1,31 @@
-# Redirects for clean URLs in Netlify
-/games/action /games/action.html 200
-/games/shooter /games/shooter.html 200
-/games/puzzle /games/puzzle.html 200
-/games/sports /games/sports.html 200
-/games/fighting /games/fighting.html 200
-/games/racing /games/racing.html 200
-/games/anime /games/anime.html 200
-/games/new /games/new.html 200
-/games/popular /games/popular.html 200
+# Netlify redirects for clean URLs - optimized to minimize redirect chains
+# Direct mapping of clean URLs to HTML files with 200 status (no redirect)
+/games/action /games/action.html 200!
+/games/shooter /games/shooter.html 200!
+/games/puzzle /games/puzzle.html 200!
+/games/sports /games/sports.html 200!
+/games/fighting /games/fighting.html 200!
+/games/racing /games/racing.html 200!
+/games/anime /games/anime.html 200!
+/games/new /games/new.html 200!
+/games/popular /games/popular.html 200!
 
-# SPA fallback
+# Handle category URLs with trailing slash for better SEO
+/games/action/ /games/action.html 200!
+/games/shooter/ /games/shooter.html 200!
+/games/puzzle/ /games/puzzle.html 200!
+/games/sports/ /games/sports.html 200!
+/games/fighting/ /games/fighting.html 200!
+/games/racing/ /games/racing.html 200!
+/games/anime/ /games/anime.html 200!
+/games/new/ /games/new.html 200!
+/games/popular/ /games/popular.html 200!
+
+# Game detail pages with clean URLs
+/games/detail/giant-rush /games/detail/giant-rush.html 200!
+/games/detail/om-nom-run /games/detail/om-nom-run.html 200!
+/games/detail/bubble-tower-3d /games/detail/bubble-tower-3d.html 200!
+/games/detail/cannon-balls-3d /games/detail/cannon-balls-3d.html 200!
+
+# SPA fallback - only use for paths not explicitly defined above
 /* /index.html 200 
