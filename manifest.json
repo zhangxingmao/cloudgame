@@ -1,0 +1,53 @@
+{
+  "name": "CloudGame - Play Free Online Games Instantly in Your Browser",
+  "short_name": "CloudGame",
+  "description": "CloudGame offers free online games you can play instantly in your browser. No downloads required. Play action, puzzle, sports, shooter, and anime games with cloud gaming technology.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#007AFF",
+  "icons": [
+    {
+      "src": "/images/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/game-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/apple-touch-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "180x180",
+      "purpose": "any"
+    }
+  ],
+  "orientation": "any",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["games", "entertainment"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Action Games",
+      "url": "/games/action.html",
+      "description": "Play action games online"
+    },
+    {
+      "name": "Puzzle Games",
+      "url": "/games/puzzle.html",
+      "description": "Play puzzle games online"
+    },
+    {
+      "name": "Sports Games",
+      "url": "/games/sports.html",
+      "description": "Play sports games online"
+    }
+  ]
+} 

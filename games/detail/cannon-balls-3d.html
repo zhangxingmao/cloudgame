@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C49NH6D1H6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-C49NH6D1H6');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../../images/game-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="../../images/apple-touch-icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007AFF">
+    <title>Cannon Balls 3D - Shooter Game | CloudGame</title>
+    <meta name="description" content="Play Cannon Balls 3D instantly on CloudGame. Take control of a powerful cannon and blast your way through challenging levels in this free online shooter game.">
+    <link rel="canonical" href="https://cloudgame.info/games/detail/cannon-balls-3d.html" />
+    <meta name="author" content="CloudGame">
+    <meta property="og:title" content="Cannon Balls 3D - Shooter Game | CloudGame">
+    <meta property="og:description" content="Take control of a powerful cannon and blast your way through challenging levels in this free online shooter game.">
+    <meta property="og:image" content="https://img.gamepix.com/games/cannon-balls-3d/cover/cannon-balls-3d.webp">
+    <meta property="og:url" content="https://cloudgame.info/games/detail/cannon-balls-3d.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cannon Balls 3D - CloudGame">
+    <meta name="twitter:description" content="Aim, shoot, and destroy targets in this exciting 3D cannon shooting game.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Service worker registration for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+        
+        // Play game function
+        function playGame(gameUrl) {
+            // Create a new fullscreen iframe
+            const gameFrame = document.createElement('iframe');
+            gameFrame.src = gameUrl;
+            gameFrame.style.position = 'fixed';
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.width = '100%';
+            gameFrame.style.height = '100%';
+            gameFrame.style.border = 'none';
+            gameFrame.style.zIndex = '9999';
+            gameFrame.allow = 'fullscreen; autoplay; gamepad';
+            
+            // Add close button
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '✕';
+            closeButton.style.position = 'fixed';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '20px';
+            closeButton.style.zIndex = '10000';
+            closeButton.style.background = '#ffffff';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '50%';
+            closeButton.style.width = '40px';
+            closeButton.style.height = '40px';
+            closeButton.style.cursor = 'pointer';
+            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            
+            // Click to close
+            closeButton.onclick = function() {
+                document.body.removeChild(gameFrame);
+                document.body.removeChild(closeButton);
+            };
+            
+            // Add to page
+            document.body.appendChild(gameFrame);
+            document.body.appendChild(closeButton);
+        }
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF', // Apple Blue
+                        secondary: '#5AC8FA', // Apple Light Blue
+                        dark: '#000000', // Pure Black
+                        darker: '#1A1A1A', // Slightly lighter black
+                        light: '#FFFFFF', // Pure White
+                        accent: '#FF2D55', // Apple Pink/Red
+                        anime: '#BF5AF2', // Brighter Purple for dark mode
+                        action: '#32D74B', // Brighter Green for dark mode
+                        puzzle: '#FF9F0A', // Brighter Orange for dark mode
+                        sports: '#64D2FF', // Brighter Teal for dark mode
+                        shooter: '#FF453A', // Brighter Red for dark mode
+                        fighting: '#FF0000', // Red for fighting
+                        racing: '#00FF00' // Green for racing
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .game-container {
+                height: 60vh;
+            }
+            
+            .game-details {
+                flex-direction: column;
+            }
+            
+            .similar-games-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+        
+        /* Tablet optimization */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .game-container {
+                height: 70vh;
+            }
+            
+            .similar-games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Game detail animations */
+        .game-container {
+            transition: all 0.5s ease;
+        }
+        
+        .game-container:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-detail-section {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Progressive loading effect */
+        .progressive-content {
+            animation: contentFadeIn 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes contentFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-darker font-sans text-light">
+    <!-- Header -->
+    <header class="fixed w-full bg-darker/90 backdrop-blur-md border-b border-white/10 z-50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="../../" class="text-2xl font-bold text-primary">CloudGame</a>
+            
+            <!-- Primary Navigation -->
+            <div class="hidden md:flex space-x-8">
+                <a href="../../#features" class="text-gray-600 hover:text-primary">Features</a>
+                <a href="../../#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
+                <a href="../../#faq" class="text-gray-600 hover:text-primary">FAQ</a>
+                <a href="../new.html" class="text-gray-600 hover:text-primary">New Games</a>
+                <a href="../popular.html" class="text-gray-600 hover:text-primary">Popular</a>
+            </div>
+            
+            <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Game Hero Section -->
+    <section class="pt-32 pb-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Game Image and Play Section -->
+                <div class="md:w-2/3">
+                    <div class="bg-darker rounded-xl overflow-hidden game-container">
+                        <div class="aspect-video bg-gray-100 overflow-hidden">
+                            <img src="https://img.gamepix.com/games/cannon-balls-3d/cover/cannon-balls-3d.webp" alt="Cannon Balls 3D on CloudGame" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 flex justify-between items-center">
+                            <h1 class="text-3xl font-bold text-light">Cannon Balls 3D</h1>
+                            <button onclick="playGame('https://play.famobi.com/cannon-balls-3d')" class="inline-block bg-shooter text-white px-6 py-3 rounded-lg hover:bg-shooter/90 transition">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Info Sidebar -->
+                <div class="md:w-1/3">
+                    <div class="bg-darker rounded-xl overflow-hidden p-6 border border-white/10">
+                        <h2 class="text-xl font-bold mb-4 text-primary">Game Info</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-sm text-light/60">Category</h3>
+                                <p class="text-light">Shooter</p>
+                            </div>
+                            <div>
+                                <h3 class="text-sm text-light/60">Controls</h3>
+                                <p class="text-light">Mouse/Touch: Drag to aim and release to fire the cannon</p>
+                            </div>
+                            <div>
+                                <h3 class="text-sm text-light/60">Compatibility</h3>
+                                <div class="flex space-x-2 mt-1">
+                                    <!-- Device compatibility icons -->
+                                    <span class="bg-light/10 text-light text-xs px-2 py-1 rounded">Desktop</span>
+                                    <span class="bg-light/10 text-light text-xs px-2 py-1 rounded">Tablet</span>
+                                    <span class="bg-light/10 text-light text-xs px-2 py-1 rounded">Mobile</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm text-light/60">Share</h3>
+                                <div class="flex space-x-3 mt-2">
+                                    <!-- Social share buttons -->
+                                    <a href="#" class="text-light hover:text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-light hover:text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="#" class="text-light hover:text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Description Section -->
+    <section class="py-12 game-detail-section progressive-content">
+        <div class="container mx-auto px-4">
+            <div class="bg-darker rounded-xl overflow-hidden p-8 border border-white/10">
+                <h2 class="text-2xl font-bold mb-6 text-primary">About This Game</h2>
+                <div class="text-light/80 space-y-4">
+                    <p>Cannon Balls 3D is an exciting physics-based shooter game that challenges your aiming skills and strategic thinking. Take control of a powerful cannon and blast your way through a variety of challenging levels filled with destructible targets.</p>
+                    <p>With realistic physics, stunning 3D graphics, and satisfying destruction effects, Cannon Balls 3D offers an immersive shooting experience. Each level presents a unique setup of targets, obstacles, and challenges that require precise aiming and proper timing to overcome.</p>
+                    <p>As you progress through the game, you'll unlock more powerful ammunition, special abilities, and face increasingly complex level designs. Can you achieve the perfect score by destroying all targets with the minimum number of shots? Test your skills now in this addictive cannon shooter!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Instructions Section -->
+    <section class="py-12 game-detail-section progressive-content delay-100">
+        <div class="container mx-auto px-4">
+            <div class="bg-darker rounded-xl overflow-hidden p-8 border border-white/10">
+                <h2 class="text-2xl font-bold mb-6 text-primary">How to Play</h2>
+                <div class="text-light/80 space-y-4">
+                    <p>Cannon Balls 3D features simple, intuitive controls that make it easy to play:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Aim:</strong> Drag to aim your cannon at the targets</li>
+                        <li><strong>Power:</strong> Hold longer to increase shot power</li>
+                        <li><strong>Fire:</strong> Release to shoot the cannon ball</li>
+                        <li><strong>Select Ammo:</strong> Tap on different ammunition types when available</li>
+                    </ul>
+                    <p class="mt-4"><strong>Tips for Success:</strong></p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Use the environment to your advantage - create chain reactions by hitting strategic points</li>
+                        <li>Conserve your shots - aim for maximum efficiency to earn higher scores</li>
+                        <li>Experiment with different angles and power levels to find the perfect trajectory</li>
+                        <li>Look for weak points in structures that might cause larger collapse effects</li>
+                        <li>Use special ammunition wisely - save them for particularly challenging targets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Similar Games Section -->
+    <section class="py-12 game-detail-section progressive-content delay-200">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-8 text-primary">Similar Games You Might Like</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 similar-games-grid">
+                <!-- Similar Game 1: Giant Rush -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                        <img src="https://img.gamepix.com/games/giant-rush/cover/giant-rush.webp" alt="Giant Rush on CloudGame" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
+                                <h3 class="text-white font-bold mt-2">Giant Rush</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2 text-light">Giant Rush</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Run, jump, and grow in this exciting endless runner game. Collect power-ups and become the biggest giant!</p>
+                        <a href="../detail/giant-rush.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                    </div>
+                </div>
+
+                <!-- Similar Game 2: Bubble Tower 3D -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                        <img src="https://img.gamepix.com/games/bubble-tower-3d/cover/bubble-tower-3d.webp" alt="Bubble Tower 3D on CloudGame" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
+                                <h3 class="text-white font-bold mt-2">Bubble Tower 3D</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2 text-light">Bubble Tower 3D</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Match and pop colorful bubbles in this addictive 3D puzzle game with challenging levels.</p>
+                        <a href="../detail/bubble-tower-3d.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                    </div>
+                </div>
+
+                <!-- Similar Game 3: Om Nom Run -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 border border-white/10">
+                    <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                        <img src="https://img.gamepix.com/games/om-nom-run/cover/om-nom-run.webp" alt="Om Nom Run on CloudGame" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6">
+                                <span class="bg-anime/80 text-white text-xs px-2.5 py-1 rounded-full">Anime</span>
+                                <h3 class="text-white font-bold mt-2">Om Nom Run</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-2 text-light">Om Nom Run</h3>
+                        <p class="text-light/70 mb-4 line-clamp-2">Help Om Nom run, jump, and slide through colorful levels while collecting candies and avoiding obstacles.</p>
+                        <a href="../detail/om-nom-run.html" class="inline-block bg-anime text-white px-5 py-2 rounded-full hover:bg-anime/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to All Games Section -->
+    <section class="py-12 game-detail-section progressive-content delay-300">
+        <div class="container mx-auto px-4 text-center">
+            <a href="../shooter.html" class="inline-block bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition">Browse All Shooter Games</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12 border-t border-white/10">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-primary">CloudGame</h2>
+                <p class="text-light/60 mt-2">Play Free Online Games Instantly in Your Browser</p>
+                <div class="mt-6 flex justify-center space-x-4">
+                    <a href="../../" class="text-light/60 hover:text-primary">Home</a>
+                    <a href="../../#features" class="text-light/60 hover:text-primary">Features</a>
+                    <a href="../../#faq" class="text-light/60 hover:text-primary">FAQ</a>
+                    <a href="../new.html" class="text-light/60 hover:text-primary">New Games</a>
+                </div>
+                <p class="text-light/40 text-sm mt-8">&copy; 2023 CloudGame. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Structured Data for Game -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Cannon Balls 3D",
+      "description": "Take control of a powerful cannon and blast your way through challenging levels in this free online shooter game.",
+      "image": "https://img.gamepix.com/games/cannon-balls-3d/cover/cannon-balls-3d.webp",
+      "url": "https://cloudgame.info/games/detail/cannon-balls-3d.html",
+      "genre": "Shooter",
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "CloudGame"
+      }
+    }
+    </script>
+</body>
+</html> 
