@@ -47,7 +47,9 @@
                         action: '#32D74B', // Brighter Green for dark mode
                         puzzle: '#FF9F0A', // Brighter Orange for dark mode
                         sports: '#64D2FF', // Brighter Teal for dark mode
-                        shooter: '#FF453A' // Brighter Red for dark mode
+                        shooter: '#FF453A', // Brighter Red for dark mode
+                        fighting: '#FF0000', // Red for fighting
+                        racing: '#00FF00' // Green for racing
                     },
                     fontFamily: {
                         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
@@ -70,6 +72,212 @@
         body {
             background-color: #000000;
             color: #FFFFFF;
+        }
+        
+        /* Category Buttons Enhancement */
+        .category-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            transform: translateY(-2px);
+        }
+        
+        .category-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .category-btn.active::after {
+            transform: scaleX(1);
+        }
+        
+        .category-btn:hover::after {
+            transform: scaleX(0.7);
+        }
+        
+        /* View More Button Enhancement */
+        #view-more-games-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+        }
+        
+        #view-more-games-btn:hover {
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        #view-more-games-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        #view-more-games-btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Loading indicator for View More Button */
+        #view-more-games-btn.loading {
+            background: linear-gradient(90deg, #007AFF, #5AC8FA, #007AFF);
+            background-size: 200% 100%;
+            animation: gradient 1.5s infinite;
+            pointer-events: none;
+        }
+        
+        /* Enhanced Game Card Styling */
+        .game-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: 0.5s;
+        }
+        
+        .game-card:hover::after {
+            left: 100%;
+        }
+        
+        .game-card .aspect-video img {
+            transition: all 0.5s;
+        }
+        
+        .game-card:hover .aspect-video img {
+            transform: scale(1.1);
+        }
+        
+        /* Button styling */
+        .game-card a[href], .game-card button, .game-card .btn, .game-card [class*="btn"] {
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .game-card a[href]::before, .game-card button::before, .game-card .btn::before, .game-card [class*="btn"]::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s;
+        }
+        
+        .game-card a[href]:hover::before, .game-card button:hover::before, .game-card .btn:hover::before, .game-card [class*="btn"]:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* Game Title highlight effect */
+        .game-card h3 {
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .game-card:hover h3 {
+            background: linear-gradient(90deg, var(--tw-gradient-from), var(--tw-gradient-to));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            animation: gradient 2s linear infinite;
+        }
+        
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        
+        /* Apply custom category colors for hover effects */
+        .game-card[data-category="action"]:hover h3 {
+            --tw-gradient-from: #32D74B;
+            --tw-gradient-to: #4ADE80;
+        }
+        
+        .game-card[data-category="shooter"]:hover h3 {
+            --tw-gradient-from: #FF453A;
+            --tw-gradient-to: #FF6B6B;
+        }
+        
+        .game-card[data-category="puzzle"]:hover h3 {
+            --tw-gradient-from: #FF9F0A;
+            --tw-gradient-to: #FFBE4D;
+        }
+        
+        .game-card[data-category="sports"]:hover h3 {
+            --tw-gradient-from: #64D2FF;
+            --tw-gradient-to: #96E2FF;
+        }
+        
+        .game-card[data-category="fighting"]:hover h3 {
+            --tw-gradient-from: #FF0000;
+            --tw-gradient-to: #FF6666;
+        }
+        
+        .game-card[data-category="racing"]:hover h3 {
+            --tw-gradient-from: #00FF00;
+            --tw-gradient-to: #66FF66;
+        }
+        
+        .game-card[data-category="anime"]:hover h3 {
+            --tw-gradient-from: #BF5AF2;
+            --tw-gradient-to: #D289F7;
+        }
+        
+        /* Better image container */
+        .game-card .aspect-video {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem 0.75rem 0 0;
+        }
+        
+        /* Enhanced Play Button */
+        .game-card a[href], .game-card button, .game-card .btn, .game-card [class*="btn"] {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .game-card a[href]:hover, .game-card button:hover, .game-card .btn:hover, .game-card [class*="btn"]:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -128,6 +336,8 @@
                 <button class="text-shooter font-medium px-6 py-2.5 rounded-full hover:bg-shooter/20 transition-colors duration-300 mx-1 category-btn" data-category="shooter">Shooter</button>
                 <button class="text-puzzle font-medium px-6 py-2.5 rounded-full hover:bg-puzzle/20 transition-colors duration-300 mx-1 category-btn" data-category="puzzle">Puzzle</button>
                 <button class="text-sports font-medium px-6 py-2.5 rounded-full hover:bg-sports/20 transition-colors duration-300 mx-1 category-btn" data-category="sports">Sports</button>
+                <button class="text-fighting font-medium px-6 py-2.5 rounded-full hover:bg-fighting/20 transition-colors duration-300 mx-1 category-btn" data-category="fighting">Fighting</button>
+                <button class="text-racing font-medium px-6 py-2.5 rounded-full hover:bg-racing/20 transition-colors duration-300 mx-1 category-btn" data-category="racing">Racing</button>
                 <button class="text-anime font-medium px-6 py-2.5 rounded-full hover:bg-anime/20 transition-colors duration-300 mx-1 category-btn" data-category="anime">Anime</button>
             </div>
 
@@ -396,457 +606,832 @@
 
     <!-- Category Filter Script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all category buttons and game cards
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            const gameCards = document.querySelectorAll('.game-card');
+        // 声明全局变量
+        const gamesContainer = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-8');
+        console.log("Games container found:", gamesContainer ? "Yes" : "No", gamesContainer);
+        // 如果默认选择器没找到，尝试找到任何合适的网格容器
+        const gridSelector = '.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-8';
+        const backupSelectors = [
+            '.grid',
+            '.games-grid',
+            '[class*="grid"][class*="gap"]',
+            '.games-container > div',
+            '#explore-all-games .grid'
+        ];
+        
+        // 尝试找到游戏容器
+        function findGamesContainer() {
+            let container = document.querySelector(gridSelector);
             
-            // Game pagination variables
-            const gamesPerPage = 6;
-            let currentPage = 1;
-            let currentCategory = 'all';
-            let allGames = [];
-            let additionalGames = [
-                // Additional action games
-                {
-                    category: 'action',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                    <rect width="300" height="200" fill="#32D74B" opacity="0.2"/>
-                                    <circle cx="150" cy="80" r="40" fill="#FF5E3A"/>
-                                    <path d="M 110 120 L 140 160 L 160 160 L 190 120" stroke="#333" stroke-width="5" fill="none"/>
-                                    <text x="150" y="180" font-family="Arial" font-size="16" fill="#333" text-anchor="middle">Rise Up</text>
-                                </svg>
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
-                                        <h3 class="text-white font-bold mt-2">Rise Up - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Rise Up on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Rise Up instantly on CloudGame. Protect your balloon as it rises through challenging obstacles in this free online action game.</p>
-                                <a href="/games/action.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                // Additional shooter games
-                {
-                    category: 'shooter',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="shooter">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                    <!-- Desert background with sunset -->
-                                    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stop-color="#FF7F50" />
-                                        <stop offset="100%" stop-color="#FFD700" />
-                                    </linearGradient>
-                                    <rect width="300" height="120" fill="url(#sky)" />
-                                    
-                                    <!-- Desert sand -->
-                                    <rect width="300" height="80" y="120" fill="#D2B48C" />
-                                    
-                                    <!-- Sun -->
-                                    <circle cx="250" cy="40" r="20" fill="#FF4500" />
-                                    
-                                    <!-- Cactus -->
-                                    <rect x="50" y="100" width="10" height="40" fill="#2F4F4F" />
-                                    <rect x="45" y="110" width="20" height="5" fill="#2F4F4F" />
-                                    
-                                    <!-- Mountains -->
-                                    <polygon points="0,120 50,70 100,120" fill="#8B4513" />
-                                    <polygon points="90,120 150,60 210,120" fill="#A0522D" />
-                                    
-                                    <!-- Sniper silhouette -->
-                                    <path d="M 130 140 C 135 130 145 130 150 140 L 150 170 L 130 170 Z" fill="#000" />
-                                    
-                                    <!-- Cowboy hat -->
-                                    <path d="M 125 140 L 155 140 L 162 135 L 118 135 Z" fill="#8B4513" />
-                                    <path d="M 130 135 L 150 135 L 145 125 L 135 125 Z" fill="#8B4513" />
-                                    
-                                    <!-- Rifle -->
-                                    <rect x="150" y="150" width="70" height="5" fill="#000" />
-                                    <rect x="155" y="155" width="10" height="10" fill="#8B4513" />
-                                    
-                                    <!-- Tumbleweeds -->
-                                    <circle cx="230" cy="170" r="10" fill="#CD853F" opacity="0.7" />
-                                    
-                                    <!-- Game title -->
-                                    <text x="150" y="190" font-family="Arial" font-size="16" font-weight="bold" fill="#000" text-anchor="middle">Western Sniper</text>
-                                </svg>
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-shooter/80 text-white text-xs px-2.5 py-1 rounded-full">Shooter</span>
-                                        <h3 class="text-white font-bold mt-2">Western Sniper - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Western Sniper on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Western Sniper instantly on CloudGame. Test your marksmanship skills in this classic western-themed sniper game in this free online shooter game.</p>
-                                <a href="/games/shooter.html" class="inline-block bg-shooter text-white px-5 py-2 rounded-full hover:bg-shooter/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                // Additional puzzle games
-                {
-                    category: 'puzzle',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="puzzle">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://img.gamepix.com/games/color-water-sort-3d/cover/color-water-sort-3d.webp" alt="Play Color Water Sort 3D on CloudGame - Free Online Puzzle Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
-                                        <h3 class="text-white font-bold mt-2">Color Water Sort 3D - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Color Water Sort 3D on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Color Water Sort 3D instantly on CloudGame. Sort colored water between tubes to create perfect matches in this free online puzzle game.</p>
-                                <a href="/games/puzzle.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                // Gold Rush puzzle game
-                {
-                    category: 'puzzle',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="puzzle">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://html5gameshq.com/data/html5-games-index-1/gold-rush/gold-rush.jpg" alt="Play Gold Rush on CloudGame - Free Online Puzzle Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
-                                        <h3 class="text-white font-bold mt-2">Gold Rush - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Gold Rush on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Gold Rush instantly on CloudGame. Tap on groups of 3 or more blocks of the same color to remove them and advance by clearing gold nuggets in this addictive Match3 puzzle game.</p>
-                                <a href="/games/puzzle.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                // Additional sports games
-                {
-                    category: 'sports',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="sports">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="https://img.gamepix.com/games/table-tennis-world-tour/cover/table-tennis-world-tour.webp" alt="Play Table Tennis World Tour on CloudGame - Free Online Sports Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-sports/80 text-white text-xs px-2.5 py-1 rounded-full">Sports</span>
-                                        <h3 class="text-white font-bold mt-2">Table Tennis World Tour - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Table Tennis World Tour on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Table Tennis World Tour instantly on CloudGame. Compete in intense table tennis matches against players from around the world in this free online sports game.</p>
-                                <a href="/games/sports.html" class="inline-block bg-sports text-white px-5 py-2 rounded-full hover:bg-sports/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-                // Additional anime games
-                {
-                    category: 'anime',
-                    html: `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="anime">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                    <!-- Pastel background -->
-                                    <linearGradient id="kawaii-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#FFD6E0" />
-                                        <stop offset="100%" stop-color="#FFEFEF" />
-                                    </linearGradient>
-                                    <rect width="300" height="200" fill="url(#kawaii-bg)" />
-                                    
-                                    <!-- Decorative elements -->
-                                    <circle cx="30" cy="30" r="15" fill="#FFC0CB" opacity="0.7" />
-                                    <circle cx="270" cy="40" r="20" fill="#FFB6C1" opacity="0.7" />
-                                    <circle cx="50" cy="170" r="18" fill="#FFC0CB" opacity="0.7" />
-                                    <circle cx="250" cy="160" r="15" fill="#FFB6C1" opacity="0.7" />
-                                    
-                                    <!-- Cute stars -->
-                                    <path d="M120,20 L123,29 L132,29 L125,35 L128,44 L120,38 L112,44 L115,35 L108,29 L117,29 Z" fill="#FFD700" />
-                                    <path d="M220,30 L222,36 L228,36 L223,40 L225,46 L220,42 L215,46 L217,40 L212,36 L218,36 Z" fill="#FFD700" />
-                                    <path d="M80,160 L82,166 L88,166 L83,170 L85,176 L80,172 L75,176 L77,170 L72,166 L78,166 Z" fill="#FFD700" />
-                                    
-                                    <!-- Anime character outline -->
-                                    <!-- Head -->
-                                    <circle cx="150" cy="75" r="35" fill="#FFF" stroke="#FF69B4" stroke-width="2" />
-                                    
-                                    <!-- Hair -->
-                                    <path d="M115,75 Q130,40 150,45 Q170,40 185,75 L185,90 Q168,100 150,95 Q132,100 115,90 Z" fill="#FF69B4" />
-                                    
-                                    <!-- Eyes -->
-                                    <ellipse cx="135" cy="75" rx="6" ry="9" fill="#FFF" />
-                                    <ellipse cx="165" cy="75" rx="6" ry="9" fill="#FFF" />
-                                    <circle cx="135" cy="75" r="3" fill="#000" />
-                                    <circle cx="165" cy="75" r="3" fill="#000" />
-                                    
-                                    <!-- Blush -->
-                                    <circle cx="125" cy="85" r="7" fill="#FFB6C1" opacity="0.7" />
-                                    <circle cx="175" cy="85" r="7" fill="#FFB6C1" opacity="0.7" />
-                                    
-                                    <!-- Smile -->
-                                    <path d="M140,90 Q150,100 160,90" fill="none" stroke="#000" stroke-width="2" />
-                                    
-                                    <!-- Dress outline -->
-                                    <path d="M130,110 L170,110 Q180,140 150,150 Q120,140 130,110" fill="#FFF" stroke="#FF69B4" stroke-width="2" />
-                                    
-                                    <!-- Clothing items -->
-                                    <rect x="190" y="115" width="20" height="30" rx="2" fill="#87CEFA" stroke="#1E90FF" />
-                                    <rect x="220" y="115" width="20" height="30" rx="2" fill="#FF69B4" stroke="#FF1493" />
-                                    <rect x="250" y="115" width="20" height="30" rx="2" fill="#98FB98" stroke="#3CB371" />
-                                    
-                                    <!-- Game title -->
-                                    <text x="150" y="185" font-family="Arial" font-size="16" font-weight="bold" fill="#FF69B4" text-anchor="middle">Kawaii Dressup</text>
-                                </svg>
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-anime/80 text-white text-xs px-2.5 py-1 rounded-full">Anime</span>
-                                        <h3 class="text-white font-bold mt-2">Kawaii Dressup - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">Kawaii Dressup on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">Play Kawaii Dressup instantly on CloudGame. Create adorable anime characters with this cute dress-up game in this free online anime game.</p>
-                                <a href="/games/anime.html" class="inline-block bg-anime text-white px-5 py-2 rounded-full hover:bg-anime/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
-                            </div>
-                        </div>
-                    `
-                },
-            ];
-            
-            // Get games container
-            const gamesContainer = document.querySelector('#explore-all-games .grid');
-            const viewMoreButton = document.getElementById('view-more-games-btn');
-            
-            // Initialize gameCards array
-            initializeGames();
-            
-            // Add click event to each category button
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Reset pagination
-                    currentPage = 1;
-                    
-                    // Remove active class from all buttons
-                    categoryButtons.forEach(btn => {
-                        btn.classList.remove('active', 'bg-primary/20', 'border', 'border-primary/30');
-                        
-                        // Reset category-specific styling
-                        const category = btn.getAttribute('data-category');
-                        if (category !== 'all') {
-                            btn.classList.remove(`bg-${category}/20`);
-                        }
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Get the selected category
-                    currentCategory = this.getAttribute('data-category');
-                    
-                    // Apply specific styles based on category
-                    if (currentCategory === 'all') {
-                        this.classList.add('bg-primary/20', 'border', 'border-primary/30');
-                    } else {
-                        this.classList.add(`bg-${currentCategory}/20`, 'border', `border-${currentCategory}/30`);
-                    }
-                    
-                    // Reset original game elements display property
-                    gameCards.forEach(card => {
-                        card.style.display = 'none';
-                    });
-                    
-                    // Display initial set of games
-                    displayGames(currentCategory, currentPage);
-                    
-                    // Show or hide the view more button
-                    updateViewMoreButtonVisibility();
-                });
-            });
-            
-            // Add click event to view more button
-            viewMoreButton.addEventListener('click', function() {
-                currentPage++;
-                displayGames(currentCategory, currentPage, true);
-                updateViewMoreButtonVisibility();
-            });
-            
-            // Helper function to get the color class for a category
-            function getColorForCategory(category) {
-                const categoryColors = {
-                    'action': 'action',
-                    'shooter': 'shooter',
-                    'puzzle': 'puzzle',
-                    'sports': 'sports',
-                    'anime': 'anime',
-                    'new': 'primary'
-                };
-                return categoryColors[category] || 'primary';
-            }
-            
-            // Initialize games array
-            function initializeGames() {
-                // Clear the allGames array to avoid duplicates if function is called multiple times
-                allGames = [];
+            if (!container) {
+                console.warn(`Primary games container selector "${gridSelector}" not found. Trying fallback selectors...`);
                 
-                // First hide all game cards
-                gameCards.forEach(card => {
-                    card.style.display = 'none';
-                    // Store original parent to restore if needed
-                    card.dataset.originalParent = card.parentNode ? 'true' : 'false';
-                });
-                
-                // Get initial games from the document
-                gameCards.forEach(card => {
-                    allGames.push({
-                        element: card,
-                        category: card.getAttribute('data-category')
-                    });
-                });
-                
-                // Add additional games to array
-                additionalGames.forEach(game => {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = game.html.trim();
-                    const gameElement = tempDiv.firstChild;
-                    
-                    allGames.push({
-                        element: gameElement,
-                        category: game.category,
-                        isAdditional: true
-                    });
-                });
-                
-                // After initializing all games, display initial set
-                displayGames('all', currentPage);
-                updateViewMoreButtonVisibility();
-            }
-            
-            // Unified function to display games by category and page
-            function displayGames(category, page, isAppending = false) {
-                // Clear current games if not appending
-                if (!isAppending) {
-                    gamesContainer.innerHTML = '';
-                }
-                
-                // Filter games by category
-                const filteredGames = category === 'all' 
-                    ? allGames 
-                    : allGames.filter(game => game.category === category);
-                
-                // Get already displayed games
-                const displayedGames = Array.from(gamesContainer.children);
-                const displayedGameTitles = displayedGames.map(game => {
-                    const title = game.querySelector('h3')?.textContent || '';
-                    return title.trim();
-                });
-                
-                // Calculate start and end indices
-                const startIndex = isAppending ? (page - 1) * gamesPerPage : 0;
-                const endIndex = page * gamesPerPage;
-                
-                // Display games for current page
-                for (let i = startIndex; i < Math.min(endIndex, filteredGames.length); i++) {
-                    const game = filteredGames[i];
-                    
-                    // Get the title for comparison
-                    const gameTitle = game.element.querySelector('h3')?.textContent || '';
-                    
-                    // Only add the game if it's not already displayed
-                    if (isAppending && displayedGameTitles.includes(gameTitle.trim())) {
-                        continue;
-                    }
-                    
-                    if (game.isAdditional) {
-                        // Create a fresh clone to avoid any issues with reused elements
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = additionalGames.find(ag => 
-                            ag.category === game.category && 
-                            ag.html.includes(gameTitle)
-                        ).html.trim();
-                        const freshClone = tempDiv.firstChild;
-                        
-                        gamesContainer.appendChild(freshClone);
-                        
-                        // Add animation
-                        setTimeout(() => {
-                            freshClone.classList.add('animate-fade-in');
-                            setTimeout(() => {
-                                freshClone.classList.remove('animate-fade-in');
-                            }, 500);
-                        }, 10);
-                    } else {
-                        // For original elements from the page
-                        const originalElement = game.element;
-                        
-                        // Check if this element is already in the DOM
-                        if (!document.body.contains(originalElement)) {
-                            gamesContainer.appendChild(originalElement);
-                            
-                            // Make it visible with animation
-                            originalElement.style.display = 'block';
-                            setTimeout(() => {
-                                originalElement.classList.add('animate-fade-in');
-                                setTimeout(() => {
-                                    originalElement.classList.remove('animate-fade-in');
-                                }, 500);
-                            }, 10);
-                        }
+                for (const selector of backupSelectors) {
+                    container = document.querySelector(selector);
+                    if (container) {
+                        console.log(`Found games container using fallback selector "${selector}"`);
+                        break;
                     }
                 }
             }
             
-            // Update "View More" button visibility
-            function updateViewMoreButtonVisibility() {
-                const filteredGames = currentCategory === 'all' 
-                    ? allGames 
-                    : allGames.filter(game => game.category === currentCategory);
-                
-                const displayedGames = gamesContainer.children.length;
-                
-                if (displayedGames >= filteredGames.length) {
-                    viewMoreButton.style.display = 'none';
+            if (!container) {
+                // 最后的尝试：查找具有3个或更多游戏卡片的容器
+                const possibleContainers = document.querySelectorAll('div[class*="grid"], div[class*="container"]');
+                for (const element of possibleContainers) {
+                    if (element.querySelectorAll('.game-card, [class*="game"]').length >= 3) {
+                        container = element;
+                        console.log('Found games container by identifying element containing multiple game cards');
+                        break;
+                    }
+                }
+            }
+            
+            return container;
+        }
+        
+        // 确保我们有一个游戏容器
+        const detectedGamesContainer = gamesContainer || findGamesContainer();
+        if (!detectedGamesContainer) {
+            console.error('Could not find games container with any selector. Creating a new container.');
+            // 创建新的游戏容器
+            const newContainer = document.createElement('div');
+            newContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+            
+            // 在合适的位置插入新容器
+            const insertPoint = document.querySelector('#explore-all-games .container.mx-auto .text-center.mt-12');
+            if (insertPoint && insertPoint.parentNode) {
+                insertPoint.parentNode.insertBefore(newContainer, insertPoint);
+                console.log('Created and inserted new games container');
+            }
+        }
+        
+        // 最终的游戏容器
+        const finalGamesContainer = detectedGamesContainer || document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-8');
+        
+        const viewMoreButton = document.getElementById('view-more-games-btn');
+        console.log("View more button found:", viewMoreButton ? "Yes" : "No");
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        let currentCategory = 'all';
+        let currentPage = 1;
+        const gamesPerPage = 6;
+        let allGames = [];
+        let additionalGames = [];
+        
+        // 游戏页面URL映射
+        const gamePageUrls = {
+            'action': '/games/action.html',
+            'shooter': '/games/shooter.html',
+            'puzzle': '/games/puzzle.html',
+            'sports': '/games/sports.html',
+            'fighting': '/games/fighting.html',
+            'racing': '/games/racing.html',
+            'anime': '/games/anime.html'
+        };
+        
+        // 设置活动分类
+        function setActiveCategory(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // 更新按钮的活动状态
+            categoryButtons.forEach(btn => {
+                const btnCategory = btn.getAttribute('data-category');
+                if (btnCategory === category) {
+                    btn.classList.add('active', 'bg-' + (category === 'all' ? 'primary' : category) + '/20');
+                    btn.classList.remove('hover:bg-' + (category === 'all' ? 'primary' : category) + '/20');
                 } else {
+                    btn.classList.remove('active', 'bg-' + (btnCategory === 'all' ? 'primary' : btnCategory) + '/20');
+                    btn.classList.add('hover:bg-' + (btnCategory === 'all' ? 'primary' : btnCategory) + '/20');
+                }
+            });
+        }
+        
+        // 添加类别按钮事件监听器
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                console.log(`Category button clicked: ${category}`);
+                console.log(`Current games in allGames array: ${allGames.length}`);
+                
+                // 检查是否有该分类的游戏
+                const categoryGames = allGames.filter(game => {
+                    if (game.category === category) return true;
+                    try {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = game.html.trim();
+                        const gameCard = tempDiv.querySelector('.game-card');
+                        return gameCard && gameCard.getAttribute('data-category') === category;
+                    } catch (error) {
+                        return false;
+                    }
+                });
+                console.log(`Found ${categoryGames.length} games for category ${category}`);
+                
+                // Set active category and update buttons
+                setActiveCategory(category);
+                
+                // Display the games
+                displayGames(category, 1);
+                
+                // Update the View More button immediately
+                if (category !== 'all' && gamePageUrls[category]) {
+                    viewMoreButton.textContent = `View All ${category.charAt(0).toUpperCase() + category.slice(1)} Games`;
+                    viewMoreButton.setAttribute('data-url', gamePageUrls[category]);
+                    viewMoreButton.className = `inline-block bg-${category} text-white px-8 py-3 rounded-full hover:bg-${category}/90 transition-colors duration-300 font-medium shadow-lg shadow-${category}/20`;
                     viewMoreButton.style.display = 'inline-block';
                 }
+            });
+        });
+        
+        // 更新显示更多按钮的可见性
+        function updateViewMoreButtonVisibility(totalGames, displayedCount) {
+            console.log(`Updating "View More" button visibility: ${displayedCount} of ${totalGames} games shown`);
+            
+            // 移除之前可能存在的"所有游戏已显示"消息
+            const existingMessages = document.querySelectorAll('.all-shown-message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            // 如果所有游戏都已显示，隐藏按钮并添加"所有游戏已显示"信息
+            if (displayedCount >= totalGames) {
+                viewMoreButton.style.display = 'none';
+                
+                // 添加"所有游戏已显示"信息
+                const allShownMessage = document.createElement('p');
+                allShownMessage.className = 'text-light/50 text-center mt-4 all-shown-message';
+                allShownMessage.textContent = `All ${totalGames} ${currentCategory === 'all' ? '' : currentCategory} games have been shown`;
+                
+                // 将消息添加到viewMoreButton的父元素
+                const viewMoreContainer = document.querySelector('.text-center.mt-12');
+                if (viewMoreContainer) {
+                    viewMoreContainer.appendChild(allShownMessage);
+                }
+            } else {
+                // 否则，显示按钮并更新文本
+                viewMoreButton.style.display = 'inline-block';
+                
+                if (currentCategory !== 'all') {
+                    // 为特定分类，显示"View All [Category] Games"
+                    viewMoreButton.textContent = `View All ${currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1)} Games`;
+                    // 设置data-url属性以便跳转
+                    viewMoreButton.setAttribute('data-url', gamePageUrls[currentCategory] || '#');
+                    // 添加特定分类的类
+                    viewMoreButton.className = `inline-block bg-${currentCategory} text-white px-8 py-3 rounded-full hover:bg-${currentCategory}/90 transition-colors duration-300 font-medium shadow-lg shadow-${currentCategory}/20`;
+                } else {
+                    // 否则，显示一般的"View More Games"信息
+                    const remainingGames = totalGames - displayedCount;
+                    viewMoreButton.textContent = `View More Games (${displayedCount}/${totalGames} - ${remainingGames} remaining)`;
+                    // 清除data-url属性
+                    viewMoreButton.removeAttribute('data-url');
+                    // 恢复默认的primary类
+                    viewMoreButton.className = 'inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium shadow-lg shadow-primary/20';
+                }
+            }
+        }
+        
+        // 添加查看更多按钮事件监听器
+        viewMoreButton.addEventListener('click', function() {
+            // 检查是否有指定的URL
+            const targetUrl = this.getAttribute('data-url');
+            if (targetUrl && currentCategory !== 'all') {
+                // 如果是特定分类，跳转到对应的分类页面
+                window.location.href = targetUrl;
+                return;
             }
             
-            // Add style for fade-in animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fade-in {
-                    animation: fadeIn 0.5s ease-out forwards;
-                }
-            `;
-            document.head.appendChild(style);
+            // 否则，执行默认的"加载更多"行为
+            // 禁用按钮，显示加载状态
+            this.disabled = true;
+            this.textContent = 'Loading...';
+            this.classList.add('loading');
             
-            // Initialize with "all" category
-            displayGames('all', currentPage);
-            updateViewMoreButtonVisibility();
+            // 短暂延迟以显示加载状态
+            setTimeout(() => {
+                currentPage++;
+                console.log(`View more button clicked. Loading page ${currentPage} of ${currentCategory} category`);
+                displayGames(currentCategory, currentPage, true);
+                
+                // 重新启用按钮
+                this.disabled = false;
+                this.classList.remove('loading');
+            }, 800);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, initializing game system...');
+            
+            // 查找页面上已有的游戏卡片
+            const existingGameCards = document.querySelectorAll('.game-card');
+            console.log(`Found ${existingGameCards.length} existing game cards on the page`);
+            
+            if (existingGameCards.length > 0) {
+                // 将已有的游戏卡片添加到allGames数组
+                existingGameCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (category) {
+                        console.log(`Adding existing ${category} game card to allGames`);
+                        allGames.push({
+                            category: category,
+                            html: card.outerHTML
+                        });
+                    }
+                });
+            }
+            
+            // 添加初始的分类游戏作为占位符
+            addCategoryGames();
+            
+            // 设置当前分类
+            setActiveCategory('all');
+            
+            // 初始化显示占位符游戏
+            displayGames('all', 1);
+            
+            // 获取分类页面中的游戏
+            console.log('Fetching games from category pages...');
+            fetchGamesFromPages();
+        });
+
+        // 初始化游戏列表
+        let gamesInitialized = false; // 游戏初始化状态
+
+        function initializeGames() {
+            // 如果已经初始化过，则不再重复初始化
+            if (gamesInitialized) {
+                console.log('Games already initialized, skipping initialization');
+                return;
+            }
+            
+            console.log('Initializing games from loaded content...');
+            
+            // 清空游戏容器以准备新的游戏
+            finalGamesContainer.innerHTML = '';
+            
+            // 重新规整allGames数组，确保游戏不重复
+            const uniqueGameTitles = new Set();
+            const uniqueGames = [];
+            
+            allGames.forEach(game => {
+                // 解析游戏HTML以获取标题
+                try {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = game.html.trim();
+                    const gameCard = tempDiv.querySelector('.game-card');
+                    
+                    if (gameCard) {
+                        // 从不同元素尝试获取标题
+                        let title = '';
+                        const h3Elements = gameCard.querySelectorAll('h3');
+                        
+                        if (h3Elements.length > 0) {
+                            // 如果有多个h3，取最长的那个作为标题
+                            h3Elements.forEach(h3 => {
+                                if (h3.textContent.length > title.length) {
+                                    title = h3.textContent.trim();
+                                }
+                            });
+                        }
+                        
+                        // 标题清理，移除" - CloudGame"和"on CloudGame"等后缀
+                        title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
+                        
+                        // 如果这个标题是唯一的，添加到唯一游戏列表中
+                        if (!uniqueGameTitles.has(title) && title !== 'Loading - CloudGame') {
+                            uniqueGameTitles.add(title);
+                            uniqueGames.push(game);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error processing game card:', error);
+                }
+            });
+            
+            // 更新allGames数组
+            allGames = uniqueGames;
+            console.log(`Total unique games after initialization: ${allGames.length}`);
+            
+            // 显示当前分类的游戏
+            displayGames(currentCategory, 1);
+            
+            // 标记为已初始化
+            gamesInitialized = true;
+            
+            // 隐藏加载中的占位符
+            finalGamesContainer.querySelectorAll('.game-card').forEach(card => {
+                if (card.querySelector('h3') && card.querySelector('h3').textContent.includes('Loading')) {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // 特别检查action分类的游戏是否被正确加载
+            const actionGames = allGames.filter(game => {
+                if (game.category === 'action') return true;
+                try {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = game.html.trim();
+                    const gameCard = tempDiv.querySelector('.game-card');
+                    return gameCard && gameCard.getAttribute('data-category') === 'action';
+                } catch (error) {
+                    return false;
+                }
+            });
+            console.log(`After initialization: ${actionGames.length} action games found`);
+            if (actionGames.length === 0) {
+                console.warn("Warning: No action games found. This may be a problem with either the category page or the selectors.");
+            }
+        }
+
+        // 添加各个分类的游戏
+        function addCategoryGames() {
+            console.log("Adding initial category games as placeholders until real games are loaded");
+            
+            // 清空全局游戏数组
+            allGames = [];
+            additionalGames = [];
+            
+            // 添加各个分类的初始游戏作为占位符
+            const initialCategoryGames = Object.keys(gamePageUrls).map(category => {
+                // 为每个分类创建一个占位符游戏
+                return {
+                    category: category,
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="${category}">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <div class="w-full h-full bg-gradient-to-r from-${category} to-${category}/50 flex items-center justify-center">
+                                    <span class="text-xl font-bold text-white">Loading ${category} games...</span>
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-${category}/80 text-white text-xs px-2.5 py-1 rounded-full">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                                        <h3 class="text-white font-bold mt-2">Loading - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Loading ${category} games...</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Please wait while we fetch the latest ${category} games for you.</p>
+                                <div class="inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium">Loading...</div>
+                            </div>
+                        </div>
+                    `
+                };
+            });
+            
+            // 添加到allGames和additionalGames
+            allGames = [...initialCategoryGames];
+            additionalGames = [...initialCategoryGames];
+            
+            console.log(`Added ${initialCategoryGames.length} initial placeholder games`);
+        }
+        
+        // 从各个分类页面获取游戏
+        async function fetchGamesFromPages() {
+            console.log('Fetching games from all category pages...');
+
+            if (!finalGamesContainer) {
+                console.error('Cannot fetch games: No games container found on the page');
+                return;
+            }
+
+            // 显示正在加载
+            viewMoreButton.textContent = 'Loading games...';
+            viewMoreButton.disabled = true;
+
+            try {
+                // 检查gamePageUrls是否定义
+                if (!gamePageUrls || Object.keys(gamePageUrls).length === 0) {
+                    console.error('gamePageUrls is not defined or empty!');
+                    return;
+                }
+                
+                console.log('Game page URLs:', gamePageUrls);
+                
+                // 准备所有分类页面的URL
+                const urls = Object.entries(gamePageUrls).map(([category, url]) => {
+                    // 确保URL是绝对路径，且处理相对路径
+                    let fullUrl = url;
+                    if (!url.startsWith('http')) {
+                        // 处理以/开头的路径
+                        if (url.startsWith('/')) {
+                            fullUrl = window.location.origin + url;
+                        } else {
+                            // 处理相对路径
+                            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+                            fullUrl = baseUrl + url;
+                        }
+                    }
+                    console.log(`Mapped ${category} to URL: ${fullUrl}`);
+                    return { category, url: fullUrl };
+                });
+                
+                console.log(`Will fetch games from ${urls.length} category pages:`, urls.map(u => u.url));
+                
+                // 检查页面是否能被正确访问
+                for (const { category, url } of urls) {
+                    try {
+                        const checkResponse = await fetch(url, { method: 'HEAD' });
+                        console.log(`URL check for ${category}: ${url} - Status: ${checkResponse.status} ${checkResponse.ok ? 'OK' : 'Failed'}`);
+                    } catch (e) {
+                        console.error(`Failed to check URL for ${category}: ${url}`, e);
+                    }
+                }
+
+                let newGames = [];
+
+                // 并行获取所有分类页面
+                const results = await Promise.all(urls.map(async ({ category, url }) => {
+                    console.log(`Fetching games from ${category} category: ${url}`);
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+                        }
+                        const html = await response.text();
+                        return { category, html, url };
+                    } catch (error) {
+                        console.error(`Error fetching ${category} games from ${url}:`, error);
+                        return { category, html: null, error, url };
+                    }
+                }));
+
+                // 处理每个分类页面的结果
+                results.forEach(({ category, html, error, url }) => {
+                    if (error || !html) {
+                        console.error(`Skipping ${category} category due to fetch error`);
+                        return;
+                    }
+
+                    console.log(`Processing games from ${category} category`);
+                    
+                    // 解析HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // 获取所有游戏卡片
+                    let allGameCards = Array.from(doc.querySelectorAll('.game-card'));
+                    console.log(`Found ${allGameCards.length} game cards with .game-card class in ${category}`);
+                    
+                    // 初始化分类游戏数组
+                    let categoryGames = [];
+                    
+                    // 如果找不到.game-card，尝试查找其他可能的游戏卡片
+                    if (allGameCards.length === 0) {
+                        console.warn(`No .game-card elements found in ${category} category page. Trying alternative selectors...`);
+                        
+                        // 尝试使用其他选择器查找游戏元素
+                        const alternativeSelectors = [
+                            '.game-item',
+                            '.game',
+                            '[class*="game-"][class*="card"]',
+                            '[class*="game-"][class*="item"]',
+                            '.card[class*="game"]',
+                            'div[class*="game"]',
+                            // 查找可能包含游戏卡片的容器内的元素
+                            '.featured-games > div',
+                            '.games-grid > div',
+                            '.more-games-section > div', 
+                            '.games-container > div',
+                            '.game-grid > div',
+                            // 寻找包含游戏相关类名的区域
+                            '.grid div',
+                            // 通用选择器，寻找包含游戏特征的元素
+                            'div:has(img) > div:has(h3):has(a)'
+                        ];
+                        
+                        for (const selector of alternativeSelectors) {
+                            try {
+                                const elements = doc.querySelectorAll(selector);
+                                console.log(`Looking for games with selector "${selector}": found ${elements.length} elements`);
+                                
+                                if (elements.length > 0) {
+                                    allGameCards = Array.from(elements);
+                                    console.log(`Using ${elements.length} elements found with selector "${selector}"`);
+                                    break;
+                                }
+                            } catch (e) {
+                                console.error(`Error using selector "${selector}":`, e);
+                            }
+                        }
+                        
+                        // 如果仍然没有找到，尝试使用更通用的方法
+                        if (allGameCards.length === 0) {
+                            console.warn(`Still no game elements found with alternative selectors. Trying to identify by content...`);
+                            
+                            // 查找包含游戏特征的元素（有图片、标题和链接的元素）
+                            const possibleGameDivs = doc.querySelectorAll('div:has(img), div:has(a.play), div:has([class*="title"]), div:has(h3)');
+                            const potentialGames = Array.from(possibleGameDivs).filter(div => {
+                                // 检查这个div是否像一个游戏卡片
+                                const hasImage = div.querySelector('img') !== null;
+                                const hasTitle = div.querySelector('h3, h4, [class*="title"]') !== null;
+                                const hasLink = div.querySelector('a') !== null;
+                                
+                                return hasImage && (hasTitle || hasLink);
+                            });
+                            
+                            console.log(`Found ${potentialGames.length} potential game elements by content analysis`);
+                            
+                            if (potentialGames.length > 0) {
+                                allGameCards = potentialGames;
+                            }
+                        }
+                    }
+                    
+                    console.log(`Processing ${allGameCards.length} game elements for ${category} category`);
+                    
+                    // 处理找到的游戏卡片
+                    allGameCards.forEach(card => {
+                        try {
+                            // 给每个卡片添加或确认分类标签
+                            card.setAttribute('data-category', category);
+                            
+                            // 修正卡片内部的链接，确保它们是绝对URL
+                            const links = card.querySelectorAll('a');
+                            links.forEach(link => {
+                                const href = link.getAttribute('href');
+                                if (href && !href.startsWith('http') && !href.startsWith('javascript')) {
+                                    // 将相对链接转换为绝对链接
+                                    const urlObj = new URL(url);
+                                    const baseUrl = urlObj.origin + urlObj.pathname.substring(0, urlObj.pathname.lastIndexOf('/') + 1);
+                                    link.setAttribute('href', new URL(href, baseUrl).href);
+                                }
+                                
+                                // Ensure links have proper styling
+                                if (link.classList.contains('btn') || link.classList.contains('button') || 
+                                    link.textContent.toLowerCase().includes('play') || 
+                                    link.parentElement && link.parentElement.classList.contains('p-6')) {
+                                    link.className = `inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium`;
+                                    link.textContent = link.textContent.includes('Play') ? link.textContent : `Play on CloudGame`;
+                                }
+                            });
+                            
+                            // 修正图片URL
+                            const images = card.querySelectorAll('img');
+                            images.forEach(img => {
+                                const src = img.getAttribute('src');
+                                if (src && !src.startsWith('http')) {
+                                    // 将相对图片链接转换为绝对链接
+                                    const urlObj = new URL(url);
+                                    const baseUrl = urlObj.origin + urlObj.pathname.substring(0, urlObj.pathname.lastIndexOf('/') + 1);
+                                    img.setAttribute('src', new URL(src, baseUrl).href);
+                                }
+                                
+                                // Add proper image styling
+                                img.className = "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105";
+                                
+                                // Add alt text if missing
+                                if (!img.hasAttribute('alt') || img.getAttribute('alt').trim() === '') {
+                                    // Extract game title from parent card if possible
+                                    let title = '';
+                                    const h3Elements = card.querySelectorAll('h3');
+                                    if (h3Elements.length > 0) {
+                                        h3Elements.forEach(h3 => {
+                                            if (h3.textContent.length > title.length) {
+                                                title = h3.textContent.trim();
+                                            }
+                                        });
+                                        title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
+                                        img.setAttribute('alt', `Play ${title} on CloudGame - Free Online ${category.charAt(0).toUpperCase() + category.slice(1)} Games`);
+                                    } else {
+                                        img.setAttribute('alt', `Play games on CloudGame - Free Online Gaming`);
+                                    }
+                                }
+                            });
+                            
+                            // Ensure card has proper class structure
+                            if (!card.classList.contains('game-card')) {
+                                card.classList.add('game-card');
+                            }
+                            
+                            // Add Tailwind classes for consistent styling
+                            card.className = `bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10`;
+                            
+                            // If the card has no proper structure, rebuild it with a consistent format
+                            const hasProperStructure = card.querySelector('.aspect-video') && card.querySelector('.p-6');
+                            if (!hasProperStructure) {
+                                // Get important elements
+                                const img = card.querySelector('img');
+                                let title = '';
+                                const h3 = card.querySelector('h3, h2, .title, [class*="title"]');
+                                if (h3) title = h3.textContent.trim();
+                                let desc = '';
+                                const p = card.querySelector('p, .description, [class*="desc"]');
+                                if (p) desc = p.textContent.trim();
+                                const link = card.querySelector('a[href]');
+                                
+                                // Re-create the card with proper structure
+                                card.innerHTML = `
+                                    <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                        ${img ? img.outerHTML : `<div class="w-full h-full bg-gradient-to-r from-${category} to-${category}/50 flex items-center justify-center">
+                                            <span class="text-xl font-bold text-white">${title || category.charAt(0).toUpperCase() + category.slice(1) + ' Game'}</span>
+                                        </div>`}
+                                        <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                            <div class="p-6">
+                                                <span class="bg-${category}/80 text-white text-xs px-2.5 py-1 rounded-full">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                                                <h3 class="text-white font-bold mt-2">${title || 'Game'} - CloudGame</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-lg font-semibold mb-2 text-light">${title || 'Game'} on CloudGame</h3>
+                                        <p class="text-light/70 mb-4 line-clamp-2">${desc || `Play ${title || 'this game'} instantly on CloudGame. Experience the best online ${category} gaming with no downloads required.`}</p>
+                                        ${link ? link.outerHTML : `<a href="${url}" class="inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium">Play on CloudGame</a>`}
+                                    </div>
+                                `;
+                            }
+                            
+                            // 添加到分类游戏列表
+                            categoryGames.push({
+                                category,
+                                html: card.outerHTML
+                            });
+                        } catch (e) {
+                            console.error(`Error processing game card in ${category}:`, e);
+                        }
+                    });
+                    
+                    console.log(`Total ${categoryGames.length} games found in ${category} category`);
+                    
+                    // 如果分类中的游戏少于3个，发出警告
+                    if (categoryGames.length < 3) {
+                        console.warn(`Warning: Only ${categoryGames.length} games found in ${category} category. This may indicate a problem with the selectors or the page structure.`);
+                    }
+                    
+                    // 将此分类的游戏添加到总列表
+                    newGames = [...newGames, ...categoryGames];
+                });
+                
+                console.log(`Total ${newGames.length} games fetched from all category pages`);
+                
+                // 将新游戏添加到additionalGames和allGames
+                additionalGames = [...additionalGames, ...newGames];
+                allGames = [...allGames, ...newGames];
+                
+                // 初始化游戏列表，移除重复项并显示
+                initializeGames();
+                
+            } catch (error) {
+                console.error('Error fetching games from pages:', error);
+            } finally {
+                // 恢复按钮状态
+                viewMoreButton.textContent = 'View More Games';
+                viewMoreButton.disabled = false;
+                
+                console.log(`Total additional games loaded: ${additionalGames.length}`);
+            }
+        }
+
+        // 显示游戏列表的函数
+        function displayGames(category, page, isAppending = false) {
+            console.log(`Displaying games for category: ${category}, page: ${page}, appending: ${isAppending}`);
+            
+            // 如果不是追加模式，则清空游戏容器
+            if (!isAppending) {
+                finalGamesContainer.innerHTML = '';
+            }
+            
+            // 根据分类筛选游戏
+            let filteredGames;
+            if (category === 'all') {
+                filteredGames = allGames;
+            } else {
+                filteredGames = allGames.filter(game => {
+                    // 检查游戏对象的category属性
+                    if (game.category === category) {
+                        return true;
+                    }
+                    
+                    // 检查HTML中的data-category属性
+                    try {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = game.html.trim();
+                        const gameCard = tempDiv.querySelector('.game-card');
+                        return gameCard && gameCard.getAttribute('data-category') === category;
+                    } catch (error) {
+                        console.error('Error checking game category:', error);
+                        return false;
+                    }
+                });
+            }
+            
+            console.log(`Found ${filteredGames.length} games for category ${category}`);
+            
+            // 如果没有找到游戏
+            if (filteredGames.length === 0) {
+                if (!isAppending) {
+                    const noGamesMessage = category === 'all' 
+                        ? 'No games found. Please try again later.' 
+                        : `No games found in ${category} category. Please try again later.`;
+                    
+                    finalGamesContainer.innerHTML = `<div class="col-span-3 text-center py-12">
+                        <p class="text-xl text-light/50">${noGamesMessage}</p>
+                        <button onclick="fetchGamesFromPages()" class="mt-4 bg-primary text-white px-5 py-2 rounded-full hover:bg-primary/90 transition-colors duration-300 text-sm font-medium">Reload</button>
+                    </div>`;
+                }
+                viewMoreButton.style.display = 'none';
+                return;
+            }
+            
+            // 去重：创建一个唯一游戏的列表
+            const uniqueGameTitles = new Set();
+            const uniqueFilteredGames = [];
+            
+            filteredGames.forEach(game => {
+                try {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = game.html.trim();
+                    const gameCard = tempDiv.querySelector('.game-card');
+                    
+                    if (gameCard) {
+                        // 从不同元素尝试获取标题
+                        let title = '';
+                        const h3Elements = gameCard.querySelectorAll('h3');
+                        
+                        if (h3Elements.length > 0) {
+                            // 如果有多个h3，取最长的那个作为标题
+                            h3Elements.forEach(h3 => {
+                                if (h3.textContent.length > title.length) {
+                                    title = h3.textContent.trim();
+                                }
+                            });
+                        }
+                        
+                        // 标题清理，移除" - CloudGame"和"on CloudGame"等后缀
+                        title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
+                        
+                        // 如果这个标题是唯一的，添加到唯一游戏列表中
+                        if (!uniqueGameTitles.has(title) && title !== 'Loading - CloudGame' && !title.includes('Loading')) {
+                            uniqueGameTitles.add(title);
+                            uniqueFilteredGames.push(game);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error processing game for display:', error);
+                }
+            });
+            
+            // 计算分页
+            const totalGames = uniqueFilteredGames.length;
+            const totalPages = Math.ceil(totalGames / gamesPerPage);
+            console.log(`Total unique games: ${totalGames}, Total pages: ${totalPages}, Current page: ${page}`);
+            
+            // 计算当前页面应该显示的游戏
+            const startIndex = (page - 1) * gamesPerPage;
+            const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
+            const gamesToShow = uniqueFilteredGames.slice(startIndex, endIndex);
+            
+            console.log(`Showing games from index ${startIndex} to ${endIndex}`);
+            
+            if (gamesToShow.length === 0) {
+                if (!isAppending) {
+                    finalGamesContainer.innerHTML = `<div class="col-span-3 text-center py-12">
+                        <p class="text-xl text-light/50">No more games found in this category.</p>
+                    </div>`;
+                }
+                viewMoreButton.style.display = 'none';
+                return;
+            }
+            
+            // 将游戏添加到容器
+            try {
+                gamesToShow.forEach((game, index) => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = game.html.trim();
+                    const gameElement = tempDiv.firstElementChild;
+                    if (gameElement) {
+                        // 确保游戏卡片有正确的分类标签
+                        gameElement.setAttribute('data-category', game.category || category);
+                        
+                        // 添加动画效果 - 使用递增延迟创建交错的出场效果
+                        gameElement.classList.add('opacity-0', 'translate-y-8');
+                        gameElement.style.transitionDelay = `${index * 80}ms`;
+                        finalGamesContainer.appendChild(gameElement);
+                        
+                        // 触发动画
+                        setTimeout(() => {
+                            gameElement.classList.add('transition-all', 'duration-700', 'ease-out');
+                            gameElement.classList.remove('opacity-0', 'translate-y-8');
+                        }, 50);
+                    }
+                });
+            } catch (error) {
+                console.error('Error adding games to container:', error);
+            }
+            
+            // 计算实际显示的游戏数量（考虑已经显示的游戏）
+            const totalDisplayed = isAppending 
+                ? finalGamesContainer.querySelectorAll('.game-card').length 
+                : gamesToShow.length;
+            
+            // 更新"查看更多"按钮的可见性
+            updateViewMoreButtonVisibility(totalGames, totalDisplayed);
+            
+            // 如果当前页小于总页数，确保"查看更多"按钮可见
+            if (page < totalPages) {
+                viewMoreButton.style.display = 'inline-block';
+            } else {
+                viewMoreButton.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
