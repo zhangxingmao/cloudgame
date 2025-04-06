@@ -8,19 +8,19 @@
   "theme_color": "#007AFF",
   "icons": [
     {
-      "src": "/images/favicon.svg",
+      "src": "images/favicon.svg",
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any"
     },
     {
-      "src": "/images/game-icon.svg",
+      "src": "images/game-icon.svg",
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/apple-touch-icon.svg",
+      "src": "images/apple-touch-icon.svg",
       "type": "image/svg+xml",
       "sizes": "180x180",
       "purpose": "any"
@@ -36,17 +36,17 @@
   "shortcuts": [
     {
       "name": "Action Games",
-      "url": "/games/action.html",
+      "url": "games/action.html",
       "description": "Play action games online"
     },
     {
       "name": "Puzzle Games",
-      "url": "/games/puzzle.html",
+      "url": "games/puzzle.html",
       "description": "Play puzzle games online"
     },
     {
       "name": "Sports Games",
-      "url": "/games/sports.html",
+      "url": "games/sports.html",
       "description": "Play sports games online"
     }
   ]

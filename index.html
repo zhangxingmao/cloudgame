@@ -614,11 +614,11 @@
                 <div>
                     <h4 class="font-semibold mb-4">Game Categories</h4>
                     <ul class="space-y-2">
-                        <li><a href="/games/action.html" class="text-gray-400 hover:text-white">Action Games</a></li>
-                        <li><a href="/games/shooter.html" class="text-gray-400 hover:text-white">Shooter Games</a></li>
-                        <li><a href="/games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
-                        <li><a href="/games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
-                        <li><a href="/games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
+                        <li><a href="games/action.html" class="text-gray-400 hover:text-white">Action Games</a></li>
+                        <li><a href="games/shooter.html" class="text-gray-400 hover:text-white">Shooter Games</a></li>
+                        <li><a href="games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
+                        <li><a href="games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
+                        <li><a href="games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
                     </ul>
                 </div>
             </div>
@@ -704,13 +704,13 @@
         
         // 游戏页面URL映射
         const gamePageUrls = {
-            'action': '/games/action.html',
-            'shooter': '/games/shooter.html',
-            'puzzle': '/games/puzzle.html',
-            'sports': '/games/sports.html',
-            'fighting': '/games/fighting.html',
-            'racing': '/games/racing.html',
-            'anime': '/games/anime.html'
+            'action': 'games/action.html',
+            'shooter': 'games/shooter.html',
+            'puzzle': 'games/puzzle.html',
+            'sports': 'games/sports.html',
+            'fighting': 'games/fighting.html',
+            'racing': 'games/racing.html',
+            'anime': 'games/anime.html'
         };
         
         // 设置活动分类
@@ -819,6 +819,7 @@
             const targetUrl = this.getAttribute('data-url');
             if (targetUrl && currentCategory !== 'all') {
                 // 如果是特定分类，跳转到对应的分类页面
+                // 确保URL以相对路径方式访问
                 window.location.href = targetUrl;
                 return;
             }

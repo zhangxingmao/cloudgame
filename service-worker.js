@@ -2,20 +2,20 @@
 const CACHE_NAME = 'cloudgame-cache-v1';
 const ASSETS_TO_CACHE = [
   '/',
-  '/index.html',
-  '/manifest.json',
-  '/images/favicon.svg',
-  '/images/game-icon.svg',
-  '/images/apple-touch-icon.svg',
-  '/images/favicon.ico',
-  '/games/action.html',
-  '/games/puzzle.html',
-  '/games/sports.html',
-  '/games/shooter.html',
-  '/games/anime.html',
-  '/games/racing.html',
-  '/games/fighting.html',
-  '/games/new.html'
+  'index.html',
+  'manifest.json',
+  'images/favicon.svg',
+  'images/game-icon.svg',
+  'images/apple-touch-icon.svg',
+  'images/favicon.ico',
+  'games/action.html',
+  'games/puzzle.html',
+  'games/sports.html',
+  'games/shooter.html',
+  'games/anime.html',
+  'games/racing.html',
+  'games/fighting.html',
+  'games/new.html'
 ];
 
 // Install event - cache assets
