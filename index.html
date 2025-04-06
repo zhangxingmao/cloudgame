@@ -865,18 +865,63 @@
                 });
             }
             
-            // 添加初始的分类游戏作为占位符
-            addCategoryGames();
+            // 添加初始的分类游戏作为占位符 - 仅在没有已有游戏时添加
+            if (existingGameCards.length === 0) {
+                addCategoryGames();
+            }
             
             // 设置当前分类
             setActiveCategory('all');
             
-            // 初始化显示占位符游戏
-            displayGames('all', 1);
+            // 立即加载静态游戏数据而不是等待
+            const shouldLoadImmediately = window.location.hostname === 'cloudgame.info' || 
+                !window.location.hostname.includes('localhost');
+                
+            if (shouldLoadImmediately) {
+                // 在生产环境中直接加载静态数据
+                loadStaticGameData();
+            } else {
+                // 在本地环境中尝试从页面中获取游戏
+                // 如果没有足够的游戏，也会加载静态数据
+                if (existingGameCards.length < 6) {
+                    loadStaticGameData();
+                } else {
+                    // 仅在没有足够游戏时获取分类页面中的游戏
+                    console.log('Enough games already on page, will fetch category games in background');
+                    setTimeout(() => fetchGamesFromPages(), 100);
+                }
+            }
             
-            // 获取分类页面中的游戏
-            console.log('Fetching games from category pages...');
-            fetchGamesFromPages();
+            // Optimize category button clicks to prevent redundant operations
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Avoid reloading the same category
+                    if (category === currentCategory) {
+                        console.log(`Category ${category} already active, skipping reload`);
+                        return;
+                    }
+                    
+                    console.log(`Category button clicked: ${category}`);
+                    
+                    // Set active category and update buttons
+                    setActiveCategory(category);
+                    
+                    // Display the games with minimal delay
+                    requestAnimationFrame(() => {
+                        displayGames(category, 1);
+                        
+                        // Update the View More button immediately
+                        if (category !== 'all' && gamePageUrls[category]) {
+                            viewMoreButton.textContent = `View All ${category.charAt(0).toUpperCase() + category.slice(1)} Games`;
+                            viewMoreButton.setAttribute('data-url', gamePageUrls[category]);
+                            viewMoreButton.className = `inline-block bg-${category} text-white px-8 py-3 rounded-full hover:bg-${category}/90 transition-colors duration-300 font-medium shadow-lg shadow-${category}/20`;
+                            viewMoreButton.style.display = 'inline-block';
+                        }
+                    });
+                });
+            });
         });
 
         // 初始化游戏列表
@@ -891,8 +936,8 @@
             
             console.log('Initializing games from loaded content...');
             
-            // 清空游戏容器以准备新的游戏
-            finalGamesContainer.innerHTML = '';
+            // Don't clear the container here since we want to keep displayed games
+            // finalGamesContainer.innerHTML = '';
             
             // 重新规整allGames数组，确保游戏不重复
             const uniqueGameTitles = new Set();
@@ -937,8 +982,8 @@
             allGames = uniqueGames;
             console.log(`Total unique games after initialization: ${allGames.length}`);
             
-            // 显示当前分类的游戏
-            displayGames(currentCategory, 1);
+            // Don't refresh the display here, games are already displayed
+            // displayGames(currentCategory, 1);
             
             // 标记为已初始化
             gamesInitialized = true;
@@ -949,23 +994,6 @@
                     card.style.display = 'none';
                 }
             });
-            
-            // 特别检查action分类的游戏是否被正确加载
-            const actionGames = allGames.filter(game => {
-                if (game.category === 'action') return true;
-                try {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = game.html.trim();
-                    const gameCard = tempDiv.querySelector('.game-card');
-                    return gameCard && gameCard.getAttribute('data-category') === 'action';
-                } catch (error) {
-                    return false;
-                }
-            });
-            console.log(`After initialization: ${actionGames.length} action games found`);
-            if (actionGames.length === 0) {
-                console.warn("Warning: No action games found. This may be a problem with either the category page or the selectors.");
-            }
         }
 
         // 添加各个分类的游戏
@@ -1011,6 +1039,226 @@
             console.log(`Added ${initialCategoryGames.length} initial placeholder games`);
         }
         
+        // Function to load static game data when in production or on fetch errors
+        function loadStaticGameData() {
+            console.log('Loading static game data immediately...');
+            
+            // Immediately mark as initialized to prevent duplicate loading attempts
+            gamesInitialized = true;
+            
+            // Clear loading state
+            viewMoreButton.textContent = 'View More Games';
+            viewMoreButton.disabled = false;
+            
+            // Static game data by category
+            const staticGameData = {
+                action: [
+                    {
+                        title: "Giant Rush",
+                        description: "Run, jump, and grow in this exciting endless runner game. Collect power-ups and become the biggest giant in this free online action game.",
+                        image: "https://img.gamepix.com/games/giant-rush/cover/giant-rush.webp",
+                        url: "games/detail/giant-rush.html"
+                    },
+                    {
+                        title: "Flip Runner",
+                        description: "Master the art of parkour with this addictive action game. Perform incredible flips and tricks as you navigate through challenging obstacle courses.",
+                        image: "https://img.gamepix.com/games/flip-runner/cover/flip-runner.webp",
+                        url: "games/action.html"
+                    },
+                    {
+                        title: "Slither.io",
+                        description: "Grow your snake by consuming glowing orbs and defeating other players in this multiplayer action game. How big can you grow?",
+                        image: "https://img.gamepix.com/games/slither-io/cover/slither-io.webp",
+                        url: "games/action.html"
+                    }
+                ],
+                puzzle: [
+                    {
+                        title: "Bubble Tower 3D",
+                        description: "Match and pop colorful bubbles in this addictive 3D puzzle game with multiple challenging levels.",
+                        image: "https://img.gamepix.com/games/bubble-tower-3d/cover/bubble-tower-3d.webp",
+                        url: "games/detail/bubble-tower-3d.html"
+                    },
+                    {
+                        title: "2048",
+                        description: "Combine matching numbers in this addictive puzzle game to reach the elusive 2048 tile. Plan your moves carefully!",
+                        image: "https://img.gamepix.com/games/2048/cover/2048.webp",
+                        url: "games/puzzle.html"
+                    },
+                    {
+                        title: "Mahjong Connect",
+                        description: "Match identical tiles in this relaxing Mahjong puzzle game. Clear the board before time runs out!",
+                        image: "https://img.gamepix.com/games/mahjong-connect/cover/mahjong-connect.webp",
+                        url: "games/puzzle.html"
+                    }
+                ],
+                shooter: [
+                    {
+                        title: "Cannon Balls 3D",
+                        description: "Take control of a powerful cannon and blast your way through challenging levels in this exciting 3D shooter game.",
+                        image: "https://img.gamepix.com/games/cannon-balls-3d/cover/cannon-balls-3d.webp",
+                        url: "games/detail/cannon-balls-3d.html"
+                    },
+                    {
+                        title: "Zombie Survival",
+                        description: "Survive waves of relentless zombies in this action-packed shooter. Upgrade your weapons and defenses to survive longer.",
+                        image: "https://img.gamepix.com/games/zombie-survival/cover/zombie-survival.webp",
+                        url: "games/shooter.html"
+                    },
+                    {
+                        title: "Space Blaze",
+                        description: "Pilot your spaceship through dangerous asteroid fields and enemy fleets in this classic space shooter game.",
+                        image: "https://img.gamepix.com/games/space-blaze/cover/space-blaze.webp",
+                        url: "games/shooter.html"
+                    }
+                ],
+                anime: [
+                    {
+                        title: "Om Nom Run",
+                        description: "Help Om Nom run, jump and slide through colorful levels while collecting candies and avoiding obstacles in this anime-style game.",
+                        image: "https://img.gamepix.com/games/om-nom-run/cover/om-nom-run.webp",
+                        url: "games/detail/om-nom-run.html"
+                    },
+                    {
+                        title: "Anime Adventure",
+                        description: "Embark on an epic journey through colorful anime-inspired worlds. Battle mysterious enemies and make allies.",
+                        image: "https://img.gamepix.com/games/anime-adventure/cover/anime-adventure.webp",
+                        url: "games/anime.html"
+                    },
+                    {
+                        title: "Manga Puzzle",
+                        description: "Test your puzzle skills with beautiful manga-inspired artwork. Complete the images by arranging the pieces correctly.",
+                        image: "https://img.gamepix.com/games/manga-puzzle/cover/manga-puzzle.webp",
+                        url: "games/anime.html"
+                    }
+                ],
+                sports: [
+                    {
+                        title: "3D Free Kick",
+                        description: "Experience the excitement of taking crucial free kicks in this realistic 3D football game. Free online sports gaming.",
+                        image: "https://img.gamepix.com/games/3d-free-kick/cover/3d-free-kick.webp",
+                        url: "games/sports.html"
+                    },
+                    {
+                        title: "Basketball Stars",
+                        description: "Show off your basketball skills in this fast-paced sports game. Compete against players worldwide to become the best.",
+                        image: "https://img.gamepix.com/games/basketball-stars/cover/basketball-stars.webp",
+                        url: "games/sports.html"
+                    },
+                    {
+                        title: "Tennis Pro",
+                        description: "Master your tennis skills with realistic physics and controls. Compete in tournaments and climb the world rankings.",
+                        image: "https://img.gamepix.com/games/tennis-pro/cover/tennis-pro.webp",
+                        url: "games/sports.html"
+                    }
+                ],
+                fighting: [
+                    {
+                        title: "Shadow Fighter",
+                        description: "Master martial arts techniques and defeat opponents in this intense fighting game with stunning visuals.",
+                        image: "https://img.gamepix.com/games/shadow-fighter/cover/shadow-fighter.webp",
+                        url: "games/fighting.html"
+                    },
+                    {
+                        title: "Street Kombat",
+                        description: "Choose your fighter and execute powerful combos in this classic arcade-style fighting game with modern graphics.",
+                        image: "https://img.gamepix.com/games/street-kombat/cover/street-kombat.webp",
+                        url: "games/fighting.html"
+                    },
+                    {
+                        title: "Boxing Star",
+                        description: "Rise through the ranks from amateur to professional boxer in this realistic boxing simulation game.",
+                        image: "https://img.gamepix.com/games/boxing-star/cover/boxing-star.webp",
+                        url: "games/fighting.html"
+                    }
+                ],
+                racing: [
+                    {
+                        title: "Speed Racer",
+                        description: "Feel the adrenaline rush of high-speed racing in this exciting 3D racing game with multiple track options.",
+                        image: "https://img.gamepix.com/games/speed-racer/cover/speed-racer.webp",
+                        url: "games/racing.html"
+                    },
+                    {
+                        title: "Drift King",
+                        description: "Master the art of drifting in this high-octane racing game. Unlock new cars and tracks as you progress.",
+                        image: "https://img.gamepix.com/games/drift-king/cover/drift-king.webp",
+                        url: "games/racing.html"
+                    },
+                    {
+                        title: "Moto X3M",
+                        description: "Race against time on your motorcycle through challenging obstacle courses. Perform stunts for extra points!",
+                        image: "https://img.gamepix.com/games/moto-x3m/cover/moto-x3m.webp",
+                        url: "games/racing.html"
+                    }
+                ]
+            };
+            
+            // Clear the existing game container first
+            finalGamesContainer.innerHTML = '';
+            
+            // Reset game arrays to avoid duplicates
+            allGames = [];
+            additionalGames = [];
+            
+            // Immediately generate and display game cards for all categories
+            let staticGames = [];
+            
+            Object.entries(staticGameData).forEach(([category, games]) => {
+                games.forEach(game => {
+                    const gameHtml = `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="${category}">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="${game.image}" alt="Play ${game.title} on CloudGame - Free Online ${category.charAt(0).toUpperCase() + category.slice(1)} Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-${category}/80 text-white text-xs px-2.5 py-1 rounded-full">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                                        <h3 class="text-white font-bold mt-2">${game.title} - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">${game.title} on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">${game.description}</p>
+                                <a href="${game.url}" class="inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium">Play on CloudGame</a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    staticGames.push({
+                        category: category,
+                        html: gameHtml
+                    });
+                    
+                    // If this game belongs to the current category or all games are shown,
+                    // append it immediately to the container for faster rendering
+                    if (currentCategory === 'all' || currentCategory === category) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = gameHtml.trim();
+                        const gameElement = tempDiv.firstElementChild;
+                        if (gameElement) {
+                            finalGamesContainer.appendChild(gameElement);
+                        }
+                    }
+                });
+            });
+            
+            console.log(`Generated and displayed ${staticGames.length} static game entries`);
+            
+            // Add static games to global arrays
+            additionalGames = [...staticGames];
+            allGames = [...staticGames];
+            
+            // Update the View More button visibility
+            const totalGames = currentCategory === 'all' ? 
+                staticGames.length : 
+                staticGames.filter(g => g.category === currentCategory).length;
+                
+            const displayedGames = document.querySelectorAll(`.game-card[data-category="${currentCategory}"]`).length;
+            
+            updateViewMoreButtonVisibility(totalGames, displayedGames);
+        }
+
         // From various category pages
         async function fetchGamesFromPages() {
             console.log('Fetching games from all category pages...');
@@ -1028,6 +1276,7 @@
                 // Check if gamePageUrls is defined
                 if (!gamePageUrls || Object.keys(gamePageUrls).length === 0) {
                     console.error('gamePageUrls is not defined or empty!');
+                    loadStaticGameData();
                     return;
                 }
                 
@@ -1044,6 +1293,10 @@
                     loadStaticGameData();
                     return;
                 }
+                
+                // In local environment, immediately load static data first to avoid waiting
+                // This gives users something to look at while the real data loads
+                loadStaticGameData();
                 
                 // Prepare all category page URLs
                 const urls = Object.entries(gamePageUrls).map(([category, url]) => {
@@ -1065,6 +1318,29 @@
                 
                 console.log(`Will fetch games from ${urls.length} category pages:`, urls.map(u => u.url));
                 
+                // Since we already loaded static data, we can proceed with the real fetch in the background
+                // No need to block the user interface
+                setTimeout(() => {
+                    console.log("Starting background fetch of real game data...");
+                    fetchRealGameData(urls);
+                }, 100);
+                
+            } catch (error) {
+                console.error('Error in fetch setup:', error);
+                // Ensure static data is loaded even if there's an error
+                if (!gamesInitialized) {
+                    loadStaticGameData();
+                }
+            } finally {
+                // Always restore button state
+                viewMoreButton.textContent = 'View More Games';
+                viewMoreButton.disabled = false;
+            }
+        }
+        
+        // Function to fetch real game data in the background after static data is shown
+        async function fetchRealGameData(urls) {
+            try {
                 // Check if pages can be accessed correctly
                 for (const { category, url } of urls) {
                     try {
@@ -1289,225 +1565,66 @@
                     });
                     
                     console.log(`Total ${categoryGames.length} games found in ${category} category`);
-                    
-                    // If category has fewer than 3 games, issue a warning
-                    if (categoryGames.length < 3) {
-                        console.warn(`Warning: Only ${categoryGames.length} games found in ${category} category. This may indicate a problem with the selectors or the page structure.`);
-                    }
-                    
-                    // Add this category's games to total list
                     newGames = [...newGames, ...categoryGames];
                 });
                 
-                console.log(`Total ${newGames.length} games fetched from all category pages`);
+                console.log(`Total ${newGames.length} real games fetched from all category pages`);
                 
-                // Add new games to additionalGames and allGames
-                additionalGames = [...additionalGames, ...newGames];
-                allGames = [...allGames, ...newGames];
-                
-                // Initialize game list, remove duplicates and display
-                initializeGames();
-                
-            } catch (error) {
-                console.error('Error fetching games from pages:', error);
-                // Fallback to static game data on error
-                loadStaticGameData();
-            } finally {
-                // Restore button state
-                viewMoreButton.textContent = 'View More Games';
-                viewMoreButton.disabled = false;
-                
-                console.log(`Total additional games loaded: ${additionalGames.length}`);
-            }
-        }
-        
-        // Function to load static game data when in production or on fetch errors
-        function loadStaticGameData() {
-            console.log('Loading static game data...');
-            
-            // Static game data by category
-            const staticGameData = {
-                action: [
-                    {
-                        title: "Giant Rush",
-                        description: "Run, jump, and grow in this exciting endless runner game. Collect power-ups and become the biggest giant in this free online action game.",
-                        image: "https://img.gamepix.com/games/giant-rush/cover/giant-rush.webp",
-                        url: "games/detail/giant-rush.html"
-                    },
-                    {
-                        title: "Flip Runner",
-                        description: "Master the art of parkour with this addictive action game. Perform incredible flips and tricks as you navigate through challenging obstacle courses.",
-                        image: "https://img.gamepix.com/games/flip-runner/cover/flip-runner.webp",
-                        url: "games/action.html"
-                    },
-                    {
-                        title: "Slither.io",
-                        description: "Grow your snake by consuming glowing orbs and defeating other players in this multiplayer action game. How big can you grow?",
-                        image: "https://img.gamepix.com/games/slither-io/cover/slither-io.webp",
-                        url: "games/action.html"
-                    }
-                ],
-                puzzle: [
-                    {
-                        title: "Bubble Tower 3D",
-                        description: "Match and pop colorful bubbles in this addictive 3D puzzle game with multiple challenging levels.",
-                        image: "https://img.gamepix.com/games/bubble-tower-3d/cover/bubble-tower-3d.webp",
-                        url: "games/detail/bubble-tower-3d.html"
-                    },
-                    {
-                        title: "2048",
-                        description: "Combine matching numbers in this addictive puzzle game to reach the elusive 2048 tile. Plan your moves carefully!",
-                        image: "https://img.gamepix.com/games/2048/cover/2048.webp",
-                        url: "games/puzzle.html"
-                    },
-                    {
-                        title: "Mahjong Connect",
-                        description: "Match identical tiles in this relaxing Mahjong puzzle game. Clear the board before time runs out!",
-                        image: "https://img.gamepix.com/games/mahjong-connect/cover/mahjong-connect.webp",
-                        url: "games/puzzle.html"
-                    }
-                ],
-                shooter: [
-                    {
-                        title: "Cannon Balls 3D",
-                        description: "Take control of a powerful cannon and blast your way through challenging levels in this exciting 3D shooter game.",
-                        image: "https://img.gamepix.com/games/cannon-balls-3d/cover/cannon-balls-3d.webp",
-                        url: "games/detail/cannon-balls-3d.html"
-                    },
-                    {
-                        title: "Zombie Survival",
-                        description: "Survive waves of relentless zombies in this action-packed shooter. Upgrade your weapons and defenses to survive longer.",
-                        image: "https://img.gamepix.com/games/zombie-survival/cover/zombie-survival.webp",
-                        url: "games/shooter.html"
-                    },
-                    {
-                        title: "Space Blaze",
-                        description: "Pilot your spaceship through dangerous asteroid fields and enemy fleets in this classic space shooter game.",
-                        image: "https://img.gamepix.com/games/space-blaze/cover/space-blaze.webp",
-                        url: "games/shooter.html"
-                    }
-                ],
-                anime: [
-                    {
-                        title: "Om Nom Run",
-                        description: "Help Om Nom run, jump and slide through colorful levels while collecting candies and avoiding obstacles in this anime-style game.",
-                        image: "https://img.gamepix.com/games/om-nom-run/cover/om-nom-run.webp",
-                        url: "games/detail/om-nom-run.html"
-                    },
-                    {
-                        title: "Anime Adventure",
-                        description: "Embark on an epic journey through colorful anime-inspired worlds. Battle mysterious enemies and make allies.",
-                        image: "https://img.gamepix.com/games/anime-adventure/cover/anime-adventure.webp",
-                        url: "games/anime.html"
-                    },
-                    {
-                        title: "Manga Puzzle",
-                        description: "Test your puzzle skills with beautiful manga-inspired artwork. Complete the images by arranging the pieces correctly.",
-                        image: "https://img.gamepix.com/games/manga-puzzle/cover/manga-puzzle.webp",
-                        url: "games/anime.html"
-                    }
-                ],
-                sports: [
-                    {
-                        title: "3D Free Kick",
-                        description: "Experience the excitement of taking crucial free kicks in this realistic 3D football game. Free online sports gaming.",
-                        image: "https://img.gamepix.com/games/3d-free-kick/cover/3d-free-kick.webp",
-                        url: "games/sports.html"
-                    },
-                    {
-                        title: "Basketball Stars",
-                        description: "Show off your basketball skills in this fast-paced sports game. Compete against players worldwide to become the best.",
-                        image: "https://img.gamepix.com/games/basketball-stars/cover/basketball-stars.webp",
-                        url: "games/sports.html"
-                    },
-                    {
-                        title: "Tennis Pro",
-                        description: "Master your tennis skills with realistic physics and controls. Compete in tournaments and climb the world rankings.",
-                        image: "https://img.gamepix.com/games/tennis-pro/cover/tennis-pro.webp",
-                        url: "games/sports.html"
-                    }
-                ],
-                fighting: [
-                    {
-                        title: "Shadow Fighter",
-                        description: "Master martial arts techniques and defeat opponents in this intense fighting game with stunning visuals.",
-                        image: "https://img.gamepix.com/games/shadow-fighter/cover/shadow-fighter.webp",
-                        url: "games/fighting.html"
-                    },
-                    {
-                        title: "Street Kombat",
-                        description: "Choose your fighter and execute powerful combos in this classic arcade-style fighting game with modern graphics.",
-                        image: "https://img.gamepix.com/games/street-kombat/cover/street-kombat.webp",
-                        url: "games/fighting.html"
-                    },
-                    {
-                        title: "Boxing Star",
-                        description: "Rise through the ranks from amateur to professional boxer in this realistic boxing simulation game.",
-                        image: "https://img.gamepix.com/games/boxing-star/cover/boxing-star.webp",
-                        url: "games/fighting.html"
-                    }
-                ],
-                racing: [
-                    {
-                        title: "Speed Racer",
-                        description: "Feel the adrenaline rush of high-speed racing in this exciting 3D racing game with multiple track options.",
-                        image: "https://img.gamepix.com/games/speed-racer/cover/speed-racer.webp",
-                        url: "games/racing.html"
-                    },
-                    {
-                        title: "Drift King",
-                        description: "Master the art of drifting in this high-octane racing game. Unlock new cars and tracks as you progress.",
-                        image: "https://img.gamepix.com/games/drift-king/cover/drift-king.webp",
-                        url: "games/racing.html"
-                    },
-                    {
-                        title: "Moto X3M",
-                        description: "Race against time on your motorcycle through challenging obstacle courses. Perform stunts for extra points!",
-                        image: "https://img.gamepix.com/games/moto-x3m/cover/moto-x3m.webp",
-                        url: "games/racing.html"
-                    }
-                ]
-            };
-            
-            // Convert static data into the format expected by the game display system
-            let staticGames = [];
-            
-            Object.entries(staticGameData).forEach(([category, games]) => {
-                games.forEach(game => {
-                    const gameHtml = `
-                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="${category}">
-                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
-                                <img src="${game.image}" alt="Play ${game.title} on CloudGame - Free Online ${category.charAt(0).toUpperCase() + category.slice(1)} Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                    <div class="p-6">
-                                        <span class="bg-${category}/80 text-white text-xs px-2.5 py-1 rounded-full">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
-                                        <h3 class="text-white font-bold mt-2">${game.title} - CloudGame</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2 text-light">${game.title} on CloudGame</h3>
-                                <p class="text-light/70 mb-4 line-clamp-2">${game.description}</p>
-                                <a href="${game.url}" class="inline-block bg-${category} text-white px-5 py-2 rounded-full hover:bg-${category}/90 transition-colors duration-300 text-sm font-medium">Play on CloudGame</a>
-                            </div>
-                        </div>
-                    `;
+                if (newGames.length > 0) {
+                    // Merge new games with static games but avoid duplication
+                    const newUniqueGames = [];
+                    const existingTitles = new Set();
                     
-                    staticGames.push({
-                        category: category,
-                        html: gameHtml
+                    // Get existing titles to avoid duplicates
+                    allGames.forEach(game => {
+                        try {
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = game.html.trim();
+                            const gameTitle = tempDiv.querySelector('h3')?.textContent.trim();
+                            if (gameTitle) {
+                                existingTitles.add(gameTitle.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, ''));
+                            }
+                        } catch (error) {
+                            console.error('Error extracting game title:', error);
+                        }
                     });
-                });
-            });
-            
-            console.log(`Generated ${staticGames.length} static game entries`);
-            
-            // Add static games to global arrays
-            additionalGames = [...additionalGames, ...staticGames];
-            allGames = [...allGames, ...staticGames];
-            
-            // Initialize and display games
-            initializeGames();
+                    
+                    // Add only unique games
+                    newGames.forEach(game => {
+                        try {
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = game.html.trim();
+                            const gameTitle = tempDiv.querySelector('h3')?.textContent.trim();
+                            const title = gameTitle ? gameTitle.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '') : '';
+                            
+                            if (title && !existingTitles.has(title)) {
+                                existingTitles.add(title);
+                                newUniqueGames.push(game);
+                            }
+                        } catch (error) {
+                            console.error('Error checking for duplicate games:', error);
+                        }
+                    });
+                    
+                    console.log(`Adding ${newUniqueGames.length} unique real games to the existing static games`);
+                    
+                    // Add new unique games to the global arrays
+                    allGames = [...allGames, ...newUniqueGames];
+                    additionalGames = [...additionalGames, ...newUniqueGames];
+                    
+                    // If we're currently showing 'all' games or a specific category that has new games,
+                    // refresh the display to include the new real games
+                    const hasNewGamesInCurrentCategory = newUniqueGames.some(game => 
+                        game.category === currentCategory || currentCategory === 'all');
+                        
+                    if (hasNewGamesInCurrentCategory) {
+                        console.log(`Refreshing display to include new games for ${currentCategory} category`);
+                        displayGames(currentCategory, 1);
+                    }
+                }
+            } catch (error) {
+                console.error('Error in background fetch:', error);
+            }
         }
 
         // 显示游戏列表的函数
@@ -1519,28 +1636,13 @@
                 finalGamesContainer.innerHTML = '';
             }
             
-            // 根据分类筛选游戏
+            // 根据分类筛选游戏 - 使用更高效的方法
             let filteredGames;
             if (category === 'all') {
                 filteredGames = allGames;
             } else {
-                filteredGames = allGames.filter(game => {
-                    // 检查游戏对象的category属性
-                    if (game.category === category) {
-                        return true;
-                    }
-                    
-                    // 检查HTML中的data-category属性
-                    try {
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = game.html.trim();
-                        const gameCard = tempDiv.querySelector('.game-card');
-                        return gameCard && gameCard.getAttribute('data-category') === category;
-                    } catch (error) {
-                        console.error('Error checking game category:', error);
-                        return false;
-                    }
-                });
+                // 一次遍历，直接使用数据属性进行过滤
+                filteredGames = allGames.filter(game => game.category === category);
             }
             
             console.log(`Found ${filteredGames.length} games for category ${category}`);
@@ -1561,53 +1663,18 @@
                 return;
             }
             
-            // 去重：创建一个唯一游戏的列表
+            // 减少处理量，使用轻量级去重
             const uniqueGameTitles = new Set();
             const uniqueFilteredGames = [];
             
-            filteredGames.forEach(game => {
-                try {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = game.html.trim();
-                    const gameCard = tempDiv.querySelector('.game-card');
-                    
-                    if (gameCard) {
-                        // 从不同元素尝试获取标题
-                        let title = '';
-                        const h3Elements = gameCard.querySelectorAll('h3');
-                        
-                        if (h3Elements.length > 0) {
-                            // 如果有多个h3，取最长的那个作为标题
-                            h3Elements.forEach(h3 => {
-                                if (h3.textContent.length > title.length) {
-                                    title = h3.textContent.trim();
-                                }
-                            });
-                        }
-                        
-                        // 标题清理，移除" - CloudGame"和"on CloudGame"等后缀
-                        title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
-                        
-                        // 如果这个标题是唯一的，添加到唯一游戏列表中
-                        if (!uniqueGameTitles.has(title) && title !== 'Loading - CloudGame' && !title.includes('Loading')) {
-                            uniqueGameTitles.add(title);
-                            uniqueFilteredGames.push(game);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error processing game for display:', error);
-                }
-            });
+            // 创建一个DocumentFragment以减少DOM操作
+            const fragment = document.createDocumentFragment();
             
-            // 计算分页
-            const totalGames = uniqueFilteredGames.length;
-            const totalPages = Math.ceil(totalGames / gamesPerPage);
-            console.log(`Total unique games: ${totalGames}, Total pages: ${totalPages}, Current page: ${page}`);
-            
-            // 计算当前页面应该显示的游戏
+            // 计算分页 - 先快速应用分页，然后在处理时再去重
+            const totalGames = filteredGames.length;
             const startIndex = (page - 1) * gamesPerPage;
             const endIndex = Math.min(startIndex + gamesPerPage, totalGames);
-            const gamesToShow = uniqueFilteredGames.slice(startIndex, endIndex);
+            const gamesToShow = filteredGames.slice(startIndex, endIndex);
             
             console.log(`Showing games from index ${startIndex} to ${endIndex}`);
             
@@ -1621,28 +1688,79 @@
                 return;
             }
             
-            // 将游戏添加到容器
+            // 批量处理游戏元素添加
+            let uniqueCount = 0;
+            
             try {
                 gamesToShow.forEach((game, index) => {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = game.html.trim();
-                    const gameElement = tempDiv.firstElementChild;
-                    if (gameElement) {
-                        // 确保游戏卡片有正确的分类标签
-                        gameElement.setAttribute('data-category', game.category || category);
+                    try {
+                        // Check if we need to apply deduplication
+                        let skipThisGame = false;
                         
-                        // 添加动画效果 - 使用递增延迟创建交错的出场效果
-                        gameElement.classList.add('opacity-0', 'translate-y-8');
-                        gameElement.style.transitionDelay = `${index * 80}ms`;
-                        finalGamesContainer.appendChild(gameElement);
+                        // Extract title for deduplication check
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = game.html.trim();
+                        const gameElement = tempDiv.firstElementChild;
                         
-                        // 触发动画
-                        setTimeout(() => {
-                            gameElement.classList.add('transition-all', 'duration-700', 'ease-out');
-                            gameElement.classList.remove('opacity-0', 'translate-y-8');
-                        }, 50);
+                        if (gameElement) {
+                            const h3Elements = gameElement.querySelectorAll('h3');
+                            let title = '';
+                            
+                            // Extract title if h3 elements exist
+                            if (h3Elements.length > 0) {
+                                h3Elements.forEach(h3 => {
+                                    if (h3.textContent.length > title.length) {
+                                        title = h3.textContent.trim();
+                                    }
+                                });
+                                
+                                // Clean title
+                                title = title.replace(/ - CloudGame$/i, '').replace(/ on CloudGame$/i, '');
+                                
+                                // Check if this title is already added
+                                if (uniqueGameTitles.has(title) || title.includes('Loading')) {
+                                    skipThisGame = true;
+                                } else if (title) {
+                                    uniqueGameTitles.add(title);
+                                }
+                            }
+                            
+                            // Skip this game if it's a duplicate
+                            if (skipThisGame) {
+                                return;
+                            }
+                            
+                            // Add to unique list
+                            uniqueFilteredGames.push(game);
+                            uniqueCount++;
+                            
+                            // 确保游戏卡片有正确的分类标签
+                            gameElement.setAttribute('data-category', game.category || category);
+                            
+                            // 添加动画效果 - 使用递增延迟创建交错的出场效果
+                            gameElement.classList.add('opacity-0', 'translate-y-8');
+                            gameElement.style.transitionDelay = `${index * 50}ms`; // Reduced delay for faster appearance
+                            
+                            // Add to document fragment
+                            fragment.appendChild(gameElement);
+                        }
+                    } catch (e) {
+                        console.error('Error processing game element:', e);
                     }
                 });
+                
+                // Add all processed elements to container at once
+                finalGamesContainer.appendChild(fragment);
+                
+                // Trigger animations in a single batch
+                setTimeout(() => {
+                    const newElements = finalGamesContainer.querySelectorAll('.opacity-0');
+                    newElements.forEach(el => {
+                        el.classList.add('transition-all', 'duration-500', 'ease-out');
+                        el.classList.remove('opacity-0', 'translate-y-8');
+                    });
+                }, 10);
+                
             } catch (error) {
                 console.error('Error adding games to container:', error);
             }
@@ -1650,12 +1768,13 @@
             // 计算实际显示的游戏数量（考虑已经显示的游戏）
             const totalDisplayed = isAppending 
                 ? finalGamesContainer.querySelectorAll('.game-card').length 
-                : gamesToShow.length;
+                : uniqueCount;
             
             // 更新"查看更多"按钮的可见性
-            updateViewMoreButtonVisibility(totalGames, totalDisplayed);
+            updateViewMoreButtonVisibility(filteredGames.length, totalDisplayed);
             
             // 如果当前页小于总页数，确保"查看更多"按钮可见
+            const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
             if (page < totalPages) {
                 viewMoreButton.style.display = 'inline-block';
             } else {
