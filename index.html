@@ -41,6 +41,8 @@
                 navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
+                        // Check for updates
+                        registration.update();
                     })
                     .catch(error => {
                         console.error('Service Worker registration failed:', error);
@@ -704,13 +706,13 @@
         
         // 游戏页面URL映射
         const gamePageUrls = {
-            'action': 'games/action.html',
-            'shooter': 'games/shooter.html',
-            'puzzle': 'games/puzzle.html',
-            'sports': 'games/sports.html',
-            'fighting': 'games/fighting.html',
-            'racing': 'games/racing.html',
-            'anime': 'games/anime.html'
+            'action': 'games/action',
+            'shooter': 'games/shooter',
+            'puzzle': 'games/puzzle',
+            'sports': 'games/sports',
+            'fighting': 'games/fighting',
+            'racing': 'games/racing',
+            'anime': 'games/anime'
         };
         
         // 设置活动分类
