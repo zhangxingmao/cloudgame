@@ -1,4 +1,16 @@
 # Netlify redirects for clean URLs - optimized to minimize redirect chains
+
+# Directly handle full URLs
+https://cloudgame.info/games/action.html /games/action.html 200!
+https://cloudgame.info/games/sports.html /games/sports.html 200!
+https://cloudgame.info/games/shooter.html /games/shooter.html 200!
+https://cloudgame.info/games/puzzle.html /games/puzzle.html 200!
+https://cloudgame.info/games/fighting.html /games/fighting.html 200!
+https://cloudgame.info/games/racing.html /games/racing.html 200!
+https://cloudgame.info/games/anime.html /games/anime.html 200!
+https://cloudgame.info/games/new.html /games/new.html 200!
+https://cloudgame.info/games/popular.html /games/popular.html 200!
+
 # Direct mapping of clean URLs to HTML files with 200 status (no redirect)
 /games/action /games/action.html 200!
 /games/shooter /games/shooter.html 200!
@@ -21,22 +33,22 @@
 /games/new/ /games/new.html 200!
 /games/popular/ /games/popular.html 200!
 
-# Explicitly handle full paths with .html extension
-https://cloudgame.info/games/sports.html /games/sports.html 200!
-https://cloudgame.info/games/action.html /games/action.html 200!
-https://cloudgame.info/games/shooter.html /games/shooter.html 200!
-https://cloudgame.info/games/puzzle.html /games/puzzle.html 200!
-https://cloudgame.info/games/fighting.html /games/fighting.html 200!
-https://cloudgame.info/games/racing.html /games/racing.html 200!
-https://cloudgame.info/games/anime.html /games/anime.html 200!
-https://cloudgame.info/games/new.html /games/new.html 200!
-https://cloudgame.info/games/popular.html /games/popular.html 200!
-
 # Game detail pages with clean URLs
 /games/detail/giant-rush /games/detail/giant-rush.html 200!
 /games/detail/om-nom-run /games/detail/om-nom-run.html 200!
 /games/detail/bubble-tower-3d /games/detail/bubble-tower-3d.html 200!
 /games/detail/cannon-balls-3d /games/detail/cannon-balls-3d.html 200!
+
+# Special handling for direct access to URLs with www
+https://www.cloudgame.info/games/action.html https://cloudgame.info/games/action.html 301!
+https://www.cloudgame.info/games/sports.html https://cloudgame.info/games/sports.html 301!
+https://www.cloudgame.info/games/shooter.html https://cloudgame.info/games/shooter.html 301!
+https://www.cloudgame.info/games/puzzle.html https://cloudgame.info/games/puzzle.html 301!
+https://www.cloudgame.info/games/fighting.html https://cloudgame.info/games/fighting.html 301!
+https://www.cloudgame.info/games/racing.html https://cloudgame.info/games/racing.html 301!
+https://www.cloudgame.info/games/anime.html https://cloudgame.info/games/anime.html 301!
+https://www.cloudgame.info/games/new.html https://cloudgame.info/games/new.html 301!
+https://www.cloudgame.info/games/popular.html https://cloudgame.info/games/popular.html 301!
 
 # SPA fallback - only use for paths not explicitly defined above
 /* /index.html 200 
