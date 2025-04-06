@@ -641,23 +641,31 @@
                     currentPage = 1;
                     
                     // Remove active class from all buttons
-                    categoryButtons.forEach(btn => btn.classList.remove('active', 'bg-primary/10', 'border', 'border-primary/20'));
+                    categoryButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-primary/20', 'border', 'border-primary/30');
+                        
+                        // Reset category-specific styling
+                        const category = btn.getAttribute('data-category');
+                        if (category !== 'all') {
+                            btn.classList.remove(`bg-${category}/20`);
+                        }
+                    });
                     
                     // Add active class to clicked button
-                    this.classList.add('active', 'bg-primary/10', 'border', 'border-primary/20');
+                    this.classList.add('active');
                     
                     // Get the selected category
                     currentCategory = this.getAttribute('data-category');
                     
+                    // Apply specific styles based on category
+                    if (currentCategory === 'all') {
+                        this.classList.add('bg-primary/20', 'border', 'border-primary/30');
+                    } else {
+                        this.classList.add(`bg-${currentCategory}/20`, 'border', `border-${currentCategory}/30`);
+                    }
+                    
                     // Display initial set of games
                     displayGamesByCategory(currentCategory, currentPage);
-                    
-                    // Apply specific styles based on category
-                    if (currentCategory !== 'all') {
-                        const categoryColor = getColorForCategory(currentCategory);
-                        this.classList.remove('bg-primary/10');
-                        this.classList.add(`bg-${currentCategory}/10`);
-                    }
                     
                     // Show or hide the view more button
                     updateViewMoreButtonVisibility();
@@ -686,7 +694,10 @@
             
             // Initialize games array
             function initializeGames() {
-                // Get initial games
+                // Clear the allGames array to avoid duplicates if function is called multiple times
+                allGames = [];
+                
+                // Get initial games from the document
                 gameCards.forEach(card => {
                     allGames.push({
                         element: card,
@@ -706,6 +717,10 @@
                         isAdditional: true
                     });
                 });
+                
+                // After initializing all games, display initial set
+                displayGamesByCategory('all', currentPage);
+                updateViewMoreButtonVisibility();
             }
             
             // Display games by category and page
@@ -828,4 +843,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
