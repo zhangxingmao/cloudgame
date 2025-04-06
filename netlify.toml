@@ -5,8 +5,15 @@
   from = "/games/*"
   to = "/games/:splat.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+
+# Specify a custom header for HTML files to ensure proper content type
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Content-Type = "text/html" 

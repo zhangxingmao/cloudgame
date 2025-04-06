@@ -71,4 +71,108 @@ AddDefaultCharset UTF-8
     <FilesMatch "\.(js|css|xml|gz|html)$">
         Header append Vary: Accept-Encoding
     </FilesMatch>
-</IfModule> 
+</IfModule>
+
+# Handle CloudGame.info domain paths
+RewriteCond %{HTTP_HOST} ^cloudgame\.info$ [NC]
+RewriteRule ^games/([^/]+)\.html$ /games/$1.html [L]
+RewriteRule ^games/([^/]+)$ /games/$1.html [L]
+
+# Ensure www. redirects to non-www
+RewriteCond %{HTTP_HOST} ^www\.cloudgame\.info$ [NC]
+RewriteRule ^(.*)$ https://cloudgame.info/$1 [L,R=301]
+
+# Ensure https is used
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# Serve Brotli-compressed files if they exist and the browser accepts them
+<IfModule mod_headers.c>
+    RewriteCond %{HTTP:Accept-Encoding} br
+    RewriteCond %{REQUEST_FILENAME}.br -f
+    RewriteRule ^(.*)$ $1.br [L]
+    <FilesMatch "\.br$">
+        Header set Content-Type "%{Content_Type}e"
+        Header set Content-Encoding br
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+</IfModule>
+
+# Serve gzip-compressed files if they exist and the browser accepts them
+<IfModule mod_headers.c>
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [L]
+    <FilesMatch "\.gz$">
+        Header set Content-Type "%{Content_Type}e"
+        Header set Content-Encoding gzip
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+</IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    # Cache images for 1 week
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+    
+    # Cache CSS, JavaScript for 1 day
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=86400, public"
+    </FilesMatch>
+    
+    # Cache fonts for 1 week
+    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+    
+    # Cache HTML for 10 minutes
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=600, public"
+    </FilesMatch>
+</IfModule>
+
+# Default charset and language
+AddDefaultCharset UTF-8
+DefaultLanguage en-US
+
+# Prevent directory listings
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 404 /index.html
+
+# Add mime types
+AddType application/javascript .js
+AddType text/css .css
+AddType image/svg+xml .svg
+AddType application/font-woff .woff
+AddType application/font-woff2 .woff2
+
+# Set security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Special fix for Basketball Stars and other game links
+# This ensures that /games/sports.html and cloudgame.info/games/sports.html work
+RewriteCond %{REQUEST_URI} ^/games/(.*)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^games/(.*)$ /games/$1.html [L]
+
+# Allow cross-origin for fonts
+<FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font\.css)$">
+    <IfModule mod_headers.c>
+        Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+</FilesMatch> 
