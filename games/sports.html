@@ -272,5 +272,36 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Script to prevent auto-redirects -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear all existing timeouts
+            const highestTimeoutId = setTimeout(";");
+            for (let i = 0; i < highestTimeoutId; i++) {
+                clearTimeout(i);
+            }
+            
+            // Clear all existing intervals
+            const highestIntervalId = setInterval(";");
+            for (let i = 0; i < highestIntervalId; i++) {
+                clearInterval(i);
+            }
+            
+            // Override setTimeout and setInterval to prevent future redirects
+            const originalSetTimeout = window.setTimeout;
+            window.setTimeout = function(callback, timeout) {
+                // Only allow timeouts for animation or UI-related functions
+                if (timeout < 5000) {  // Allow short timeouts (less than 5 seconds)
+                    return originalSetTimeout(callback, timeout);
+                }
+                console.log('Blocked a long timeout that might cause redirect');
+                return 0;
+            };
+            
+            // Log to console
+            console.log('Auto-redirect prevention active');
+        });
+    </script>
 </body>
 </html> 

@@ -232,7 +232,7 @@
 
             <!-- View All Button -->
             <div class="text-center mt-12">
-                <a href="/games/new.html" class="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium shadow-lg shadow-primary/20">View All Games</a>
+                <button id="view-more-games-btn" class="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-colors duration-300 font-medium shadow-lg shadow-primary/20">View More Games</button>
             </div>
         </div>
     </section>
@@ -385,9 +385,158 @@
             const categoryButtons = document.querySelectorAll('.category-btn');
             const gameCards = document.querySelectorAll('.game-card');
             
+            // Game pagination variables
+            const gamesPerPage = 6;
+            let currentPage = 1;
+            let currentCategory = 'all';
+            let allGames = [];
+            let additionalGames = [
+                // Additional action games
+                {
+                    category: 'action',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://img.gamepix.com/games/go-escape/cover/go-escape.webp" alt="Play Go Escape on CloudGame - Free Online Action Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
+                                        <h3 class="text-white font-bold mt-2">Go Escape - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Go Escape on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Go Escape instantly on CloudGame. Navigate through challenging mazes and find your way to freedom in this free online action game.</p>
+                                <a href="/games/action.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    category: 'action',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="action">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://img.gamepix.com/games/rise-up/cover/rise-up.webp" alt="Play Rise Up on CloudGame - Free Online Action Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-action/80 text-white text-xs px-2.5 py-1 rounded-full">Action</span>
+                                        <h3 class="text-white font-bold mt-2">Rise Up - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Rise Up on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Rise Up instantly on CloudGame. Protect your balloon as it rises through challenging obstacles in this free online action game.</p>
+                                <a href="/games/action.html" class="inline-block bg-action text-white px-5 py-2 rounded-full hover:bg-action/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+                // Additional shooter games
+                {
+                    category: 'shooter',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="shooter">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://html5gameshq.com/wp-content/uploads/2022/02/Western-Sniper-HTML5-Game.jpg" alt="Play Western Sniper on CloudGame - Free Online Shooter Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-shooter/80 text-white text-xs px-2.5 py-1 rounded-full">Shooter</span>
+                                        <h3 class="text-white font-bold mt-2">Western Sniper - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Western Sniper on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Western Sniper instantly on CloudGame. Test your marksmanship skills in this classic western-themed sniper game in this free online shooter game.</p>
+                                <a href="/games/shooter.html" class="inline-block bg-shooter text-white px-5 py-2 rounded-full hover:bg-shooter/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+                // Additional puzzle games
+                {
+                    category: 'puzzle',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="puzzle">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://img.gamepix.com/games/color-water-sort-3d/cover/color-water-sort-3d.webp" alt="Play Color Water Sort 3D on CloudGame - Free Online Puzzle Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-puzzle/80 text-white text-xs px-2.5 py-1 rounded-full">Puzzle</span>
+                                        <h3 class="text-white font-bold mt-2">Color Water Sort 3D - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Color Water Sort 3D on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Color Water Sort 3D instantly on CloudGame. Sort colored water between tubes to create perfect matches in this free online puzzle game.</p>
+                                <a href="/games/puzzle.html" class="inline-block bg-puzzle text-white px-5 py-2 rounded-full hover:bg-puzzle/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+                // Additional sports games
+                {
+                    category: 'sports',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="sports">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://img.gamepix.com/games/table-tennis-world-tour/cover/table-tennis-world-tour.webp" alt="Play Table Tennis World Tour on CloudGame - Free Online Sports Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-sports/80 text-white text-xs px-2.5 py-1 rounded-full">Sports</span>
+                                        <h3 class="text-white font-bold mt-2">Table Tennis World Tour - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Table Tennis World Tour on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Table Tennis World Tour instantly on CloudGame. Compete in intense table tennis matches against players from around the world in this free online sports game.</p>
+                                <a href="/games/sports.html" class="inline-block bg-sports text-white px-5 py-2 rounded-full hover:bg-sports/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+                // Additional anime games
+                {
+                    category: 'anime',
+                    html: `
+                        <div class="bg-darker rounded-2xl overflow-hidden shadow-lg shadow-black/50 hover:shadow-xl hover:shadow-black/50 transition-shadow duration-300 game-card border border-white/10" data-category="anime">
+                            <div class="aspect-video bg-gray-100 overflow-hidden relative group">
+                                <img src="https://img.gamepix.com/games/kawaii-dressup/cover/kawaii-dressup.webp" alt="Play Kawaii Dressup on CloudGame - Free Online Anime Games" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                    <div class="p-6">
+                                        <span class="bg-anime/80 text-white text-xs px-2.5 py-1 rounded-full">Anime</span>
+                                        <h3 class="text-white font-bold mt-2">Kawaii Dressup - CloudGame</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-2 text-light">Kawaii Dressup on CloudGame</h3>
+                                <p class="text-light/70 mb-4 line-clamp-2">Play Kawaii Dressup instantly on CloudGame. Create adorable anime characters with this cute dress-up game in this free online anime game.</p>
+                                <a href="/games/anime.html" class="inline-block bg-anime text-white px-5 py-2 rounded-full hover:bg-anime/90 transition-colors duration-300 text-sm font-medium">Play Now on CloudGame</a>
+                            </div>
+                        </div>
+                    `
+                },
+            ];
+            
+            // Get games container
+            const gamesContainer = document.querySelector('#explore-all-games .grid');
+            const viewMoreButton = document.getElementById('view-more-games-btn');
+            
+            // Initialize gameCards array
+            initializeGames();
+            
             // Add click event to each category button
             categoryButtons.forEach(button => {
                 button.addEventListener('click', function() {
+                    // Reset pagination
+                    currentPage = 1;
+                    
                     // Remove active class from all buttons
                     categoryButtons.forEach(btn => btn.classList.remove('active', 'bg-primary/10', 'border', 'border-primary/20'));
                     
@@ -395,31 +544,28 @@
                     this.classList.add('active', 'bg-primary/10', 'border', 'border-primary/20');
                     
                     // Get the selected category
-                    const selectedCategory = this.getAttribute('data-category');
+                    currentCategory = this.getAttribute('data-category');
                     
-                    // Show all cards if 'all' is selected, otherwise filter
-                    gameCards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
-                        
-                        if (selectedCategory === 'all' || selectedCategory === cardCategory) {
-                            card.style.display = 'block';
-                            // Add animation for appearing cards
-                            card.classList.add('animate-fade-in');
-                            setTimeout(() => {
-                                card.classList.remove('animate-fade-in');
-                            }, 500);
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    // Display initial set of games
+                    displayGamesByCategory(currentCategory, currentPage);
                     
                     // Apply specific styles based on category
-                    if (selectedCategory !== 'all') {
-                        const categoryColor = getColorForCategory(selectedCategory);
+                    if (currentCategory !== 'all') {
+                        const categoryColor = getColorForCategory(currentCategory);
                         this.classList.remove('bg-primary/10');
-                        this.classList.add(`bg-${selectedCategory}/10`);
+                        this.classList.add(`bg-${currentCategory}/10`);
                     }
+                    
+                    // Show or hide the view more button
+                    updateViewMoreButtonVisibility();
                 });
+            });
+            
+            // Add click event to view more button
+            viewMoreButton.addEventListener('click', function() {
+                currentPage++;
+                displayMoreGames(currentCategory, currentPage);
+                updateViewMoreButtonVisibility();
             });
             
             // Helper function to get the color class for a category
@@ -435,6 +581,131 @@
                 return categoryColors[category] || 'primary';
             }
             
+            // Initialize games array
+            function initializeGames() {
+                // Get initial games
+                gameCards.forEach(card => {
+                    allGames.push({
+                        element: card,
+                        category: card.getAttribute('data-category')
+                    });
+                });
+                
+                // Add additional games to array
+                additionalGames.forEach(game => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = game.html.trim();
+                    const gameElement = tempDiv.firstChild;
+                    
+                    allGames.push({
+                        element: gameElement,
+                        category: game.category,
+                        isAdditional: true
+                    });
+                });
+            }
+            
+            // Display games by category and page
+            function displayGamesByCategory(category, page) {
+                // Clear current games
+                gamesContainer.innerHTML = '';
+                
+                // Filter games by category
+                const filteredGames = category === 'all' 
+                    ? allGames 
+                    : allGames.filter(game => game.category === category);
+                
+                // Display games for current page
+                const startIndex = 0;
+                const endIndex = page * gamesPerPage;
+                
+                for (let i = startIndex; i < Math.min(endIndex, filteredGames.length); i++) {
+                    const game = filteredGames[i];
+                    
+                    if (game.isAdditional) {
+                        // Clone the element to avoid issues with reusing
+                        const clone = game.element.cloneNode(true);
+                        gamesContainer.appendChild(clone);
+                        
+                        // Add animation
+                        setTimeout(() => {
+                            clone.classList.add('animate-fade-in');
+                            setTimeout(() => {
+                                clone.classList.remove('animate-fade-in');
+                            }, 500);
+                        }, 10);
+                    } else {
+                        // Original element from the page
+                        gamesContainer.appendChild(game.element);
+                        
+                        // Make it visible and add animation
+                        game.element.style.display = 'block';
+                        setTimeout(() => {
+                            game.element.classList.add('animate-fade-in');
+                            setTimeout(() => {
+                                game.element.classList.remove('animate-fade-in');
+                            }, 500);
+                        }, 10);
+                    }
+                }
+            }
+            
+            // Display more games
+            function displayMoreGames(category, page) {
+                // Filter games by category
+                const filteredGames = category === 'all' 
+                    ? allGames 
+                    : allGames.filter(game => game.category === category);
+                
+                // Calculate indices for pagination
+                const startIndex = (page - 1) * gamesPerPage;
+                const endIndex = page * gamesPerPage;
+                
+                // Display additional games
+                for (let i = startIndex; i < Math.min(endIndex, filteredGames.length); i++) {
+                    const game = filteredGames[i];
+                    
+                    if (game.isAdditional) {
+                        // Clone the element to avoid issues with reusing
+                        const clone = game.element.cloneNode(true);
+                        gamesContainer.appendChild(clone);
+                        
+                        // Add animation
+                        setTimeout(() => {
+                            clone.classList.add('animate-fade-in');
+                            setTimeout(() => {
+                                clone.classList.remove('animate-fade-in');
+                            }, 500);
+                        }, 10);
+                    } else if (!document.contains(game.element)) {
+                        // If original element is not in the document
+                        gamesContainer.appendChild(game.element);
+                        
+                        // Make it visible and add animation
+                        game.element.style.display = 'block';
+                        setTimeout(() => {
+                            game.element.classList.add('animate-fade-in');
+                            setTimeout(() => {
+                                game.element.classList.remove('animate-fade-in');
+                            }, 500);
+                        }, 10);
+                    }
+                }
+            }
+            
+            // Update "View More" button visibility
+            function updateViewMoreButtonVisibility() {
+                const filteredGames = currentCategory === 'all' 
+                    ? allGames 
+                    : allGames.filter(game => game.category === currentCategory);
+                
+                if (currentPage * gamesPerPage >= filteredGames.length) {
+                    viewMoreButton.style.display = 'none';
+                } else {
+                    viewMoreButton.style.display = 'inline-block';
+                }
+            }
+            
             // Add style for fade-in animation
             const style = document.createElement('style');
             style.textContent = `
@@ -447,6 +718,10 @@
                 }
             `;
             document.head.appendChild(style);
+            
+            // Initialize with "all" category
+            displayGamesByCategory('all', currentPage);
+            updateViewMoreButtonVisibility();
         });
     </script>
 </body>
