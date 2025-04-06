@@ -2,7 +2,7 @@
   "name": "CloudGame - Play Free Online Games Instantly in Your Browser",
   "short_name": "CloudGame",
   "description": "CloudGame offers free online games you can play instantly in your browser. No downloads required. Play action, puzzle, sports, shooter, and anime games with cloud gaming technology.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#007AFF",
@@ -27,7 +27,7 @@
     }
   ],
   "orientation": "any",
-  "scope": "/",
+  "scope": "./",
   "prefer_related_applications": false,
   "lang": "en-US",
   "dir": "ltr",

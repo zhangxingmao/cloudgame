@@ -18,7 +18,7 @@
     <link rel="icon" href="../../images/game-icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
     <link rel="apple-touch-icon" href="../../images/apple-touch-icon.svg" type="image/svg+xml">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="../../manifest.json">
     <meta name="theme-color" content="#007AFF">
     <title>GAME_TITLE - CloudGame</title>
     <meta name="description" content="GAME_DESCRIPTION">
@@ -36,7 +36,7 @@
         // Service worker registration for PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('../../service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })
@@ -178,15 +178,15 @@
     <!-- Header -->
     <header class="fixed w-full bg-darker/90 backdrop-blur-md border-b border-white/10 z-50">
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold text-primary">CloudGame</a>
+            <a href="../../" class="text-2xl font-bold text-primary">CloudGame</a>
             
             <!-- Primary Navigation -->
             <div class="hidden md:flex space-x-8">
-                <a href="/#features" class="text-gray-600 hover:text-primary">Features</a>
-                <a href="/#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
-                <a href="/#faq" class="text-gray-600 hover:text-primary">FAQ</a>
-                <a href="/games/new.html" class="text-gray-600 hover:text-primary">New Games</a>
-                <a href="/games/popular.html" class="text-gray-600 hover:text-primary">Popular</a>
+                <a href="../../#features" class="text-gray-600 hover:text-primary">Features</a>
+                <a href="../../#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
+                <a href="../../#faq" class="text-gray-600 hover:text-primary">FAQ</a>
+                <a href="../../games/new.html" class="text-gray-600 hover:text-primary">New Games</a>
+                <a href="../../games/popular.html" class="text-gray-600 hover:text-primary">Popular</a>
             </div>
             
             <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition">Play Now</button>
@@ -310,7 +310,7 @@
                     <div class="p-6">
                         <h3 class="text-lg font-semibold mb-2 text-light">SIMILAR_GAME_1_TITLE</h3>
                         <p class="text-light/70 mb-4 line-clamp-2">SIMILAR_GAME_1_DESCRIPTION</p>
-                        <a href="/games/detail/SIMILAR_GAME_1_SLUG.html" class="inline-block bg-SIMILAR_GAME_1_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_1_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                        <a href="SIMILAR_GAME_1_SLUG.html" class="inline-block bg-SIMILAR_GAME_1_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_1_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
                     </div>
                 </div>
 
@@ -328,7 +328,7 @@
                     <div class="p-6">
                         <h3 class="text-lg font-semibold mb-2 text-light">SIMILAR_GAME_2_TITLE</h3>
                         <p class="text-light/70 mb-4 line-clamp-2">SIMILAR_GAME_2_DESCRIPTION</p>
-                        <a href="/games/detail/SIMILAR_GAME_2_SLUG.html" class="inline-block bg-SIMILAR_GAME_2_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_2_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                        <a href="SIMILAR_GAME_2_SLUG.html" class="inline-block bg-SIMILAR_GAME_2_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_2_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
                     </div>
                 </div>
 
@@ -346,7 +346,7 @@
                     <div class="p-6">
                         <h3 class="text-lg font-semibold mb-2 text-light">SIMILAR_GAME_3_TITLE</h3>
                         <p class="text-light/70 mb-4 line-clamp-2">SIMILAR_GAME_3_DESCRIPTION</p>
-                        <a href="/games/detail/SIMILAR_GAME_3_SLUG.html" class="inline-block bg-SIMILAR_GAME_3_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_3_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
+                        <a href="SIMILAR_GAME_3_SLUG.html" class="inline-block bg-SIMILAR_GAME_3_CATEGORY text-white px-5 py-2 rounded-full hover:bg-SIMILAR_GAME_3_CATEGORY/90 transition-colors duration-300 text-sm font-medium">View Game</a>
                     </div>
                 </div>
             </div>
@@ -356,7 +356,7 @@
     <!-- Back to All Games Section -->
     <section class="py-12 game-detail-section progressive-content delay-300">
         <div class="container mx-auto px-4 text-center">
-            <a href="/games/GAME_CATEGORY.html" class="inline-block bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition">Browse All GAME_CATEGORY Games</a>
+            <a href="../GAME_CATEGORY.html" class="inline-block bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary/90 transition">Browse All GAME_CATEGORY Games</a>
         </div>
     </section>
 
@@ -367,10 +367,10 @@
                 <h2 class="text-2xl font-bold text-primary">CloudGame</h2>
                 <p class="text-light/60 mt-2">Play Free Online Games Instantly in Your Browser</p>
                 <div class="mt-6 flex justify-center space-x-4">
-                    <a href="/" class="text-light/60 hover:text-primary">Home</a>
-                    <a href="/#features" class="text-light/60 hover:text-primary">Features</a>
-                    <a href="/#faq" class="text-light/60 hover:text-primary">FAQ</a>
-                    <a href="/games/new.html" class="text-light/60 hover:text-primary">New Games</a>
+                    <a href="../../" class="text-light/60 hover:text-primary">Home</a>
+                    <a href="../../#features" class="text-light/60 hover:text-primary">Features</a>
+                    <a href="../../#faq" class="text-light/60 hover:text-primary">FAQ</a>
+                    <a href="../new.html" class="text-light/60 hover:text-primary">New Games</a>
                 </div>
                 <p class="text-light/40 text-sm mt-8">&copy; 2023 CloudGame. All rights reserved.</p>
             </div>

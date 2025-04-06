@@ -18,7 +18,7 @@
     <link rel="icon" href="images/game-icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.svg" type="image/svg+xml">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#007AFF">
     <title>CloudGame - Play Free Online Games Instantly in Your Browser | No Downloads</title>
     <meta name="description" content="CloudGame offers free online games you can play instantly in your browser. No downloads required. Play action, puzzle, sports, shooter, and anime games with cloud gaming technology. Start playing now!">
@@ -38,7 +38,7 @@
         // Service worker registration for PWA functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registered with scope:', registration.scope);
                     })
