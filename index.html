@@ -1747,6 +1747,21 @@
                             // 确保游戏卡片有正确的分类标签
                             gameElement.setAttribute('data-category', game.category || category);
                             
+                            // 修改游戏卡片的点击事件，移除自动重定向
+                            const gameLinks = gameElement.querySelectorAll('a[href]');
+                            gameLinks.forEach(link => {
+                                if (link.href && !link.href.includes('javascript:void')) {
+                                    // 如果是游戏链接，阻止默认行为并使用playGame函数
+                                    link.addEventListener('click', function(e) {
+                                        e.preventDefault();
+                                        const iframeElement = gameElement.querySelector('iframe');
+                                        if (iframeElement && iframeElement.src) {
+                                            playGame(iframeElement.src);
+                                        }
+                                    });
+                                }
+                            });
+                            
                             // 添加动画效果 - 使用递增延迟创建交错的出场效果
                             gameElement.classList.add('opacity-0', 'translate-y-8');
                             gameElement.style.transitionDelay = `${index * 50}ms`; // Reduced delay for faster appearance
