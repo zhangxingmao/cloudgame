@@ -18,9 +18,9 @@
     <link rel="icon" href="../images/game-icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.svg" type="image/svg+xml">
-    <title>Anime Games - CloudGame</title>
-    <meta name="description" content="Discover anime-themed games at CloudGame. Immerse yourself in vibrant Japanese-inspired worlds with stunning visuals and engaging gameplay.">
-    <link rel="canonical" href="https://cloudgame.info/games/anime.html" />
+    <title>Adventure Games - CloudGame</title>
+    <meta name="description" content="Embark on exciting adventures with CloudGame's collection of adventure games. Explore new worlds, solve puzzles, and experience thrilling stories directly in your browser.">
+    <link rel="canonical" href="https://cloudgame.info/games/adventure.html" />
     <meta name="author" content="yanzhang582">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,7 +35,9 @@
                         action: '#10B981',
                         puzzle: '#F59E0B',
                         sports: '#3B82F6',
-                        shooter: '#EF4444'
+                        shooter: '#EF4444',
+                        casual: '#8B5CF6',
+                        adventure: '#047857'
                     }
                 }
             }
@@ -107,12 +109,12 @@
         </nav>
     </header>
 
-    <!-- Category Header with Anime Style -->
-    <section class="pt-32 pb-12 bg-gradient-to-r from-anime/20 to-indigo-100">
+    <!-- Category Header -->
+    <section class="pt-32 pb-12 bg-gradient-to-b from-white to-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold text-anime mb-4">Anime Games</h1>
-                <p class="text-xl text-gray-700 mb-8">Immerse yourself in vibrant anime-inspired worlds with stunning visuals and engaging storylines</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-adventure mb-4">Adventure Games</h1>
+                <p class="text-xl text-gray-600 mb-8">Embark on exciting journeys, solve mysteries, and explore new worlds</p>
             </div>
         </div>
     </section>
@@ -123,106 +125,25 @@
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-center mb-4">Featured Game</h2>
                 <div class="aspect-video rounded-xl overflow-hidden shadow-xl">
-                    <iframe src="https://play.famobi.com/om-nom-run" 
+                    <iframe src="https://play.famobi.com/woodventure" 
                             class="w-full h-full border-0"
                             allow="fullscreen; autoplay; gamepad"
-                            title="Om Nom Run">
+                            title="Woodventure">
                     </iframe>
                 </div>
                 <div class="mt-8 bg-gray-50 p-6 rounded-lg">
-                    <h3 class="text-xl font-semibold mb-2">Om Nom Run</h3>
-                    <p class="text-gray-600">Join Om Nom in this exciting endless runner adventure! Run, jump, and collect candies while avoiding obstacles.</p>
-                    <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/om-nom-run')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition mt-4">Play Now</a>
+                    <h3 class="text-xl font-semibold mb-2">Woodventure</h3>
+                    <p class="text-gray-600">Join the wooden hero on an adventure through magical forests. This charming platform game features hand-drawn environments and challenging puzzles.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- More Anime Games -->
+    <!-- More Adventure Games -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">More Anime Games</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">More Adventure Games</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Kiba & Kumba: High Jump -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/highjump" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Kiba & Kumba: High Jump">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Kiba & Kumba: High Jump</h3>
-                        <p class="text-gray-600 mb-4">Jump as high as you can with the adorable monkeys Kiba & Kumba! Collect power-ups to improve your highscore!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/highjump')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- My Little Dragon -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/my-little-dragon" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="My Little Dragon">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">My Little Dragon</h3>
-                        <p class="text-gray-600 mb-4">In My Little Dragon you will adopt a tiny and cute creature. Play with it, feed it, clean it and watch it grow up.</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/my-little-dragon')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- Kiba & Kumba: Jungle Chaos -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/kk-jungle-chaos" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Kiba & Kumba: Jungle Chaos">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Kiba & Kumba: Jungle Chaos</h3>
-                        <p class="text-gray-600 mb-4">Help the cute monkeys Kiba & Kumba to to fight against the evil penguin Dr. Slip van Ice in this jump 'n' run game!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/kk-jungle-chaos')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- Monster Pet -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/monster-pet" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Monster Pet">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Monster Pet</h3>
-                        <p class="text-gray-600 mb-4">Adopt your very own monster in this online pet game! Take good care of your new friend and make it happy!</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/monster-pet')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
-                    </div>
-                </div>
-
-                <!-- Kiba & Kumba: Shadow Run -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <div class="aspect-video bg-gray-100 overflow-hidden">
-                        <iframe src="https://play.famobi.com/kk-shadow-run" 
-                                class="w-full h-full border-0"
-                                allow="fullscreen; autoplay; gamepad"
-                                title="Kiba & Kumba: Shadow Run">
-                        </iframe>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Kiba & Kumba: Shadow Run</h3>
-                        <p class="text-gray-600 mb-4">In this fun jump 'n' run game you have to help the cute monkeys Kiba & Kumba to flee from Dr.Slipp van Ice into safety.</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/kk-shadow-run')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
-                    </div>
-                </div>
-
                 <!-- Woodventure -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
                     <div class="aspect-video bg-gray-100 overflow-hidden">
@@ -235,20 +156,41 @@
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Woodventure</h3>
                         <p class="text-gray-600 mb-4">Join the wooden hero on an adventure through magical forests. This charming platform game features hand-drawn environments and challenging puzzles.</p>
-                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/woodventure')" class="inline-block bg-anime text-white px-4 py-2 rounded-lg hover:bg-anime/90 transition">Play Now</a>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/woodventure')" class="inline-block bg-adventure text-white px-4 py-2 rounded-lg hover:bg-adventure/90 transition">Play Now</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Anime Theme Section -->
-    <section class="py-16 bg-gradient-to-r from-anime/5 to-indigo-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-8 text-anime">Anime-Inspired Gaming</h2>
-            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-sm">
-                <p class="text-gray-600 mb-4">Our anime game collection brings the distinct visual style and storytelling of Japanese animation to your gaming experience. Featuring vibrant colors, unique character designs, and engaging narratives, these games transport you to worlds inspired by popular anime aesthetics.</p>
-                <p class="text-gray-600">Whether you're a long-time anime fan or new to the genre, our curated selection offers something for everyone - from action-packed adventures to strategic role-playing games, all with that distinctive anime flair.</p>
+                <!-- Diamond Rush -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/diamond-rush" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Diamond Rush">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Diamond Rush</h3>
+                        <p class="text-gray-600 mb-4">Embark on a treasure hunting adventure across exotic locations. Collect diamonds, solve puzzles, and navigate through ancient temples filled with traps.</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/diamond-rush')" class="inline-block bg-adventure text-white px-4 py-2 rounded-lg hover:bg-adventure/90 transition">Play Now</a>
+                    </div>
+                </div>
+
+                <!-- Orange Ranch -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="aspect-video bg-gray-100 overflow-hidden">
+                        <iframe src="https://play.famobi.com/orange-ranch" 
+                                class="w-full h-full border-0"
+                                allow="fullscreen; autoplay; gamepad"
+                                title="Orange Ranch">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Orange Ranch</h3>
+                        <p class="text-gray-600 mb-4">Build your own orange farm in this adventure simulation game. Plant trees, harvest crops, and expand your ranch while completing various quests and missions.</p>
+                        <a href="javascript:void(0)" onclick="playGame('https://play.famobi.com/orange-ranch')" class="inline-block bg-adventure text-white px-4 py-2 rounded-lg hover:bg-adventure/90 transition">Play Now</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -50,7 +50,9 @@
                         sports: '#64D2FF', // Brighter Teal for dark mode
                         shooter: '#FF453A', // Brighter Red for dark mode
                         fighting: '#FF0000', // Red for fighting
-                        racing: '#00FF00' // Green for racing
+                        racing: '#00FF00', // Green for racing
+                        casual: '#8B5CF6', // Purple for casual
+                        adventure: '#047857' // Green for adventure
                     },
                     fontFamily: {
                         sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
@@ -264,6 +266,16 @@
             --tw-gradient-to: #D289F7;
         }
         
+        .game-card[data-category="casual"]:hover h3 {
+            --tw-gradient-from: #8B5CF6;
+            --tw-gradient-to: #A78BFA;
+        }
+        
+        .game-card[data-category="adventure"]:hover h3 {
+            --tw-gradient-from: #047857;
+            --tw-gradient-to: #10B981;
+        }
+        
         /* Better image container */
         .game-card .aspect-video {
             position: relative;
@@ -333,7 +345,6 @@
                 <a href="/#features" class="text-gray-600 hover:text-primary">Features</a>
                 <a href="/#how-it-works" class="text-gray-600 hover:text-primary">How It Works</a>
                 <a href="/#faq" class="text-gray-600 hover:text-primary">FAQ</a>
-                <a href="games/new.html" class="text-gray-600 hover:text-primary">New Games</a>
                 <a href="games/popular.html" class="text-gray-600 hover:text-primary">Popular</a>
             </div>
             
@@ -380,6 +391,8 @@
                 <button class="text-fighting font-medium px-6 py-2.5 rounded-full hover:bg-fighting/20 transition-colors duration-300 mx-1 category-btn" data-category="fighting">Fighting</button>
                 <button class="text-racing font-medium px-6 py-2.5 rounded-full hover:bg-racing/20 transition-colors duration-300 mx-1 category-btn" data-category="racing">Racing</button>
                 <button class="text-anime font-medium px-6 py-2.5 rounded-full hover:bg-anime/20 transition-colors duration-300 mx-1 category-btn" data-category="anime">Anime</button>
+                <button class="text-casual font-medium px-6 py-2.5 rounded-full hover:bg-casual/20 transition-colors duration-300 mx-1 category-btn" data-category="casual">Casual</button>
+                <button class="text-adventure font-medium px-6 py-2.5 rounded-full hover:bg-adventure/20 transition-colors duration-300 mx-1 category-btn" data-category="adventure">Adventure</button>
             </div>
 
             <!-- Games Grid -->
@@ -490,7 +503,7 @@
                     <div class="p-6">
                         <h3 class="text-lg font-semibold mb-2 text-light">New Release</h3>
                         <p class="text-light/70 mb-4 line-clamp-2">We're constantly adding new games to our collection. Check back soon for our latest releases!</p>
-                        <a href="games/new.html" class="inline-block bg-white border border-primary/30 text-primary px-5 py-2 rounded-full hover:bg-primary/5 transition-colors duration-300 text-sm font-medium">View New Games</a>
+                        <a href="games/popular.html" class="inline-block bg-white border border-primary/30 text-primary px-5 py-2 rounded-full hover:bg-primary/5 transition-colors duration-300 text-sm font-medium">View Popular Games</a>
                     </div>
                 </div>
             </div>
@@ -644,6 +657,10 @@
                         <li><a href="games/puzzle.html" class="text-gray-400 hover:text-white">Puzzle Games</a></li>
                         <li><a href="games/sports.html" class="text-gray-400 hover:text-white">Sports Games</a></li>
                         <li><a href="games/anime.html" class="text-gray-400 hover:text-white">Anime Games</a></li>
+                        <li><a href="games/racing.html" class="text-gray-400 hover:text-white">Racing Games</a></li>
+                        <li><a href="games/fighting.html" class="text-gray-400 hover:text-white">Fighting Games</a></li>
+                        <li><a href="games/casual.html" class="text-gray-400 hover:text-white">Casual Games</a></li>
+                        <li><a href="games/adventure.html" class="text-gray-400 hover:text-white">Adventure Games</a></li>
                     </ul>
                 </div>
             </div>
@@ -735,7 +752,9 @@
             'sports': 'games/sports',
             'fighting': 'games/fighting',
             'racing': 'games/racing',
-            'anime': 'games/anime'
+            'anime': 'games/anime',
+            'casual': 'games/casual',
+            'adventure': 'games/adventure'
         };
         
         // 设置活动分类
