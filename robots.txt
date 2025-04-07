@@ -1,0 +1,34 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+Allow: /games/
+Allow: /images/
+Allow: /sitemap.xml
+
+# Disallow admin and system files
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /private/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/cache/
+Disallow: /wp-content/themes/
+Disallow: /trackback/
+Disallow: /comments/
+Disallow: /category/*/feed/
+Disallow: /author/
+Disallow: /tag/
+Disallow: /?feed=
+Disallow: /?s=
+Disallow: /search/
+Disallow: /page/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+
+# Sitemap location
+Sitemap: https://cloudgame.info/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10 
