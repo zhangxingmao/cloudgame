@@ -43,42 +43,8 @@
     </script>
     <script>
         function playGame(gameUrl) {
-            // 创建一个新的全屏iframe
-            const gameFrame = document.createElement('iframe');
-            gameFrame.src = gameUrl;
-            gameFrame.style.position = 'fixed';
-            gameFrame.style.top = '0';
-            gameFrame.style.left = '0';
-            gameFrame.style.width = '100%';
-            gameFrame.style.height = '100%';
-            gameFrame.style.border = 'none';
-            gameFrame.style.zIndex = '9999';
-            gameFrame.allow = 'fullscreen; autoplay; gamepad';
-            
-            // 添加关闭按钮
-            const closeButton = document.createElement('button');
-            closeButton.innerHTML = '✕';
-            closeButton.style.position = 'fixed';
-            closeButton.style.top = '20px';
-            closeButton.style.right = '20px';
-            closeButton.style.zIndex = '10000';
-            closeButton.style.background = '#ffffff';
-            closeButton.style.border = 'none';
-            closeButton.style.borderRadius = '50%';
-            closeButton.style.width = '40px';
-            closeButton.style.height = '40px';
-            closeButton.style.cursor = 'pointer';
-            closeButton.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            
-            // 点击关闭按钮时移除iframe和按钮
-            closeButton.onclick = function() {
-                document.body.removeChild(gameFrame);
-                document.body.removeChild(closeButton);
-            };
-            
-            // 将iframe和关闭按钮添加到页面
-            document.body.appendChild(gameFrame);
-            document.body.appendChild(closeButton);
+            // Open the game URL in a new tab/window
+            window.open(gameUrl, '_blank');
         }
         
         function showExternalGameInfo(gameName, imageUrl, gameUrl, description) {

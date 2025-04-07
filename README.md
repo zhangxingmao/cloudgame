@@ -21,7 +21,7 @@ CloudGame is a modern web platform that enables users to play a diverse collecti
   - Sports
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Modern UI/UX**: Clean interface with smooth animations and transitions
-- **Fullscreen Mode**: Enhanced gaming experience with fullscreen gameplay option
+- **New Tab Gaming**: Games open in a new tab for distraction-free gameplay
 - **Performance Optimized**: Fast loading times and smooth performance
 - **No Registration Required**: Jump straight into gameplay without account creation
 
@@ -30,9 +30,9 @@ CloudGame is a modern web platform that enables users to play a diverse collecti
 1. **Visit the Website**: Navigate to [CloudGame](https://cloudgame.info) in your web browser
 2. **Browse Categories**: Explore different game categories via the navigation menu
 3. **Select a Game**: Click on any game card to view details
-4. **Play**: Click the "Play Now" button to launch the game in fullscreen mode
+4. **Play**: Click the "Play Now" button to launch the game in a new tab
 5. **Controls**: Each game includes its own control instructions
-6. **Exit**: Use the ✕ button in the top-right corner to exit fullscreen mode
+6. **Return**: Simply close the game tab to return to CloudGame when finished
 
 ## Popular Games
 
